@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <title>供货存管理系统</title>
+    <link rel="stylesheet" href="layui/css/layui.css"/>
+    <link rel="stylesheet" href="layui/css/ms.css"/>
+    <script src="layui/lay/modules/jquery.min.js"></script>
+    <script src="layui/Chart.js"></script>
+    <!--JQuery Easy UI 模块-->
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/bootstrap/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/icon.css"/>
+    <script type="text/javascript" src="jquery-easyui/jquery.easyui.min.js"></script>
+</head>
+<body class="">
+    <div class="">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <blockquote class="layui-elem-quote" id="amount"></blockquote>
+            <div class="bar-chart">
+                <div id="container" >
+                    <canvas id="canvas" style="width: 75%;height: 150px;"></canvas>
+                </div>
+            </div>
+
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>库存查询</legend>
+            </fieldset>
+            <div class="layui-form-item">
+                <!--输入框-->
+                <label class="layui-form-label">物品名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="likeStr" required="required"  lay-verify="required" placeholder="请输入物品" autocomplete="off" class="layui-input"/>
+                </div>
+                <!--查询按钮-->
+                <div class="layui-input-inline">
+                    <button class="layui-btn layui-btn-danger" onclick="reloadTable()">查询</button>
+                </div>
+            </div>
+            <div class="layui-form-item">
+               <label class="layui-form-label">供货商：</label>
+                <div class="layui-input-inline">
+                    <select id="su_supplier" name="su_supplier" class="ms_form_select_lg">
+                    </select>
+                </div>
+                <!--查询按钮-->
+                <div class="layui-input-inline">
+                    <button class="layui-btn layui-btn-danger" onclick="reloadTable1()">查询</button>
+                </div>
+                <button class="layui-btn layui-btn-sm" onclick="Export('导出excel', $('#dg'));">打印报表</button>
+            </div>
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>库存清单</legend>
+            </fieldset>
+
+           <table id="dg" class="easyui-datagrid" title="出货历史列表" style="width:100%;height:800px"
+                  data-options="rownumbers:true,singleSelect:true,method:'get', remoteSort:false">
+                            <thead>
+                            <tr>
+                                <th data-options="field:'or_id',width:80">库存流水号</th>
+                                <th data-options="field:'su_name',width:80,sortable:true">货品名称</th>
+                                <th data-options="field:'supplier_office',width:100,sortable:true">供货商</th>
+                                <th data-options="field:'su_orign',width:100,sortable:true">产地</th>
+                                <th data-options="field:'su_standard',width:100,sortable:true">规格</th>
+                                <th data-options="field:'su_storage',width:100,sortable:true">存储条件</th>
+                                <th data-options="field:'or_date',width:100,sortable:true">订货日期</th>
+                                <th data-options="field:'or_deaddate',width:100,sortable:true">到期日期</th>
+                                <th data-options="field:'or_number',width:80,align:'right',sortable:true">余量</th>
+                                <th data-options="field:'or_price',width:80,align:'right',sortable:true">单价</th>
+                                <th data-options="field:'or_total',width:80,align:'right',sortable:true">总价</th>
+                                <th data-options="field:'or_invoice',width:80,align:'right',sortable:true">发票状况</th>
+                                <th data-options="field:'or_other',width:80,align:'right'">备注</th>
+                            </tr>
+                            </thead>
+            </table>
+        </div>
+    </div>
+    <!--右键菜单-->
+    <div id="mm" class="easyui-menu" style="width:120px;">
+        <div onclick=" $('#dlg_Cart').dialog('open');" data-options="iconCls:'icon-add'">加入购物车</div>
+        <div onclick="ShowUpdateOther()" data-options="iconCls:'icon-add'">修改备注</div>
+    </div>
+    <!--添加物品-->
+    <div id="dlg_Cart" class="easyui-dialog" title="加入购物车" data-options="iconCls:'icon-save'" closed ='true' style="width:450px;height:200px;padding:10px">
+        <div style="margin-bottom:20px">
+            <input class="easyui-numberbox" id="car_number" name="number" style="width:100%" data-options="label:'数量:',required:true"/>
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" id="car_other" name="subject" style="width:100%" data-options="label:'备注:',required:true"/>
+        </div>
+        <div style="text-align:center;padding:5px 0">
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="addToCar()" style="width:80px">确认</a>
+        </div>
+    </div>
+    <!--更新备注-->
+    <div id="dlg_updateOther" class="easyui-dialog" title="更新备注"  closed="true" data-options="iconCls:'icon-save'" style="width:400px;height:120px;">
+        <input id="other" class="easyui-textbox" label="新备注:" labelPosition="top" style="width:90%;height:52px"/>
+        <button class="easyui-linkbutton" onclick="updateOther()">确定</button>
+    </div>
+
+<!--下拉框更新AJAX-->
+<script>
+    /*<![CDATA[*/
+    $(function () {
+        $('#likeStr').bind("blur",function () {
+            var likeStr= $('#likeStr').val();
+            $.ajax({
+                type:"GET",
+                data:{like:likeStr},
+                url:"/web/order/getLike.do",
+                success:function (data) {
+                    var i;
+                    $('#ajax-list').empty();
+                    for(i=0;i<data.length;i++)
+                    {
+                        $('#ajax-list').append("<option value='"+data[i].or_goods_id+"'>"+data[i].su_name+"【"+data[i].supplier_office+"】</option>");
+                        console.log("<option value='"+data[i].or_goods_id+"'>"+data[i].su_name+"【"+data[i].supplier_office+"】</option>");
+                    }
+                }
+            })
+        });
+        $('#dg').datagrid({url:"/web/order/search.do"});
+        $('#dg').datagrid({
+            onDblClickRow: function(index,row){
+                var info="";
+                $.ajax({
+                   url:"/web/sale/getSaledInfoByOrId.do" ,
+                    data:{id:row.or_id},
+                    success:function (data) {
+                        for(var i=0;i<data.length;i++)
+                        {
+                            var time =new Date(parseInt(data[i].sale_date));
+                           info=info+"购买人： "+data[i].cu_name+" 购买数量： "+data[i].sale_number+" 购买时间： "+time.toLocaleDateString()+"</br>"
+                        }
+                        $.messager.alert('出售记录',info);
+                    }
+                });
+            }
+        });
+    });
+    /*]]>*/
+</script>
+<!--Layui启动代码-->
+<!--重载表格数据-->
+<script>
+    /*<![CDATA[*/
+    //绘制统计图
+    $.ajax({
+            url:"/web/order/getStatistics.do",
+            success:function (data) {
+                var labels=[];
+                var datas=[];
+                var i;
+                console.log(data);
+                for(i=0;i<data.length;i++)
+                {
+                    labels.push(data[i].su_name);
+                    datas.push(data[i].su_sum);
+
+                }
+
+                var barChartData = {
+                    labels: labels,
+                    datasets: [{
+                        fillColor : "rgba(220,220,220,0.5)",
+                        strokeColor : "rgba(220,220,220,0.8)",
+                        highlightFill: "rgba(220,220,220,0.75)",
+                        highlightStroke: "rgba(220,220,220,1)",
+                        label: '数量',
+                        borderWidth: 1,
+                        data: datas
+                    }]
+                };
+
+                var ctx = document.getElementById("canvas").getContext("2d");
+                window.myBar = new Chart(ctx, {
+                    type: 'bar',
+                    data: barChartData,
+                    options: {
+                        scaleStartValue : 0,
+                        responsive: true,
+                        legend: {
+                            position: 'top'
+                        },
+                        title: {
+                            display: true,
+                            text: '库存余量'
+                        }
+                    }
+                });
+            }
+    });
+    //重新加载表格
+    function reloadTable() {
+        var $str =$('#likeStr').val();
+        $('#dg').datagrid({url:"/web/order/getLike.do"});
+        $('#dg').datagrid('load',{like:$str});
+        $('#dg').datagrid({
+            onLoadSuccess:function (data) {
+                var rows=$('#dg').datagrid("getRows");
+                for(var i=0;i<rows.length;i++)
+                {
+                    var invoiceStr="";
+                    switch(rows[i].or_invoice) {
+                        case 1:
+                            invoiceStr = "有";
+                            break;
+                        case 2:
+                            invoiceStr = "无";
+                            break;
+                        case 3:
+                            invoiceStr = "拖欠";
+                            break;
+                    }
+                    $('#dg').datagrid('updateRow',{
+                        index: i,
+                        row: {
+                            or_date:new Date(rows[i].or_date).toLocaleDateString(),
+                            or_deaddate:new Date(rows[i].or_deaddate).toLocaleDateString(),
+                            or_invoice:invoiceStr,
+                            or_total:rows[i].or_price*rows[i].or_number
+                        }
+                    });
+                }
+            }
+        });
+    }
+    function reloadTable1() {
+        var $str =$('#su_supplier').val();
+        $('#dg').datagrid({url:"/web/order/getBySupplierId.do"});
+        $('#dg').datagrid('load',{id:$str});
+        $('#dg').datagrid({
+            onLoadSuccess:function (data) {
+                var rows=$('#dg').datagrid("getRows");
+                for(var i=0;i<rows.length;i++)
+                {
+                    var invoiceStr="";
+                    switch(rows[i].or_invoice) {
+                        case 1:
+                            invoiceStr = "有";
+                            break;
+                        case 2:
+                            invoiceStr = "无";
+                            break;
+                        case 3:
+                            invoiceStr = "拖欠";
+                            break;
+                    }
+                    $('#dg').datagrid('updateRow',{
+                        index: i,
+                        row: {
+                            or_date:new Date(rows[i].or_date).toLocaleDateString(),
+                            or_deaddate:new Date(rows[i].or_deaddate).toLocaleDateString(),
+                            or_invoice:invoiceStr,
+                            or_total:rows[i].or_price*rows[i].or_number
+                        }
+                    });
+                }
+            }
+        });
+    }
+    //右键菜单
+    $(function () {
+        $('#dg').datagrid({
+            onRowContextMenu:function (e, index, row) {
+                e.preventDefault();
+                $('#mm').menu('show',{
+                    left:e.pageX,
+                    top:e.pageY
+                })
+            }
+        });
+        //计算库存余额
+        $.ajax({
+            url:"/web/order/getAmount.do",
+            success:function (data) {
+                $('#amount').text("库存总额为:"+data+"元");
+            }
+        });
+    });
+    //加入购物车
+    function addToCar() {
+        var car_su_id=$('#dg').datagrid('getSelected').or_goods_id;
+        var car_number=$("#car_number").val();
+        var car_other=$("#car_other").val();
+        $.ajax({
+            url:"/web/sc/add.do",
+            method:"post",
+            data:{
+                car_su_id:car_su_id,
+                car_su_number:car_number,
+                car_other:car_other
+            },
+            success:function (data) {
+                $.messager.alert("提示信息",data);
+            }
+        })
+    }
+    // 更新备注状况
+    function ShowUpdateOther() {
+        $('#dlg_updateOther').dialog("open");
+    }
+    function updateOther() {
+        var checkVal = $('#other').val();
+        var or_id =$('#dg').datagrid("getSelected").or_id;
+        $.ajax({
+            url:"/web/order/updateOther.do",
+            data:{key:or_id,val:checkVal},
+            success:function (data) {
+                $.messager.alert("消息",data);
+            }
+        })
+    }
+    /*]]>*/
+</script>
+
+<!--获得供货商-->
+<script>
+    /*<![CDATA[*/
+    $(function () {
+        $.ajax({
+            type:"GET",
+            url:"/web/supplier/getALlSupplierInfo.do",
+            success:function (datas) {
+                console.log(datas);
+                var i;
+                for(i=0;i<datas.length;i++)
+                {
+                    $('#su_supplier').append("<option value='"+datas[i].supplier_id+"'>"+datas[i].supplier_office+"</option>")
+                }
+            }
+        });
+    });
+    /*]]>*/
+</script>
+<script>
+    /*<![CDATA[*/
+    function ChangeToTable(printDatagrid) {
+        var tableString = '<table cellspacing="0" class="pb">';
+        var frozenColumns = printDatagrid.datagrid("options").frozenColumns; // 得到frozenColumns对象
+        var columns = printDatagrid.datagrid("options").columns;  // 得到columns对象
+        var nameList = new Array();
+
+        // 载入title
+        if (typeof columns != 'undefined' && columns != '') {
+            $(columns).each(function (index) {
+                tableString += '\n<tr>';
+                if (typeof frozenColumns != 'undefined' && typeof frozenColumns[index] != 'undefined') {
+                    for (var i = 0; i < frozenColumns[index].length; ++i) {
+                        if (!frozenColumns[index][i].hidden) {
+                            tableString += '\n<th width="' + frozenColumns[index][i].width + '"';
+                            if (typeof frozenColumns[index][i].rowspan != 'undefined' && frozenColumns[index][i].rowspan > 1) {
+                                tableString += ' rowspan="' + frozenColumns[index][i].rowspan + '"';
+                            }
+                            if (typeof frozenColumns[index][i].colspan != 'undefined' && frozenColumns[index][i].colspan > 1) {
+                                tableString += ' colspan="' + frozenColumns[index][i].colspan + '"';
+                            }
+                            if (typeof frozenColumns[index][i].field != 'undefined' && frozenColumns[index][i].field != '') {
+                                nameList.push(frozenColumns[index][i]);
+                            }
+                            tableString += '>' + frozenColumns[0][i].title + '</th>';
+                        }
+                    }
+                }
+                for (var i = 0; i < columns[index].length; ++i) {
+                    if (!columns[index][i].hidden) {
+                        tableString += '\n<th width="' + columns[index][i].width + '"';
+                        if (typeof columns[index][i].rowspan != 'undefined' && columns[index][i].rowspan > 1) {
+                            tableString += ' rowspan="' + columns[index][i].rowspan + '"';
+                        }
+                        if (typeof columns[index][i].colspan != 'undefined' && columns[index][i].colspan > 1) {
+                            tableString += ' colspan="' + columns[index][i].colspan + '"';
+                        }
+                        if (typeof columns[index][i].field != 'undefined' && columns[index][i].field != '') {
+                            nameList.push(columns[index][i]);
+                        }
+                        tableString += '>' + columns[index][i].title + '</th>';
+                    }
+                }
+                tableString += '\n</tr>';
+            });
+        }
+        // 载入内容
+        var rows = printDatagrid.datagrid("getRows"); // 这段代码是获取当前页的所有行
+        for (var i = 0; i < rows.length; ++i) {
+            tableString += '\n<tr>';
+            for (var j = 0; j < nameList.length; ++j) {
+                var e = nameList[j].field.lastIndexOf('_0');
+
+                tableString += '\n<td';
+                if (nameList[j].align != 'undefined' && nameList[j].align != '') {
+                    tableString += ' style="text-align:' + nameList[j].align + ';"';
+                }
+                tableString += '>';
+                if (e + 2 == nameList[j].field.length) {
+                    tableString += rows[i][nameList[j].field.substring(0, e)];
+                }
+                else
+                    tableString += rows[i][nameList[j].field];
+                tableString += '</td>';
+            }
+            tableString += '\n</tr>';
+        }
+        tableString += '\n</table>';
+        return tableString;
+    }
+    function Export(strXlsName, exportGrid) {
+        var f = $('<form action="/web/branch/excel.do" method="post" id="fm1"></form>');
+        var i = $('<input type="hidden" id="txtContent" name="txtContent" />');
+        var l = $('<input type="hidden" id="txtName" name="txtName" />');
+        i.val(ChangeToTable(exportGrid));
+        i.appendTo(f);
+        l.val(strXlsName);
+        l.appendTo(f);
+        f.appendTo(document.body).submit();
+        document.body.removeChild(f);
+    }
+    /*]]>*/
+</script>
+</body>
+</html>

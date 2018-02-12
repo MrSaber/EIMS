@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mrsaber.mapper.OrderMapper">
+    <insert id="addOrder" parameterType="com.mrsaber.model.Order">
+      INSERT INTO `gongxiao`.`ms_order` (`or_goods_id`, `or_supplier_id`, `or_date`, `or_price`, `or_number`, `or_total`,`or_invoice`, `or_other`,`or_check`,`or_initial`,`or_deaddate`,`or_payment`,`or_alarm`) VALUES (#{or_goods_id}, #{or_supplier_id}, #{or_date}, #{or_price},#{or_number},#{or_total},#{or_invoice},#{or_other},1,#{or_number},#{or_deaddate},#{or_payment},#{or_alarm});
+    </insert>
+    <update id="updateOrderNumInBound" parameterType="com.mrsaber.model.UpdateItem">
+        UPDATE `gongxiao`.`ms_order` SET `or_number`=`or_number`-#{cost_num} WHERE `or_id`=#{or_id} and `or_check`=3;
+    </update>
+    <delete id="refreshOrderInBound">
+        DELETE FROM `gongxiao`.`ms_order` WHERE or_number=0 and or_check=3;
+  </delete>
+    <select id="getOrderByDateAndSupplierId" parameterType="com.mrsaber.model.OfIdAndDateItem" resultType="com.mrsaber.model.Order">
+        SELECT ms_order.*,ms_supplier.supplier_office,ms_goods.*
+        FROM gongxiao.ms_order,gongxiao.ms_supplier,gongxiao.ms_goods
+        where or_supplier_id=supplier_id
+        and or_goods_id = su_id
+        and (or_date between #{begin_date}
+        and #{end_date})
+        and supplier_id=#{key_id} ;
+    </select>
+</mapper>
+

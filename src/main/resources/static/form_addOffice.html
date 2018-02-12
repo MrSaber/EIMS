@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>addOffice</title>
+    <script type="text/javascript" src="jquery-easyui/jquery.min.js"></script>
+</head>
+<body>
+<h1>添加单位</h1>
+<div class="layui-form-item">
+    <label class="layui-form-label">单位名</label>
+    <div class="layui-input-block">
+        <input type="text" name="su_No" required="required"   placeholder="机构名" autocomplete="off" class="layui-input" id="ms_of_name"/>
+    </div>
+</div>
+
+<div class="layui-form-item">
+    <label class="layui-form-label">单位地址</label>
+    <div class="layui-input-block">
+        <input type="text" name="su_orign" required="required"   placeholder="地址" autocomplete="off" class="layui-input" id="ms_of_addr"/>
+    </div>
+</div>
+<div class="layui-form-item">
+    <label class="layui-form-label">备注</label>
+    <div class="layui-input-block">
+        <input type="text" name="su_standard" required="required"   placeholder="备注" autocomplete="off" class="layui-input" id="ms_of_other"/>
+    </div>
+</div>
+<div class="layui-form-item">
+    <div class="layui-input-block">
+        <button class="layui-btn"  onclick="addOffice()">提交</button>
+        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+</div>
+<script>
+    function addOffice() {
+        var $ms_of_name = $('#ms_of_name').val();
+        var $ms_of_addr = $('#ms_of_addr').val();
+        var $ms_of_other = $('#ms_of_other').val();
+        var $addGoods_request  = $.ajax({
+            type:"POST",
+            url:"/web/office/add.do",
+            data:{
+                of_name:$ms_of_name,
+                of_addr:$ms_of_addr,
+                of_other:$ms_of_other
+            },
+            success:function (msg) {
+                alert("消息"+msg);
+                location.reload();
+                window.opener.location.reload();
+            }
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>发票状况</title>
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT= "no-cache, must-revalidate">
+    <META HTTP-EQUIV="expires" CONTENT= "Wed, 26 Feb 1997 08:21:57 GMT">
+    <!--Layer 模块-->
+    <script src="layui/lay/modules/jquery.min.js"></script>
+    <script src="layui/layui.js"></script>
+    <!--JQuery Easy UI 模块-->
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/default/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/icon.css"/>
+    <script type="text/javascript" src="jquery-easyui/jquery.easyui.min.js"></script>
+</head>
+<body>
+<table id="dg" class="easyui-datagrid" title="Row Editing in DataGrid" style="width:700px;height:auto"
+       data-options="
+				iconCls: 'icon-edit',
+				singleSelect: true,
+				toolbar: '#tb',
+				url: 'datagrid_data1.json',
+				method: 'get',
+			">
+    <thead>
+    <tr>
+        <th data-options="field:'in_id',width:80,hidden:true">流水号</th>
+        <th data-options="field:'in_money',width:80,align:'right',editor:'numberbox'">开票金额</th>
+        <th data-options="field:'in_date',width:80,align:'right',editor:'datebox'">开票时间</th>
+        <th data-options="field:'in_other',width:250,editor:'textbox'">说明</th>
+    </tr>
+    </thead>
+</table>
+<div id="tb" style="height:auto">
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="addIn()">添加</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">删除</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="accept()">Accept</a>
+</div>
+
+<div id="dlg" class="easyui-dialog" title="添加发票" data-options="iconCls:'icon-save'" style="width:300px;height:180px;padding:10px">
+    <table cellpadding="2">
+        <tr>
+            <td>开票金额</td>
+            <td><input id="in_money" class="easyui-textbox"  required="required"> </input> </td>
+        </tr>
+        <tr>
+            <td>开票时间</td>
+            <td><input  id="in_date"  type= "text" class= "easyui-datebox" required ="required"> </input> </td>
+        </tr>
+        <tr>
+            <td>说明</td>
+            <td><input id="in_other" class="easyui-textbox"  required="required"> </input> </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><button class="easyui-linkbutton" onclick="addInvoice()">添加发票</button></td>
+        </tr>
+    </table>
+</div>
+<script>
+    function getQueryStringArgs(){
+        //取得查询字符串并去掉开头的问号
+        var qs = (location.search.length > 0 ? location.search.substring(1) : ""),
+            //保存数据的对象
+            args = {},
+            //取得每一项
+            items = qs.length ? qs.split("&") : [],
+            item = null,
+            name = null,
+            value = null,
+            //在 for 循环中使用
+            i = 0,
+            len = items.length;
+        //逐个将每一项添加到 args 对象中
+        for (i=0; i < len; i++){
+            item = items[i].split("=");
+            name = decodeURIComponent(item[0]);
+            value = decodeURIComponent(item[1]);
+            if (name.length) {
+                args[name] = value;
+            }
+        }
+        return args;
+    }
+    function addIn(){
+        $('#dlg').dialog('open');
+    }
+    function addInvoice() {
+        var arr= getQueryStringArgs();
+        var $in_money=$('#in_money').val();
+        var $in_date=$('#in_date').val();
+        var $in_other=$('#in_other').val();
+        $.ajax({
+            url:"/web/in/add.do",
+            method:'post',
+            data:{
+                in_money:$in_money,
+                in_date:$in_date,
+                in_other:$in_other,
+                in_sale_id:arr['key']
+            },
+            success:function (data) {
+                alert(data);
+                location.reload();
+            }
+        })
+    }
+
+    function removeit() {
+        var id=$("#dg").datagrid("getSelected").in_id;
+        $.ajax({
+            url:"/web/in/del.do",
+            data:{inId:id},
+            success:function (data) {
+                $.messager.alert('消息',data);
+            }
+
+        })
+    }
+    $(function () {
+        $('#dlg').dialog("close");
+        var arr= getQueryStringArgs();
+        $('#dg').datagrid({
+            url:"/web/in/get.do"
+        });
+        $('#dg').datagrid('load',{saleId:arr['key']});
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <title>供销存管理系统</title>
+    <link rel="stylesheet" href="layui/css/layui.css"/>
+    <link rel="stylesheet" href="layui/css/ms.css"/>
+    <script src="layui/lay/modules/jquery.min.js"></script>
+    <script src="layui/layui.js"></script>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>出货确认清单</legend>
+            </fieldset>
+            <blockquote class="layui-elem-quote">下列订单尚未出库确认！请及时确认！</blockquote>
+            <table class="layui-table">
+                <thead>
+                <tr>
+                    <th>订单流水号</th>
+                    <th>顾客名称</th>
+                    <th>货品名称</th>
+                    <th>出货日期</th>
+                    <th>出货量</th>
+                    <th>出货价</th>
+                    <th>备注</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody id="order_list">
+                </tbody>
+            </table>
+        </div>
+</div>
+<!--下拉框更新AJAX-->
+<script>
+    /*<![CDATA[*/
+    $(function () {
+        $.ajax({
+            type:"GET",
+            url:"/web/sale/getCheck.do",
+            data:{token:0},
+            success:function (data) {
+                console.log(data);
+                var i;
+                for (i = 0; i < data.length; i++) {
+                    var temp_date = new Date(data[i].sale_date).toLocaleDateString();
+                    $('#order_list').append("<tr><td>" + data[i].sale_id + "</td>" +
+                            "<td>" + data[i].cu_name + "</td>" +
+                            "<td>" + data[i].su_name + "</td>" +
+                            "<td>" +temp_date + "</td>" +
+                            "<td>" + data[i].sale_number + "</td>" +
+                            "<td>" + data[i].sale_price + "</td>" +
+                            "<td>" + data[i].sale_other + "</td>" +
+                            "<td><button onclick='inbound(this)' saleId='"+data[i].sale_id+"'num='"+data[i].sale_number+"'bind='"+data[i].sale_or_id+"' class='layui-btn layui-btn-mini'>确认</button>" +
+                            "<button onclick='delOrder(this)' bind='"+data[i].sale_id+"' class='layui-btn layui-btn-mini'>删除</button></td>" +
+                            "</tr>"
+                    )
+                }
+            }
+        })
+    });
+    /*]]>*/
+</script>
+<!--Layui启动代码-->
+<script>
+    //JavaScript代码区域
+    layui.use('element', function(){
+        var element = layui.element;
+    });
+
+</script>
+<!--重载表格数据-->
+<script>
+    /*<![CDATA[*/
+    function reloadTable() {
+        var $str =$('#ajax-list').val();
+        $.ajax({
+            type:"post",
+            url:"/web/order/search.do",
+            data:{str:$str},
+            success:function (data) {
+                if(data==null)
+                {alert("操作失败！")}
+                else
+                {
+                    $('#order_list').empty();
+                    var i;
+                    for(i=0;i<data.length;i++)
+                    {
+                        console.log(data[i]);
+                        $('#order_list').append("<tr>" +
+                                "<td>"+data[i].or_id+"</td>" +
+                                "<td>"+$('#ajax-list option:selected').text()+"</td>" +
+                                "<td>"+data[i].supplier_office+"</td>" +
+                                "<td>"+data[i].or_price+"</td>" +
+                                "<td>"+data[i].or_number+"</td>" +
+                                "<td>"+data[i].or_invoice+"</td>" +
+                                "</tr>")
+                    }
+                }
+            }
+        })
+    }
+    /*]]>*/
+</script>
+<!--CURD代码-->
+<script>
+    function inbound(btn)
+    {
+        var re=  window.confirm("确定出库？");
+        var order_id=$(btn).attr('bind');
+        var sale_num=$(btn).attr('num');
+        var sale_id=$(btn).attr('saleId');
+        if(re==true)
+        {
+            $.ajax({
+                url:"/web/sale/confirmSale.do",
+                data:{
+                    sale_or_id:order_id,
+                    sale_number:sale_num,
+                    sale_id:sale_id
+                },
+                success:function (msg) {
+                    alert(msg);
+                    location.reload();
+                }
+            })
+        }
+    }
+
+    function delOrder(btn) {
+        var re=  window.confirm("确定要删除订单吗？");
+        var order_id=$(btn).attr('bind');
+        if(re==true)
+        {
+            $.ajax({
+                url:"/web/sale/del.do",
+                data:{
+                    sale_id:order_id
+                },
+                success:function (msg) {
+                    alert(msg);
+                }
+            })
+        }
+    }
+</script>
+</body>
+</html>

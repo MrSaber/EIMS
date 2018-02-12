@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/demo.css">
+    <script type="text/javascript" src="jquery-easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-easyui/jquery.easyui.min.js"></script>
+    <style>
+        .blockquote{
+            margin: 0;
+            margin-bottom: 10px;
+            padding: 15px;
+            line-height: 22px;
+            border-left: 5px solid #009688;
+            border-radius: 0 2px 2px 0;
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <button id="test" onclick="selectedCu()">确认</button>
+    <div style="">
+        <div class="easyui-panel" style="padding:5px;height:500px;">
+            <ul id="tt" class="easyui-tree" data-options="url:'/web/customer/getCuTree.do',method:'get',animate:true,lines:true"></ul>
+        </div>
+    </div>
+    <div id="dlg_info" class="easyui-dialog" title="客户信息" data-options="iconCls:'icon-save'" closed="true">
+            <table id="pg" class="easyui-propertygrid" style="width:300px;">
+            </table>
+            <button onclick="update()">更新</button>
+    </div>
+    <script>
+        $('#tt').tree({
+            onContextMenu: function(e, node){
+                e.preventDefault();
+                // select the node
+                $('#tt').tree('select', node.target);
+                // display context menu
+                $('#mm').menu('show', {
+                    left: e.pageX,
+                    top: e.pageY
+                });
+            }
+        });
+    </script>
+    <!--右键菜单-->
+    <div id="mm" class="easyui-menu" style="width:120px;">
+        <div onclick="append()" data-options="iconCls:'icon-add'">添加</div>
+        <div onclick="showInfo()" data-options="iconCls:'icon-remove'">查看</div>
+        <div onclick="remove()" data-options="iconCls:'icon-remove'">删除</div>
+    </div>
+    <script>
+        /**
+         id：绑定节点的标识值。
+         text：显示的节点文本。
+         iconCls：显示的节点图标CSS类ID。
+         checked：该节点是否被选中。
+         state：节点状态，'open' 或 'closed'。
+         attributes：绑定该节点的自定义属性。
+         target：目标DOM对象。
+         */
+        function append() {
+            var nodes= $('#tt').tree('getSelected');
+            if(nodes.attributes.type==-1)
+            {
+              window.open("form_addOffice.html",'_blank','width=400,height=400')
+            }
+            if(nodes.attributes.type==0)
+            {
+                var addr = "form_addBranch.html?key="+nodes.attributes.targetVal;
+                window.open(addr,'_blank','width=400,height=400');
+            }
+            if(nodes.attributes.type==1)
+            {
+                var addr = "form_addLab.html?key="+nodes.attributes.targetVal;
+                window.open(addr,'_blank','width=400,height=400');
+            }
+            if(nodes.attributes.type==2)
+            {
+                var addr = "form_addCu.html?key="+nodes.attributes.targetVal+"&farther=-1";
+                window.open(addr,'_blank','width=400,height=400');
+            }
+            if(nodes.attributes.type==3)
+            {
+                var addr = "form_addCu.html?key="+nodes.attributes.targetVal+"&farther="+nodes.attributes.targetVal;
+                window.open(addr,'_blank','width=400,height=400');
+            }
+        }
+        function remove() {
+            var nodes= $('#tt').tree('getSelected');
+            if(nodes.attributes.type==3||nodes.attributes.type==4)
+            {
+                $.ajax({
+                    url:"/web/customer/del.do",
+                    data:{id:nodes.attributes.targetVal},
+                    success:function (data) {
+                        $.messager.alert("消息",data);
+                        $('#tt').tree("reload");
+                    }
+
+                });
+            }
+            if(nodes.attributes.type==0)
+            {
+                $.ajax({
+                    url:"/web/office/del.do",
+                    data:{id:nodes.attributes.targetVal},
+                    success:function (data) {
+                        $.messager.alert("消息",data);
+                        $('#tt').tree("reload");
+                    }
+
+                });
+            }
+            if(nodes.attributes.type==1)
+            {
+                $.ajax({
+                    url:"/web/branch/del.do",
+                    data:{id:nodes.attributes.targetVal},
+                    success:function (data) {
+                        $.messager.alert("消息",data);
+                        $('#tt').tree("reload");
+                    }
+
+                });
+            }
+            if(nodes.attributes.type==2)
+            {
+                $.ajax({
+                    url:"/web/lab/del.do",
+                    data:{id:nodes.attributes.targetVal},
+                    success:function (data) {
+                        $.messager.alert("消息",data);
+                        $('#tt').tree("reload");
+                    }
+
+                });
+            }
+
+        }
+        function showInfo() {
+            $('#dlg_info').dialog("open");
+            var cuId=$('#tt').tree("getSelected");
+            console.log(cuId.attributes.targetVal);
+            $.ajax({
+                url:"/web/customer/getById.do",
+                data:{id:cuId.attributes.targetVal},
+                success:function (data) {
+                        var row_id = {name:"ID", value:data['cu_id']};
+                        var row_name = {name:"姓名", value:data['cu_name']};
+                        var row_tel = {name:"电话", value:data['cu_tel']};
+                        var row_addr = {name:"地址", value:data['cu_addr']};
+                        var row_other = {name:"备注", value:data['cu_other']};
+                        $('#pg').propertygrid('updateRow',{index: 0, row: row_id});
+                        $('#pg').propertygrid('updateRow',{index: 1, row: row_name});
+                        $('#pg').propertygrid('updateRow',{index: 2, row: row_tel});
+                        $('#pg').propertygrid('updateRow',{index: 3, row: row_addr});
+                        $('#pg').propertygrid('updateRow',{index: 4, row: row_other});
+
+                }
+            })
+        }
+        function selectedCu() {
+            var nodes = $('#tt').tree('getSelected');
+            window.opener.updateText(nodes.text)
+        }
+        // 初始化属性表格
+        $(function () {
+            $('#pg').propertygrid('appendRow',{name:"ID", value:'',editor:'text'});
+            $('#pg').propertygrid('appendRow',{name:"姓名", value:'',editor:'text'});
+            $('#pg').propertygrid('appendRow',{name:"电话", value:'',editor:'text'});
+            $('#pg').propertygrid('appendRow',{name:"地址", value:'',editor:'text'});
+            $('#pg').propertygrid('appendRow',{name:"备注", value:'',editor:'text'});
+        });
+        // 更新数据表格
+        function update() {
+            var arrs = $('#pg').propertygrid("getRows");
+            var row_id = arrs[0].value;
+            var row_name = arrs[1].value;
+            var row_tel =arrs[2].value;
+            var row_addr = arrs[3].value;
+            var row_other = arrs[4].value;
+            $.ajax({
+                url:"/web/customer/update.do",
+                data:{
+                    cu_id:row_id,
+                    cu_name:row_name,
+                    cu_tel:row_tel,
+                    cu_addr:row_addr,
+                    cu_other:row_other
+                },
+                success:function (data) {
+                    $.messager.alert("消息",data);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

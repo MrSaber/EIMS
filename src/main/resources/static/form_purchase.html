@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <title>供货存管理系统</title>
+    <link rel="stylesheet" href="layui/css/layui.css"/>
+    <link rel="stylesheet" href="layui/css/ms.css"/>
+    <script src="layui/lay/modules/jquery.min.js"></script>
+    <script src="layui/layui.js"></script>
+</head>
+<body>
+<div class="">
+    <!-- 内容主体区域 -->
+    <div style="padding: 15px;">
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend>进货</legend>
+        </fieldset>
+        <!--选择物品-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">选择物品:</label>
+            <!--输入框-->
+            <div class="layui-input-inline">
+                <input type="text" id="likeStr" required="required"  lay-verify="required" placeholder="请输入物品" autocomplete="off" class="layui-input"/>
+            </div>
+            <!--选择框-->
+            <div class="layui-input-inline" >
+                <select id="ajax-list" class="ms_form_select_lg"></select>
+            </div>
+            <!--按钮——添加新物品-->
+            <div class="layui-input-inline" style="width: auto;">
+                <button class="layui-btn layui-btn-sm" onclick="openForm_AddGoods()" id="ajax_add">
+                    <i class="layui-icon">&#xe654;</i>
+                </button>
+            </div>
+            <script>
+                function openForm_AddGoods() {
+                    window.open("form_addGoods.html","_blank","height=800,width=400");
+                }
+            </script>
+        </div>
+        <!--金额/数目/库存预警-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">金额:</label>
+            <!--金额-->
+            <div class="layui-input-inline">
+                <input type="number" value="0" min="0" id="order_price" name="number" required="required"  lay-verify="required" placeholder="数量" autocomplete="off" class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+                <label class="layui-form-label">数目:</label>
+            <div class="layui-input-inline">
+                <input type="number" value="0" min="0" id="order_number" name="number" required="required"  lay-verify="required" placeholder="数量" autocomplete="off" class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+                <label class="layui-form-label">预警阀值:</label>
+            <div class="layui-input-inline">
+                <input type="number" value="0" min="0" id="order_alarm" name="number" required="required"  lay-verify="required" placeholder="数量" autocomplete="off" class="layui-input"/>
+            </div>
+        </div>
+        <!--入库日期/到期日期-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">进货日期:</label>
+            <!--金额-->
+            <div class="layui-input-inline">
+                <input type="date" value="0" min="0" id="order_date" name="number" required="required"  lay-verify="required" placeholder="数量" autocomplete="off" class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+                <label class="layui-form-label">到期日期:</label>
+            <div class="layui-input-inline">
+                <input type="date" value="0" min="0" id="order_deaddate" name="number" required="required"  lay-verify="required" placeholder="数量" autocomplete="off" class="layui-input"/>
+            </div>
+        </div>
+        <!--发票状况/到期提醒-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">有无发票:</label>
+            <!--有无发票-->
+            <div class="layui-input-inline" >
+                <select id="order_invoice" name="interest"  class="ms_form_select_md">
+                    <option value="1">有</option>
+                    <option value="2">无</option>
+                    <option value="3">拖欠</option>
+                </select>
+            </div>
+        </div>
+        <!--结款状况-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否结账:</label>
+            <!--有无发票-->
+            <div class="layui-input-inline" >
+                <select id="order_payment" name="interest"  class="ms_form_select_md">
+                    <option value="3">预付款</option>
+                    <option value="4">月结</option>
+                    <option value="5">现结</option>
+                </select>
+            </div>
+        </div>
+        <!--备注信息-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注信息:</label>
+            <div class="layui-input-block">
+                <input class="layui-input" placeholder="输入备注信息" id="order_other"/>
+            </div>
+        </div>
+        <!--添加按钮-->
+        <div class="layui-form-item">
+            <!--添加按钮-->
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-danger" onclick="addAjax()">添加</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--下拉框更新AJAX-->
+<script>
+    /*<![CDATA[*/
+    $(function () {
+        $('#likeStr').bind("blur",function () {
+            var likeStr= $('#likeStr').val();
+            $.ajax({
+                type:"GET",
+                data:{like:likeStr},
+                url:"/web/goods/getlike.do",
+                success:function (data) {
+                    var i;
+                    $('#ajax-list').empty();
+                    for(i=0;i<data.length;i++)
+                    {
+                        $('#ajax-list').append("<option value='"+data[i].su_id+"'>"+data[i].su_name+"【"+data[i].supplier_office+"】</option>");
+                        console.log("<option value='"+data[i].su_id+"'>"+data[i].su_name+"【"+data[i].supplier_office+"】</option>");
+                    }
+                }
+            })
+        })
+        var args = getQueryStringArgs();
+        if(args['key']!=undefined)
+        {
+            $('#likeStr').detach();
+            $('#ajax-list').detach();
+            $('#ajax_add').detach();
+        }
+    });
+    function getQueryStringArgs(){
+        //取得查询字符串并去掉开头的问号
+        var qs = (location.search.length > 0 ? location.search.substring(1) : ""),
+            //保存数据的对象
+            args = {},
+            //取得每一项
+            items = qs.length ? qs.split("&") : [],
+            item = null,
+            name = null,
+            value = null,
+            //在 for 循环中使用
+            i = 0,
+            len = items.length;
+        //逐个将每一项添加到 args 对象中
+        for (i=0; i < len; i++){
+            item = items[i].split("=");
+            name = decodeURIComponent(item[0]);
+            value = decodeURIComponent(item[1]);
+            if (name.length) {
+                args[name] = value;
+            }
+        }
+        return args;
+    }
+    /*]]>*/
+</script>
+<!--Layui启动代码-->
+<script>
+    //JavaScript代码区域
+    layui.use('element', function(){
+        var element = layui.element;
+    });
+    layui.use('table', function(){
+        var table = layui.table;
+        table.on('tool(demo)',function (obj) {
+            var data=obj.data;
+            if(obj.event==="edit")
+            {
+                alert(data.su_id);
+            }
+            else if(obj.event==="del")
+            {
+                var choice=window.confirm("您确定要删除该物品吗？")
+                if(choice==true)
+                {
+                    delGoodsById(data.su_id);
+                }
+            }
+        })
+    });
+</script>
+
+<!--CURD代码-->
+<script>
+    function addAjax() {
+        var args = getQueryStringArgs();
+        if(args['key']!=undefined)
+        {
+            var $order_goods_id=args['key'];
+        }else{
+            var $order_goods_id = $('#ajax-list').val();
+        }
+        var $order_date = $('#order_date').val();
+        var $order_deaddate = $('#order_deaddate').val();
+        var $order_alarm = $('#order_alarm').val();
+        var $order_number = $('#order_number').val();
+        var $order_invoice=$('#order_invoice').val();
+        var $order_payment=$('#order_payment').val();
+        var $order_other=$('#order_other').val();
+        var $order_price=$('#order_price').val();
+        var $addOrder_request =$.ajax({
+            type:"post",
+            url:"/web/order/add.do",
+            data:{
+                or_goods_id:$order_goods_id,
+                or_date:$order_date,
+                or_number:$order_number,
+                or_invoice:$order_invoice,
+                or_other:$order_other,
+                or_deaddate:$order_deaddate,
+                or_alarm:$order_alarm,
+                or_price:$order_price,
+                or_payment:$order_payment
+            },
+            success:function (data) {
+                alert(data);
+            }
+        });
+    }
+</script>
+</body>

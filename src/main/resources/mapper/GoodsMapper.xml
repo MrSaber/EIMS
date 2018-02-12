@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mrsaber.mapper.GoodsMapper">
+    <insert id="addGoods" parameterType="com.mrsaber.model.Goods">
+      INSERT INTO `gongxiao`.`ms_goods` (`su_name`, `su_No`, `su_supplier`, `su_orign`, `su_standard`, `su_storage`, `su_birDate`, `su_deadDate`, `su_cost`, `su_listPrice`, `su_price`,`su_warranty`) VALUES (#{su_name}, #{su_No}, #{su_supplier}, #{su_orign}, #{su_standard}, #{su_storage}, #{su_birDate}, #{su_deadDate}, #{su_cost}, #{su_listPrice}, #{su_price},#{su_warranty});
+    </insert>
+
+</mapper>
+

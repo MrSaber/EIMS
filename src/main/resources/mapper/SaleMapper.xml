@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mrsaber.mapper.SaleMapper">
+    <insert id="addSale" parameterType="com.mrsaber.model.Sale">
+    INSERT INTO `gongxiao`.`ms_sale` (`sale_or_id`,`sale_goods_id`, `sale_cu_id`, `sale_date`, `sale_price`, `sale_number`, `sale_other`, `sale_invoice`,`sale_payment`) VALUES (#{sale_or_id},#{sale_goods_id}, #{sale_cu_id}, #{sale_date}, #{sale_price}, #{sale_number}, #{sale_other},2,#{sale_payment});
+    </insert>
+    <select id="getSaleByDateAndCuId" parameterType="com.mrsaber.model.OfIdAndDateItem" resultType="com.mrsaber.model.Sale">
+    SELECT ms_sale.*,ms_customer.cu_name,ms_goods.su_name,su_orign,su_standard,su_storage,supplier_office
+	  FROM gongxiao.ms_sale,gongxiao.ms_customer,gongxiao.ms_goods,gongxiao.ms_supplier
+		WHERE sale_cu_id=cu_id
+			and sale_goods_id=su_id
+			and su_supplier=supplier_id
+			and (sale_date between #{begin_date}
+            and #{end_date})
+            and sale_check =1
+            and (cu_id =#{key_id} or cu_farther=#{key_id});
+    </select>
+    <select id="getRecentSales" resultType="com.mrsaber.model.Sale">
+        SELECT ms_sale.*,cu_name,su_name,su_orign,su_standard,su_storage
+        FROM gongxiao.ms_sale,gongxiao.ms_customer,gongxiao.ms_goods
+        WHERE sale_cu_id=cu_id
+        and sale_goods_id=su_id
+        and sale_check =1
+        order by sale_date;
+    </select>
+
+    <select id="getSaleByCuId" parameterType="com.mrsaber.model.OfIdAndDateItem" resultType="com.mrsaber.model.Sale">
+        SELECT ms_sale.*,cu_name,su_name,su_orign,su_standard,su_storage
+        FROM gongxiao.ms_sale,gongxiao.ms_customer,gongxiao.ms_goods
+        WHERE sale_cu_id=cu_id
+        and sale_goods_id=su_id
+        and sale_check =1
+        and (cu_id =#{key_id} or cu_farther=#{key_id});
+    </select>
+</mapper>
+<!--    and (sale_date  BETWEEN #{begin_date} and #{end_date});-->

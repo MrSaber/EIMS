@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="layui/lay/modules/jquery.min.js"></script>
+</head>
+<body>
+<h1>添加用户</h1>
+<div id="Customer_Div_Add" style="padding-right: 50px;">
+    <div class="layui-form-item">
+        <label class="layui-form-label">姓名</label>
+        <div class="layui-input-block">
+            <input type="text" name="su_No" required="required"  lay-verify="required" placeholder="姓名" autocomplete="off" class="layui-input" id="ms_cu_name"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">电话</label>
+        <div class="layui-input-block">
+            <input type="text" name="su_orign" required="required"  lay-verify="required" placeholder="电话" autocomplete="off" class="layui-input" id="ms_cu_tel"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">地址</label>
+        <div class="layui-input-block">
+            <input type="text" name="su_orign" required="required"  lay-verify="required" placeholder="地址" autocomplete="off" class="layui-input" id="ms_cu_addr"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-block">
+            <input type="text" name="su_standard" required="required"  lay-verify="required" placeholder="备注" autocomplete="off" class="layui-input" id="ms_cu_other"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-filter="formDemo" onclick="addCustomer()">提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        args=getQueryStringArgs();
+    });
+    function addCustomer()
+    {
+        var $ms_cu_name =$('#ms_cu_name').val();
+        var $ms_cu_tel =$('#ms_cu_tel').val();
+        var $ms_cu_addr =$('#ms_cu_addr').val();
+        var $ms_cu_other =$('#ms_cu_other').val();
+        var $cu_office=-1;
+        var $cu_farther=-1;
+        if(args['farther']=='-1')
+        {
+            $cu_office=args['key'];
+        }else
+        {
+            $cu_farther=args['farther'];
+        }
+        var $addCustomer_request = $.ajax({
+            type:"POST",
+            url:"/web/customer/add.do",
+            data:{
+                cu_name:$ms_cu_name,
+                cu_office:$cu_office,
+                cu_farther:$cu_farther,
+                cu_tel:$ms_cu_tel,
+                cu_addr:$ms_cu_addr,
+                cu_other:$ms_cu_other
+            }
+        });
+        $addCustomer_request.done(function (msg) {
+            alert(msg);
+            location.reload();
+            window.opener.location.reload();
+        })
+
+    }
+    function getQueryStringArgs(){
+        //取得查询字符串并去掉开头的问号
+        var qs = (location.search.length > 0 ? location.search.substring(1) : ""),
+            //保存数据的对象
+            args = {},
+            //取得每一项
+            items = qs.length ? qs.split("&") : [],
+            item = null,
+            name = null,
+            value = null,
+            //在 for 循环中使用
+            i = 0,
+            len = items.length;
+        //逐个将每一项添加到 args 对象中
+        for (i=0; i < len; i++){
+            item = items[i].split("=");
+            name = decodeURIComponent(item[0]);
+            value = decodeURIComponent(item[1]);
+            if (name.length) {
+                args[name] = value;
+            }
+        }
+        return args;
+    }
+</script>
+</body>
+</html>

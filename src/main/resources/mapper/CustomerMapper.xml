@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mrsaber.mapper.CustomerMapper">
+    <insert id="addCustomer" parameterType="com.mrsaber.model.Customer">
+    INSERT INTO `gongxiao`.`ms_customer` (`cu_name`, `cu_office`, `cu_tel`, `cu_addr`, `cu_other`,`cu_farther`) VALUES (#{cu_name}, #{cu_office}, #{cu_tel}, #{cu_addr}, #{cu_other},#{cu_farther});
+    </insert>
+</mapper>
+
