@@ -33,6 +33,7 @@ brim n 边，边缘 v 满，使..满
 
 【C】
 captive n 俘虏 adj 被俘虏的
+campaign n 战役；运动，活动
 criterion n 标准，准则
 cloak n,斗篷，宽大外衣，掩护
 climatic adj 气候上的
@@ -40,6 +41,7 @@ clumsy adj 笨拙的，笨重的，不得体的
 coward n 懦夫 adj 胆小的
 
 【D】
+debate n 辩论，讨论
 decree n 法令，判决 v 裁定
 deceit n 欺骗，轨迹，不诚实
 desire n 愿望，欲望
@@ -62,6 +64,7 @@ forsake v 放弃，断念，抛弃
 【G】
 gloomy adj 阴暗的，抑郁的，郁闷的
 gradient n 倾斜度，坡度 adj 倾斜的
+guarantee n 保证，担保
 
 【H】
 handicap n 生理缺陷
@@ -98,6 +101,7 @@ opaque adj 不透明的，难懂的
 ornament n 装饰 v 装饰
 
 【P】
+packed adj 充满..的，塞满的
 persevere v 坚持,孜孜不倦，不屈不挠
 pessimistic adj 悲观的，悲观主义的
 pier n 码头
