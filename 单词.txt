@@ -18,11 +18,16 @@ woollen n 毛织品 adj 羊毛制的
 thereof 关于...，将他，他的
 【A】
 abide v 遵守，忍受
+alloy n 合金
+amplify v 扩大，详述
+anticipate v 预期，期望，占先，抢先
 ascertain v 确定，探知，查明
+assault n 攻击，突袭
 
 
 【B】
 barren 不育的，贫瘠的
+bitterly adv 怨恨地，悲痛地
 bleach n 漂白剂 v 漂白
 bosom n 胸怀 v 怀抱 adj 知心的
 bruise n 淤青，擦伤 v 受伤
@@ -48,6 +53,10 @@ desire n 愿望，欲望
 deflect v 使转向；使偏斜 v 转向，偏斜
 deviate v 偏离 n 偏差，叛徒 adj 离经叛道的
 dismiss v 解雇，把...免职；遣散；驳回
+disposal n 处理，消除
+diverge v 分歧
+dreadful adj 可怕的
+
 
 【E】
 elapse v 逝去，过去
@@ -56,6 +65,8 @@ emerge v 浮现，出现
 enclose v 围绕，圈起
 
 【F】
+faultless adj 完美的，无缺点的
+filth n 污秽
 flake v 剥落 n 小薄片
 furnace n 炉子
 fuss n 大惊小怪
@@ -87,6 +98,8 @@ kinetic adj 运动的，动力学的
 latent adj 潜在的 n 指纹
 leakage n 泄露
 leaflet n 传单
+lest conj 唯恐 prep 唯恐，以免
+liter n 升，公升
 
 【M】
 magician n 魔术师
@@ -105,6 +118,7 @@ packed adj 充满..的，塞满的
 persevere v 坚持,孜孜不倦，不屈不挠
 pessimistic adj 悲观的，悲观主义的
 pier n 码头
+pioneer n 先锋，拓荒者 v 提倡
 plunder v 掠夺，抢劫 n 抢夺
 portray v 描写
 preplex 使..困惑
@@ -126,6 +140,7 @@ riddle n 谜语 v 出迷
 
 【S】
 scarcity n 缺乏，不足，缺少
+scorch v 使烧焦，变焦
 serpent n 蛇
 spherical adj 球的，球面的，球状的
 sham n 假，赝品 adj 假的 v 假装
@@ -136,6 +151,7 @@ stitch n 一针 v 缝合
 stuffy adj 闷热的，闷人的；通风不畅的；一本正经的
 smuggle v 偷运，走私
 spade n 铲子 v 铲
+sparrow n 麻雀
 spacious adj 广阔的，宽敞的
 spouse n 配偶 v 和...结婚
 substantial adj 大量的，实际上的
