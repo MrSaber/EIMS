@@ -104,6 +104,7 @@ liter n 升，公升
 【M】
 magician n 魔术师
 moderately adv 适当地，适度地，中庸的
+monitor n 监督员，班长，监视器，显示器
 
 【N】
 narration n 叙述
