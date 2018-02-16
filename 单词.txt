@@ -20,6 +20,7 @@ thereof 关于...，将他，他的
 abide v 遵守，忍受
 alloy n 合金
 amplify v 扩大，详述
+ample adj 充足的，丰富的，宽敞的
 anticipate v 预期，期望，占先，抢先
 ascertain v 确定，探知，查明
 assault n 攻击，突袭
@@ -35,9 +36,12 @@ brute n 畜生，残忍的人 adj 残忍的，无理性的
 broom n 扫帚 v 扫
 brisk adj 敏锐的，凛冽的 adj活泼的
 brim n 边，边缘 v 满，使..满
+bribe n 贿赂，贿赂物
+burglar n 窃贼
 
 【C】
 captive n 俘虏 adj 被俘虏的
+calibration n 刻度，校准
 campaign n 战役；运动，活动
 criterion n 标准，准则
 cloak n,斗篷，宽大外衣，掩护
@@ -49,11 +53,13 @@ coward n 懦夫 adj 胆小的
 debate n 辩论，讨论
 decree n 法令，判决 v 裁定
 deceit n 欺骗，轨迹，不诚实
+deceive v 欺骗 v 行骗
 desire n 愿望，欲望
 deflect v 使转向；使偏斜 v 转向，偏斜
 deviate v 偏离 n 偏差，叛徒 adj 离经叛道的
 dismiss v 解雇，把...免职；遣散；驳回
 disposal n 处理，消除
+distinctly adv 清楚地，显然的，明显的
 diverge v 分歧
 dreadful adj 可怕的
 
@@ -66,8 +72,10 @@ enclose v 围绕，圈起
 
 【F】
 faultless adj 完美的，无缺点的
+farmer n 农夫，农场主
 filth n 污秽
 flake v 剥落 n 小薄片
+flatter v 阿谀奉承，取悦
 furnace n 炉子
 fuss n 大惊小怪
 forsake v 放弃，断念，抛弃
@@ -90,6 +98,7 @@ stray n 浪子 adj 迷途的 v 迷路
 ion n 离子
 inward adj 内在的 adv 向内 n 内部
 invoice n 发票 v 开发票
+inaugurate v 举行，开创 v 举行仪式，举行就职典礼
 
 【K】
 kinetic adj 运动的，动力学的
@@ -103,8 +112,10 @@ liter n 升，公升
 
 【M】
 magician n 魔术师
+meditate v 冥想，默念，沉思
 moderately adv 适当地，适度地，中庸的
 monitor n 监督员，班长，监视器，显示器
+monarch n 帝王，统治者，元首
 
 【N】
 narration n 叙述
@@ -125,9 +136,15 @@ portray v 描写
 preplex 使..困惑
 propagation n 增殖，繁殖，广传
 proficiency n 熟练，精通
+proverb n 谚语，格言 v 用谚语表达
 pulley n 滑车，滑轮
 perish v 毁灭，灭亡
 perpetual adj 永恒的，永久的
+piston n 活塞
+physician n 内科医生
+
+【Q】
+quiver v 颤动，震动 n 颤抖，振动
 
 【R】
 rash adj 轻率的。鲁莽的
@@ -137,6 +154,7 @@ repent v 后悔，悔悟
 retort v 反驳 n 反驳 
 rib n 肋骨，嘲笑 v 嘲笑
 riddle n 谜语 v 出迷
+refute v 驳斥，驳倒
 
 
 【S】
@@ -145,12 +163,14 @@ scorch v 使烧焦，变焦
 serpent n 蛇
 spherical adj 球的，球面的，球状的
 sham n 假，赝品 adj 假的 v 假装
+shameful adj 可耻的
 shady adj 阴凉的，成荫的
 sideways adv 向旁边，侧面地 adj 旁边的
 stiffen v 使..坚硬
 stitch n 一针 v 缝合 
 stuffy adj 闷热的，闷人的；通风不畅的；一本正经的
 smuggle v 偷运，走私
+snack n 小吃，点心
 spade n 铲子 v 铲
 sparrow n 麻雀
 spacious adj 广阔的，宽敞的
@@ -176,6 +196,7 @@ versatile adj 多才多艺的
 vengeance n 报复，复仇
 vanity n 虚荣 adj 虚荣心的
 vibrate v 回响，颤动
+vuglar adj 通俗的，粗俗的
 
 【W】
 wicked adj 邪恶的
