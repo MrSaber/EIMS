@@ -28,6 +28,7 @@ assault n 攻击，突袭
 
 【B】
 barren 不育的，贫瘠的
+banquet n 宴会 v 宴请
 bitterly adv 怨恨地，悲痛地
 bleach n 漂白剂 v 漂白
 bosom n 胸怀 v 怀抱 adj 知心的
@@ -48,18 +49,23 @@ cloak n,斗篷，宽大外衣，掩护
 climatic adj 气候上的
 clumsy adj 笨拙的，笨重的，不得体的 
 coward n 懦夫 adj 胆小的
+curse v 诅咒，咒骂 n 诅咒，咒语
+
 
 【D】
+dazzle v 使眼花，目眩，耀眼 n 耀眼的光
 debate n 辩论，讨论
 decree n 法令，判决 v 裁定
 deceit n 欺骗，轨迹，不诚实
 deceive v 欺骗 v 行骗
+desirable adj 值得有的，令人满意的，有吸引力的 n 有吸引力的人
 desire n 愿望，欲望
 deflect v 使转向；使偏斜 v 转向，偏斜
 deviate v 偏离 n 偏差，叛徒 adj 离经叛道的
 dismiss v 解雇，把...免职；遣散；驳回
 disposal n 处理，消除
 distinctly adv 清楚地，显然的，明显的
+distortion n 扭曲，变形，曲解
 diverge v 分歧
 dreadful adj 可怕的
 
@@ -79,6 +85,7 @@ flatter v 阿谀奉承，取悦
 furnace n 炉子
 fuss n 大惊小怪
 forsake v 放弃，断念，抛弃
+fortune n 财气，命运，运气
 
 【G】
 gloomy adj 阴暗的，抑郁的，郁闷的
@@ -99,6 +106,8 @@ ion n 离子
 inward adj 内在的 adv 向内 n 内部
 invoice n 发票 v 开发票
 inaugurate v 举行，开创 v 举行仪式，举行就职典礼
+inertia n 惯性，惰性
+institute n 学会，学院 v 创立，开始，制定  
 
 【K】
 kinetic adj 运动的，动力学的
@@ -116,24 +125,28 @@ meditate v 冥想，默念，沉思
 moderately adv 适当地，适度地，中庸的
 monitor n 监督员，班长，监视器，显示器
 monarch n 帝王，统治者，元首
+mood n 心情
 
 【N】
 narration n 叙述
 
 【O】
 obedient adj 顺从的，服从的
+observing adj 注意的，留心的
 opaque adj 不透明的，难懂的
 ornament n 装饰 v 装饰
 
 【P】
 packed adj 充满..的，塞满的
 persevere v 坚持,孜孜不倦，不屈不挠
+permanently adv 永久的
 pessimistic adj 悲观的，悲观主义的
 pier n 码头
 pioneer n 先锋，拓荒者 v 提倡
 plunder v 掠夺，抢劫 n 抢夺
 portray v 描写
 preplex 使..困惑
+pregnant adj 怀孕的，含蓄的，富于想象的
 propagation n 增殖，繁殖，广传
 proficiency n 熟练，精通
 proverb n 谚语，格言 v 用谚语表达
@@ -150,15 +163,18 @@ quiver v 颤动，震动 n 颤抖，振动
 rash adj 轻率的。鲁莽的
 radiant adj 发光的，明亮的，辐射的 
 rectify v 订正
+repeat n 重复，反复
 repent v 后悔，悔悟
 retort v 反驳 n 反驳 
 rib n 肋骨，嘲笑 v 嘲笑
 riddle n 谜语 v 出迷
+ridicule n 嘲笑，愚弄 v 嘲笑，愚弄
 refute v 驳斥，驳倒
 
 
 【S】
 scarcity n 缺乏，不足，缺少
+slaughter n 残杀，屠杀 v 残杀，屠杀
 scorch v 使烧焦，变焦
 serpent n 蛇
 spherical adj 球的，球面的，球状的
