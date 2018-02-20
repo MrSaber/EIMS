@@ -23,12 +23,14 @@ amplify v 扩大，详述
 ample adj 充足的，丰富的，宽敞的
 anticipate v 预期，期望，占先，抢先
 ascertain v 确定，探知，查明
-assault n 攻击，突袭
+assault n 攻击，突袭 *
 
 
 【B】
 barren 不育的，贫瘠的
+baffle v 困惑，为难
 banquet n 宴会 v 宴请
+bestow v 授予，适用，利用
 bitterly adv 怨恨地，悲痛地
 bleach n 漂白剂 v 漂白
 bosom n 胸怀 v 怀抱 adj 知心的
@@ -54,11 +56,15 @@ curse v 诅咒，咒骂 n 诅咒，咒语
 curly adj 卷曲的
 compress v 压榨，压缩
 cradle n 摇篮，发祥地
+commence v 着手，开始
+compensation n 补偿，赔偿
 
 
 【D】
 dazzle v 使眼花，目眩，耀眼 n 耀眼的光
 debate n 辩论，讨论
+deafen v 使...聋
+derivation n 引出，诱导，来历
 decree n 法令，判决 v 裁定
 deceit n 欺骗，轨迹，不诚实
 deceive v 欺骗 v 行骗
@@ -72,8 +78,11 @@ disposal n 处理，消除
 distinctly adv 清楚地，显然的，明显的
 distortion n 扭曲，变形，曲解
 diverge v 分歧
+distracting adj 令人分心的，让人思想不集中的
+discourse n 谈话，演讲 v 谈话，演讲
 dreadful adj 可怕的
 dril n 训练，钻孔 v 钻孔，训练
+domestic adj 国内的，家庭的，驯养的 **
 
 
 【E】
@@ -81,6 +90,7 @@ elapse v 逝去，过去
 eloquence n 雄辩，口才
 emerge v 浮现，出现
 enclose v 围绕，圈起
+experimentally adv 实验上，实验地
 
 【F】
 faultless adj 完美的，无缺点的
@@ -112,6 +122,8 @@ ion n 离子
 inward adj 内在的 adv 向内 n 内部
 invoice n 发票 v 开发票
 inaugurate v 举行，开创 v 举行仪式，举行就职典礼
+industrialized adj 工业化的
+indebted adj 负债的
 inertia n 惯性，惰性
 institute n 学会，学院 v 创立，开始，制定  
 
@@ -128,7 +140,9 @@ liter n 升，公升
 【M】
 magician n 魔术师
 malice n 恶意，怨恨，蓄意
+marine n 士兵，军官 adj 海的，海事的
 meditate v 冥想，默念，沉思
+mental adj 精神的，脑力的，精神错乱的
 moderately adv 适当地，适度地，中庸的
 monitor n 监督员，班长，监视器，显示器
 monarch n 帝王，统治者，元首
@@ -136,6 +150,7 @@ mood n 心情
 
 【N】
 narration n 叙述
+naked adj 裸体的，无掩饰的
 
 【O】
 obedient adj 顺从的，服从的
@@ -165,6 +180,8 @@ perpetual adj 永恒的，永久的
 persently adv 不久，一会，现在，目前
 piston n 活塞
 physician n 内科医生
+postulate n 假定，基本条件 v 要求，假定
+prick v 扎，刺，戳 n 刺，扎
 
 【Q】
 quiver v 颤动，震动 n 颤抖，振动
@@ -172,6 +189,7 @@ quiver v 颤动，震动 n 颤抖，振动
 【R】
 rash adj 轻率的。鲁莽的
 radiant adj 发光的，明亮的，辐射的 
+rebuke v 斥责，阻止，指责 n 指责，谴责
 rectify v 订正
 repeat n 重复，反复
 repent v 后悔，悔悟
@@ -191,6 +209,7 @@ serpent n 蛇
 spherical adj 球的，球面的，球状的
 sham n 假，赝品 adj 假的 v 假装
 shameful adj 可耻的
+shabby adj 破旧的
 shady adj 阴凉的，成荫的
 sideways adv 向旁边，侧面地 adj 旁边的
 stiffen v 使..坚硬
@@ -201,11 +220,13 @@ snack n 小吃，点心
 spade n 铲子 v 铲
 sparrow n 麻雀
 spacious adj 广阔的，宽敞的
+spectator n 观众，旁观者
 spouse n 配偶 v 和...结婚
 substantial adj 大量的，实际上的
 sullen adj 阴沉的，闷闷不乐的
 swarm v 挤满 n一大群
 sneer n 冷笑 v 嘲笑
+subdue v 使服从，压制，减弱
 
 【T】
 trifle n 琐事 v 开玩笑 v 浪费
@@ -214,6 +235,7 @@ trial n 试验；审讯；审判 adj 实验的，审讯的
 tyrant n 暴君，专制的君主
 timid adj 胆怯的，害羞的
 tolerant adj 宽容的，容忍的
+torrent n 激流，山洪
 
 
 【U】
@@ -221,6 +243,7 @@ unanimous adj 全体一致的，一致同意的
 unbearable adj 无法忍受的
 
 【V】
+vacate v 空出，让出
 versatile adj 多才多艺的
 vengeance n 报复，复仇
 vanity n 虚荣 adj 虚荣心的
@@ -229,6 +252,7 @@ vuglar adj 通俗的，粗俗的
 
 【W】
 wicked adj 邪恶的
+witty adj 赋予机智的，诙谐的
 
 【Z】
 zebra n 斑马线
