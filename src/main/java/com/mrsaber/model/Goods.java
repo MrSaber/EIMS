@@ -1,5 +1,6 @@
 package com.mrsaber.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -15,9 +16,10 @@ public class Goods {
     private String su_orign;
     private String su_standard;
     private String su_storage;
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date su_birDate;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
     private Date su_deadDate;
     private Double su_cost;
     private Double su_listPrice;

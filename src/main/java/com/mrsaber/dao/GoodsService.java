@@ -15,18 +15,10 @@ import java.util.List;
 public class GoodsService {
     @Autowired
     private GoodsMapper goodsMapper;
-    public GoodsItem getAllGoods()
+    public List<Goods> getAllGoods()
     {
-        List<Goods> goodses=goodsMapper.getAllGoods();
-        System.out.println("共有物品数量为："+goodses.size());
-        GoodsItem goodsItem = new GoodsItem();
-        goodsItem.setCode(0);
-        goodsItem.setMsg("Hello");
-        goodsItem.setCount(goodses.size());
-        goodsItem.setData(goodses);
-        return goodsItem;
+        return  goodsMapper.getAllGoods();
     }
-
     public void addGoods(Goods goods)
     {
         goodsMapper.addGoods(goods);

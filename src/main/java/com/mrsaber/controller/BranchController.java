@@ -2,6 +2,7 @@ package com.mrsaber.controller;
 
 import com.mrsaber.dao.BranchService;
 import com.mrsaber.model.Branch;
+import com.mrsaber.security.RoleCheck;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +29,7 @@ public class BranchController {
         }
        return "添加成功";
     }
-
+    @RoleCheck(level = {3})
     @RequestMapping("/del.do")
     public String del(Integer id)
     {

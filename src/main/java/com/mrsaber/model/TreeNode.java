@@ -15,8 +15,18 @@ public class TreeNode {
     private String text;
     private String state;
     private String checked;
+    private String iconCls;
     public List<TreeNode> children;
     private TreeNodeAttr attributes;
+
+
+    public String getIconCls() {
+        return iconCls;
+    }
+
+    public void setIconCls(String iconCls) {
+        this.iconCls = iconCls;
+    }
 
     public String getId() {
         return id;

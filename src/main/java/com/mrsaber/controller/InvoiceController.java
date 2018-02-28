@@ -2,7 +2,9 @@ package com.mrsaber.controller;
 
 import com.mrsaber.dao.InvoiceService;
 import com.mrsaber.model.Invoice;
+import com.mrsaber.security.RoleCheck;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Role;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -58,6 +60,7 @@ public class InvoiceController {
      * @param inId 发票ID
      * @return
      */
+    @RoleCheck(level = {3})
     @RequestMapping(value = "/del.do")
     public String del(Integer inId)
     {

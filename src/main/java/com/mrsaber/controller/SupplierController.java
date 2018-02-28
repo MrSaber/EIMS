@@ -42,7 +42,7 @@ public class SupplierController {
         return "添加成功";
 
     }
-    @RoleCheck(level = {1,3})
+    @RoleCheck(level = {3})
     @RequestMapping(value = "del.do")
     public String delSupplier(Integer ID)
     {

@@ -26,6 +26,7 @@ bleach n 漂白剂 v 漂白
 bruise n 淤青，擦伤 v 受伤
 brute n 畜生，残忍的人 adj 残忍的，无理性的
 broom n 扫帚 v 扫
+brook n 小河，溪 v 容忍，忍受
 
 【C】
 criterion n 标准，准则
@@ -50,6 +51,7 @@ enclose v 围绕，圈起
 flake v 剥落 n 小薄片
 furnace n 炉子
 fuss n 大惊小怪
+fully adv 十分的，完全的
 forsake v 放弃，断念，抛弃
 
 【G】

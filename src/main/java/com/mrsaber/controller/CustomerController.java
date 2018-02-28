@@ -23,9 +23,12 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
+    /**
+     * 获得所有的供应商信息？
+     * @return
+     */
     @RequestMapping(value = "/get.do")
     public CustomerItem getALlSupplierInfo() {
-        System.out.println("Hello");
         return customerService.getALlCustomer();
     }
 
@@ -92,7 +95,6 @@ public class CustomerController {
 
     @RequestMapping(value = "/getLike.do")
     public CustomerItem getLike(String likeStr) {
-        System.out.println(likeStr);
         return customerService.getLikeCustomer(likeStr);
     }
 }

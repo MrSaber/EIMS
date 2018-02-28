@@ -30,7 +30,7 @@ public class GoodsController {
     @RequestMapping(value = "/get.do")
     public List<Goods> getAllGoods()
     {
-        return goodsService.getAllGoods().getData();
+        return goodsService.getAllGoods();
     }
 
     /**
@@ -46,18 +46,16 @@ public class GoodsController {
             goodsService.addGoods(goods);
         }catch (Exception e)
         {
-            return "数据录入异常！";
+            return e.getMessage();
         }
         return "数据添加成功！";
     }
-
-
     /**
      * 【删除物品】
      * @param goodsID
      * @return
      */
-    @RoleCheck(level = {1,3})
+    @RoleCheck(level = {3})
     @RequestMapping(value = "/del.do",method = RequestMethod.POST)
     public String delGoods(Integer goodsID)
     {
@@ -65,7 +63,8 @@ public class GoodsController {
             goodsService.delGoodsById(goodsID);
         }catch (Exception e)
         {
-            return "数据删除异常！";
+            e.printStackTrace();
+            return e.getMessage();
         }
         return "数据删除成功";
     }

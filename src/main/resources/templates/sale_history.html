@@ -26,21 +26,8 @@
                 </select>
                 <select class="ms_form_select_lg" id="ms_branch">
                 </select>
-                <select class="ms_form_select_lg" id="ms_lab">
-                </select>
                 <select class="ms_form_select_lg" id="ms_customer">
                 </select>
-            </div>
-            <div class="layui-input-block">
-                <label class="layui-form-label">搜索客户</label>
-                <div class="layui-input-inline">
-                    <input type="text" id="likeStr1" required="required"  lay-verify="required" placeholder="请输入收货人姓名" autocomplete="off" class="layui-input"/>
-                </div>
-                <!--选择框-->
-                <div class="layui-input-inline" >
-                    <select id="ajax-list1"   class="ms_form_select_lg"></select>
-                </div>
-                <button onclick="queryByCuId()">查找</button>
             </div>
             <div class="layui-input-block">
                 <label class="layui-form-label">选择日期</label>
@@ -61,6 +48,17 @@
                     <button class="layui-btn layui-btn-sm" onclick="Export('导出excel', $('#dg'));">打印报表</button>
                     <button class="layui-btn layui-btn-sm" onclick="colorRow();">高亮区分</button>
                 </div>
+            </div>
+            <div class="layui-input-block">
+                <label class="layui-form-label">搜索客户</label>
+                <div class="layui-input-inline">
+                    <input type="text" id="likeStr1" required="required"  lay-verify="required" placeholder="请输入收货人姓名" autocomplete="off" class="layui-input"/>
+                </div>
+                <!--选择框-->
+                <div class="layui-input-inline" >
+                    <select id="ajax-list1"   class="ms_form_select_lg"></select>
+                </div>
+                <button onclick="queryByCuId()">查找</button>
             </div>
             <!--统计信息-->
             <blockquote class="layui-elem-quote layui-quote-nm" id="tongji"></blockquote>
@@ -372,7 +370,7 @@
                 $('#dg').datagrid('loadData',rows);
                 $('#tongji').text("【统计信息】：已付款："+donePay+" 未付款： "+toDoPay+" 合计金额："+(donePay+toDoPay));
             }
-    // 自动获得机构信息并添加到选择框中
+    // 自动获得层级信息并添加到选择框中
     $(function () {
         $('#ms_office').blur(function () {
             var var1=$('#ms_office').val();
@@ -392,22 +390,6 @@
         });
         $('#ms_branch').blur(function () {
             var var1=$('#ms_branch').val();
-            $('#ms_lab').empty();
-            $.ajax({
-                type:"GET",
-                url:"/web/lab/gets.do?key="+var1,
-                success:function (datas) {
-                    console.log(datas);
-                    var i;
-                    for(i=0;i<datas.length;i++)
-                    {
-                        $('#ms_lab').append("<option value='"+datas[i].lab_id+"'>"+datas[i].lab_name+"</option>")
-                    }
-                }
-            });
-        });
-        $('#ms_lab').blur(function () {
-            var var1=$('#ms_lab').val();
             $('#ms_customer').empty();
             $.ajax({
                 type:"GET",
@@ -422,7 +404,6 @@
                 }
             });
         });
-
         $(function () {
             $.ajax({
                 type:"GET",
@@ -455,7 +436,6 @@
     }
     /*]]>*/
 </script>
-
 <script>
     /*<![CDATA[*/
     function ChangeToTable(printDatagrid) {

@@ -22,8 +22,7 @@ public class CustomerService {
     private BranchService branchService;
     @Autowired
     private OfficeService officeService;
-    @Autowired
-    private LabService labService;
+
 
     public CustomerItem getALlCustomer()
     {
@@ -51,10 +50,12 @@ public class CustomerService {
     {
         customerMapper.update(customer);
     }
+
     public void addCustomer(Customer customer)
     {
         customerMapper.addCustomer(customer);
     }
+
     public void delCustomer(Integer id)
     {
         customerMapper.delCustomer(id);
@@ -77,7 +78,6 @@ public class CustomerService {
         TreeNodeAttr attr0 = new TreeNodeAttr();
         attr0.setType(-1);
         treeNode.setAttributes(attr0);
-
         /*
             遍历单位
          */
@@ -89,6 +89,7 @@ public class CustomerService {
             TreeNode officeNode = new TreeNode();
             officeNode.setId(String.valueOf(it_office.getOf_id()));
             officeNode.setText(it_office.getOf_name());
+            officeNode.setIconCls("icon-more");
 
             TreeNodeAttr attr = new TreeNodeAttr();
             attr.setType(0);
@@ -106,30 +107,16 @@ public class CustomerService {
                 TreeNode branchNode = new TreeNode();
                 branchNode.setId(String.valueOf(it_branch.getBr_id()));
                 branchNode.setText(it_branch.getBr_name());
-
+                branchNode.setIconCls("icon-add");
                 TreeNodeAttr attr1 = new TreeNodeAttr();
                 attr1.setType(1);
                 attr1.setTargetVal(it_branch.getBr_id());
                 branchNode.setAttributes(attr1);
-
-                /*遍历科室*/
-                List<TreeNode> labList = new ArrayList<>();
-                Iterator<Lab> it_l = labService.getLabByBranchId(it_branch.getBr_id()).iterator();
-                while (it_l.hasNext())
-                {
-                    Lab it_lab = it_l.next();
-                    TreeNode labNode = new TreeNode();
-                    labNode.setText(it_lab.getLab_name());
-                    labNode.setId(String.valueOf(it_lab.getLab_id()));
-
-                    TreeNodeAttr attr2 = new TreeNodeAttr();
-                    attr2.setType(2);
-                    attr2.setTargetVal(it_lab.getLab_id());
-                    labNode.setAttributes(attr2);
+                branchNode.setState("closed");
 
                     /*遍历负责人*/
                     List<TreeNode> cuList = new ArrayList<>();
-                    Iterator<Customer> it_cu =customerMapper.getCustomerByLabId(it_lab.getLab_id()).iterator();
+                    Iterator<Customer> it_cu =customerMapper.getCustomerByLabId(it_branch.getBr_id()).iterator();
                     while (it_cu.hasNext())
                     {
                         Customer it_customer=it_cu.next();
@@ -139,6 +126,7 @@ public class CustomerService {
                         attr3.setType(3);
                         attr3.setTargetVal(it_customer.getCu_id());
                         cuNode.setAttributes(attr3);
+                        cuNode.setIconCls("icon-man");
                          /*遍历成员*/
                         List<TreeNode> cusList = new ArrayList<>();
                         Iterator<Customer> it_cus =customerMapper.getCustomerByFarId(it_customer.getCu_id()).iterator();
@@ -147,6 +135,7 @@ public class CustomerService {
                             Customer it_customers=it_cus.next();
                             TreeNode cusNode = new TreeNode();
                             cusNode.setText(it_customers.getCu_name());
+                            cusNode.setIconCls("icon-man");
                             TreeNodeAttr attr4 = new TreeNodeAttr();
                             attr4.setType(4);
                             attr4.setTargetVal(it_customers.getCu_id());
@@ -156,10 +145,7 @@ public class CustomerService {
                         cuNode.setChildren(cusList);
                         cuList.add(cuNode);
                     }
-                    labNode.setChildren(cuList);
-                    labList.add(labNode);
-                }
-                branchNode.setChildren(labList);
+                branchNode.setChildren(cuList);
                 branchList.add(branchNode);
             }
             officeNode.setChildren(branchList);
@@ -168,5 +154,4 @@ public class CustomerService {
         treeNode.setChildren(officeList);
         return treeNode;
     }
-
 }

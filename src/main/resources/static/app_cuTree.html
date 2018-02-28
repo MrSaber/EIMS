@@ -75,11 +75,6 @@
             }
             if(nodes.attributes.type==1)
             {
-                var addr = "form_addLab.html?key="+nodes.attributes.targetVal;
-                window.open(addr,'_blank','width=400,height=400');
-            }
-            if(nodes.attributes.type==2)
-            {
                 var addr = "form_addCu.html?key="+nodes.attributes.targetVal+"&farther=-1";
                 window.open(addr,'_blank','width=400,height=400');
             }
@@ -127,19 +122,6 @@
 
                 });
             }
-            if(nodes.attributes.type==2)
-            {
-                $.ajax({
-                    url:"/web/lab/del.do",
-                    data:{id:nodes.attributes.targetVal},
-                    success:function (data) {
-                        $.messager.alert("消息",data);
-                        $('#tt').tree("reload");
-                    }
-
-                });
-            }
-
         }
         function showInfo() {
             $('#dlg_info').dialog("open");

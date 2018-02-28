@@ -4,29 +4,31 @@
     <meta charset="UTF-8">
     <title>addOffice</title>
     <script type="text/javascript" src="jquery-easyui/jquery.min.js"></script>
+    <style>
+    </style>
 </head>
 <body>
-<h1>添加单位</h1>
+<h1 style="text-align: center">添加单位</h1>
 <div class="layui-form-item">
     <label class="layui-form-label">单位名</label>
     <div class="layui-input-block">
-        <input type="text" name="su_No" required="required"   placeholder="机构名" autocomplete="off" class="layui-input" id="ms_of_name"/>
+        <input type="text"  placeholder="机构名" autocomplete="off" class="layui-input" id="ms_of_name"/>
     </div>
 </div>
 
 <div class="layui-form-item">
     <label class="layui-form-label">单位地址</label>
     <div class="layui-input-block">
-        <input type="text" name="su_orign" required="required"   placeholder="地址" autocomplete="off" class="layui-input" id="ms_of_addr"/>
+        <input type="text"   placeholder="地址" autocomplete="off" class="layui-input" id="ms_of_addr"/>
     </div>
 </div>
 <div class="layui-form-item">
     <label class="layui-form-label">备注</label>
     <div class="layui-input-block">
-        <input type="text" name="su_standard" required="required"   placeholder="备注" autocomplete="off" class="layui-input" id="ms_of_other"/>
+        <input type="text"    placeholder="备注" autocomplete="off" class="layui-input" id="ms_of_other"/>
     </div>
 </div>
-<div class="layui-form-item">
+<div style="text-align: center">
     <div class="layui-input-block">
         <button class="layui-btn"  onclick="addOffice()">提交</button>
         <button type="reset" class="layui-btn layui-btn-primary">重置</button>

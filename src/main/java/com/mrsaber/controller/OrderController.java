@@ -5,6 +5,7 @@ import com.mrsaber.model.OfIdAndDateItem;
 import com.mrsaber.model.Order;
 import com.mrsaber.model.OrderItem;
 import com.mrsaber.model.Statistics;
+import com.mrsaber.security.RoleCheck;
 import com.sun.tools.corba.se.idl.constExpr.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -48,6 +49,7 @@ public class OrderController {
      * @param id
      * @return
      */
+    @RoleCheck(level = {3})
     @RequestMapping(value = "/del.do")
     public String delOrder(Integer id)
     {
