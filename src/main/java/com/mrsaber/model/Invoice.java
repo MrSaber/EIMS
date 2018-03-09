@@ -1,5 +1,6 @@
 package com.mrsaber.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -8,10 +9,10 @@ public class Invoice {
     private Integer in_id;
     private Integer in_sale_id;
     private Double in_money;
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date in_date;
     private String in_other;
-
     public Integer getIn_id() {
         return in_id;
     }

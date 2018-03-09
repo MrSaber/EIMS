@@ -16,14 +16,10 @@ public class Goods {
     private String su_orign;
     private String su_standard;
     private String su_storage;
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date su_birDate;
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
-    private Date su_deadDate;
     private Double su_cost;
     private Double su_listPrice;
     private Double su_price;
+
     private Integer su_warranty; //保质期
     private String su_other;
     //-----关联表查询属性-----//
@@ -36,7 +32,6 @@ public class Goods {
     public void setSupplier_office(String supplier_office) {
         this.supplier_office = supplier_office;
     }
-
 
     public String getSu_other() {
         return su_other;
@@ -111,22 +106,6 @@ public class Goods {
         this.su_storage = su_storage;
     }
 
-    public Date getSu_birDate() {
-        return su_birDate;
-    }
-
-    public void setSu_birDate(Date su_birDate) {
-        this.su_birDate = su_birDate;
-    }
-
-    public Date getSu_deadDate() {
-        return su_deadDate;
-    }
-
-    public void setSu_deadDate(Date su_deadDate) {
-        this.su_deadDate = su_deadDate;
-    }
-
     public Double getSu_cost() {
         return su_cost;
     }
@@ -161,8 +140,6 @@ public class Goods {
                 ", su_orign='" + su_orign + '\'' +
                 ", su_standard='" + su_standard + '\'' +
                 ", su_storage='" + su_storage + '\'' +
-                ", su_birDate=" + su_birDate +
-                ", su_deadDate=" + su_deadDate +
                 ", su_cost=" + su_cost +
                 ", su_listPrice=" + su_listPrice +
                 ", su_price=" + su_price +

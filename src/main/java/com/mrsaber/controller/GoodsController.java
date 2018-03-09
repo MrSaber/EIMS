@@ -89,7 +89,8 @@ public class GoodsController {
     public String updateGoods(Goods goods)
     {
         try {
-        goodsService.updateById(goods);}
+            goodsService.updateById(goods);
+        }
         catch (Exception e)
         {
             e.printStackTrace();
@@ -97,5 +98,4 @@ public class GoodsController {
         }
         return "OK";
     }
-
 }
