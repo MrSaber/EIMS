@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <title>供货存管理系统</title>
+    <script src="layui/lay/modules/jquery.min.js"></script>
+    <!--JQuery Easy UI 模块-->
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/bootstrap/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/icon.css"/>
+    <script type="text/javascript" src="jquery-easyui/jquery.easyui.min.js"></script>
+    <style>
+        .panel{float: left;}
+    </style>
+</head>
+<body>
+
+
+<div class="easyui-panel" title="进货台" style="width:100%;max-width:400px;padding:30px 60px;float: left">
+    <form id="ff" method="post">
+        <div style="margin-bottom:20px">
+            <input id="likeStr" style="width: 100%" class="easyui-textbox" data-options="label:'物品名称:',required:false"/>
+        </div>
+        <div style="margin-bottom:20px">
+            <input id="likeNo" style="width: 100%" class="easyui-textbox" data-options="label:'货 号:',required:false"/>
+        </div>
+        <div style="margin-bottom:20px">
+            <input name="or_number" style="width:100%" type="number"  class="easyui-numberbox" value="1" id="order_number" data-options="label:'数 量:',required:true"/>
+        </div>
+        <div style="margin-bottom:20px">
+            <input name="or_price" style="width:100%" type="number" class="easyui-numberbox" value="1"  data-options="label:'进 价:',required:true,min:0,precision:2"/>
+        </div>
+        <div style="margin-bottom:20px">
+            <input name="or_alarm" style="width:100%" type="number" class="easyui-numberbox" value="1"  data-options="label:'预警阈值:',required:true"/>
+        </div>
+        <div style="margin-bottom:20px">
+            <input  id="or_date" name="or_date"  style="width:100%" type= "text" class= "easyui-datebox" required ="required" label="进货日期："> </input>
+        </div>
+        <div style="margin-bottom:20px">
+            <input  id="or_deaddate" name="or_deaddate"  style="width:100%" type= "text" class= "easyui-datebox" required ="required" label="到期日期："> </input>
+        </div>
+        <div style="margin-bottom:20px">
+            <label class="textbox-label">发票状况：</label>
+            <select name="or_invoice" style="width:50%" class="easyui-combobox">
+                <option value="1">有</option>
+                <option value="2">无</option>
+                <option value="3">拖欠</option>
+            </select>
+        </div>
+        <div style="margin-bottom:20px">
+            <label class="textbox-label">付款状况：</label>
+            <select name="or_payment" style="width:50%" class="easyui-combobox">
+                <option value="3">预付款</option>
+                <option value="4">月结</option>
+                <option value="5">现结</option>
+            </select>
+        </div>
+
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" style="width:100%" name="or_other" data-options="label:'备注信息:',required:false"/>
+        </div>
+        <div style="text-align: center">
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="addAjax()" style="width:90px">保存</a>
+        </div>
+    </form>
+</div>
+
+<div id="p" class="easyui-panel" title="货品信息" style="width:660px;height:490px;padding:10px;">
+    <div class="layui-colla-content layui-show" id="repertory">
+        <table id="dg" class="easyui-datagrid" style="width:640px;height:410px"
+               data-options="url:'/web/goods/getLike.do',fitColumns:true,singleSelect:true">
+            <thead>
+            <tr>
+                <th data-options="field:'su_id',width:10,hidden:true">ID</th>
+                <th data-options="field:'su_name',width:100">名称</th>
+                <th data-options="field:'su_No',width:80">货号</th>
+                <th data-options="field:'supplier_office',width:100">供货商</th>
+                <th data-options="field:'su_orign',width:100">产地</th>
+                <th data-options="field:'su_standard',width:100">规格</th>
+                <th data-options="field:'su_storage',width:100">存储条件</th>
+                <th data-options="field:'su_listPrice',width:100">目录价</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<script>
+    /*<![CDATA[*/
+    $(function(){
+        $('#or_date').datebox({
+            onSelect:function(date)
+            {
+                var newYear = date.getFullYear()+5;
+                var newDate = date.getMonth()+"/"+date.getDay()+"/"+newYear;
+                $('#or_deaddate').datebox("setValue",newDate);
+            }
+        });
+
+        $('#likeStr').textbox({
+            onChange:function()
+            {
+                $('#dg').datagrid("load",{
+                    like:$('#likeStr').val(),
+                    type:1
+                });
+            }
+        });
+        $('#likeNo').textbox({
+            onChange:function()
+            {
+                $('#dg').datagrid("load",{
+                    like:$('#likeNo').val(),
+                    type:2
+                });
+            }
+        });
+    });
+    function addAjax() {
+        var orderNum = $('#order_number').val();
+        if(orderNum <1)
+        {
+            $.messager.alert("错误","进货数量不能小于1！");
+        }else{
+            $('#ff').form('submit', {
+                url: "/web/order/add.do",
+                onSubmit: function (param) {
+                    param.or_goods_id=$('#dg').datagrid('getSelected').su_id;
+                },
+                success: function (result) {
+                    $.messager.alert("反馈",result);
+                }
+            })
+        }
+    }
+    /*]]>*/
+</script>
+
+</body>
+</html>

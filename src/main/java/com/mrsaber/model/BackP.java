@@ -1,5 +1,6 @@
 package com.mrsaber.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -8,11 +9,11 @@ public class BackP {
     private Integer bp_id;
     private Integer bp_or_id;
     private Integer bp_number;
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date bp_date;
     private String bp_other;
     private String bp_su_id;
-
 
     public String getBp_su_id() {
         return bp_su_id;

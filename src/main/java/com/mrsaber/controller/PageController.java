@@ -1,6 +1,5 @@
 package com.mrsaber.controller;
 
-import com.mrsaber.dao.GoodsService;
 import com.mrsaber.security.RoleCheck;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,8 +14,7 @@ public class PageController {
     @RequestMapping(value = "goods.html")
     public String goods_html()
     {
-
-        return "goods";
+        return "page_curd_goods";
     }
     /**
      * 供货人管理
@@ -25,7 +23,7 @@ public class PageController {
     @RequestMapping(value = "supplier.html")
     public String supplier_html()
     {
-        return "supplier";
+        return "page_curd_supplier";
     }
 
     /**
@@ -54,7 +52,7 @@ public class PageController {
     @RequestMapping(value = "order.html")
     public String order_html()
     {
-        return "order";
+        return "page_bound";
     }
     /**
      * 订货入库
@@ -62,7 +60,7 @@ public class PageController {
     @RequestMapping(value = "inbound.html")
     public String inbound_html()
     {
-        return "inbound";
+        return "page_inbound_check";
     }
     /**
      * 出货
@@ -78,7 +76,7 @@ public class PageController {
     @RequestMapping(value = "sale_query.html")
     public String sale_query_html()
     {
-        return "sale_query";
+        return "page_outbound_check";
     }
     /**
      * 历史出货
@@ -86,7 +84,7 @@ public class PageController {
     @RequestMapping(value = "sale_history.html")
     public String sale_history_html()
     {
-        return "sale_history";
+        return "page_sale_history";
     }
     /**
      * 历史入库
@@ -94,27 +92,43 @@ public class PageController {
     @RequestMapping(value = "order_history.html")
     public String order_history_html()
     {
-        return "order_history";
+        return "page_inbound_history";
     }
     /**
      * 库存预警
      */
     @RequestMapping(value = "order_alarm.html")
-    public String order_alarm_html(){return "order_alarm";}
+    public String order_alarm_html(){return "page_order_alarm";}
     /**
      * 到期提醒
      */
     @RequestMapping(value = "order_dead.html")
-    public String order_dead_html(){return "order_dead";}
+    public String order_dead_html(){return "page_order_dead";}
     /**
      * 购物车
      */
     @RequestMapping(value = "shopcar.html")
     public String shopcar_html()
     {
-        return "shopcar";
+        return "page_shopcar";
     }
 
+    /**
+     * 出货新
+     */
+    @RequestMapping(value = "page_sale_new.html")
+    public String sale_new_html()
+    {
+        return "page_sale_new";
+    }
+    /**
+     * 出货新
+     */
+    @RequestMapping(value = "page_purchase_new.html")
+    public String page_purchase_new()
+    {
+        return "page_purchase_new";
+    }
     /**
      * 管理员界面
      */
@@ -133,9 +147,19 @@ public class PageController {
     }
 
     @RoleCheck(level = {2})
-    @RequestMapping(value = "chakan.html")
-    public String chakan_html(){return "chakan";}
+    @RequestMapping(value = "page_index_viewer.html")
+    public String page_index_viewer(){return "page_index_viewer";}
 
     @RequestMapping(value = "admin_user.html")
-    public String admin_user_html(){return "admin_user";}
+    public String admin_user_html(){return "page_admin_user";}
+
+    @RoleCheck(level = {3})
+    @RequestMapping(value = "page_admin.html")
+    public String page_admin_html(){return "page_admin";}
+
+    @RequestMapping(value = "page_index.html")
+    public String page_index_html(){return "page_index";}
+
+    @RequestMapping(value = "page_order_viewer.html")
+    public String page_order_viewer(){return "page_bound_viewer";}
 }

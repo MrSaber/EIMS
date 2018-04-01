@@ -33,7 +33,7 @@ public class SaleController {
             saleService.addSale(sale);
         } catch (Exception e) {
             e.printStackTrace();
-            return "操作失败！";
+            return e.getMessage();
         }
         return "操作成功";
     }
@@ -66,6 +66,7 @@ public class SaleController {
      * @param sale
      * @return
      */
+    @RoleCheck(level = {3})
     @RequestMapping(value = "/confirmSale.do")
     public String confirmSale(Sale sale)
     {
@@ -80,39 +81,10 @@ public class SaleController {
     }
 
     /**
-     * 【根据用户ID查询日期内出货记录】
-     * @param item
-     * @return
-     */
-    @RequestMapping(value = "getSaleByDateAndCuId.do")
-    public List<Sale> getSaleByDateAndCuId(OfIdAndDateItem item, HttpServletResponse response)
-    {
-        response.setHeader("Access-Control-Allow-Origin", "*"); //解决跨域请求问题
-        System.out.println("获取客户出货记录");
-        try {
-            return saleService.getSaleByDateAndCuId(item);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
-     * 【获得订单的售货记录】
-     * @param id
-     * @return
-     */
-    @RequestMapping(value = "/getSaledInfoByOrId.do")
-    public List<Sale> getSaledInfoByOrId(Integer id)
-    {
-        return saleService.getSaledInfoByOrId(id);
-    }
-
-    /**
      * 【用户退货】
      * @return
      */
-    @RoleCheck(level = {1,3})
+    @RoleCheck(level = {3})
     @RequestMapping(value = "/backGoods.do")
     public String backGoods(Integer sale_id,Integer or_id,Integer back_num,String back_cause)
     {
@@ -124,25 +96,66 @@ public class SaleController {
             return e.getMessage();
         }
         return "退货成功";
+
     }
+
+
+
     /**
      * 【获得出货记录按出货时间排序】
      */
-    @RequestMapping(value = "/getRecentSales.do")
-    public List<Sale> getRecentSales()
+    @RequestMapping(value = "/getListByRecent.do")
+    public List<Sale> getListByRecent()
     {
-        return saleService.getRecentSales();
+        return saleService.getListByRecent();
     }
 
     /**
-     * 【设置结账情况】
-     * @param id
+     * 【获得订单的售货记录】
+     */
+    @RequestMapping(value = "/getListByOrId.do")
+    public List<Sale> getListByOrId(Integer id)
+    {
+        return saleService.getListByOrId(id);
+    }
+
+    /**
+     * 【根据用户ID查询记录】
+     */
+    @RequestMapping(value = "/getListByCuId.do")
+    public List<Sale> getListByCuId(Integer cuId)
+    {
+        return saleService.getListByCuId(cuId);
+    }
+
+    /**
+     * 【根据用户ID查询日期内出货记录】
+     * @param item
      * @return
      */
-    @RequestMapping(value = "/setPayment.do")
-    public String setPayment(Integer id)
+    @RequestMapping(value = "/getListByDateAndCuId.do")
+    public List<Sale> getListByDateAndCuId(OfIdAndDateItem item)
     {
-        try{saleService.setPayment(id);}
+            return saleService.getListByDateAndCuId(item);
+    }
+
+
+
+
+
+    /**
+     * 【设置结账情况】
+     * @param
+     * @return
+     */
+    @RoleCheck(level = {3})
+    @RequestMapping(value = "/setPayment.do")
+    public String setPayment(Sale sale)
+    {
+        try{
+            System.out.println(sale.getSale_id()+sale.getSale_commit()+sale.getSale_paydate());
+            saleService.setPayment(sale);
+        }
         catch (Exception e)
         {
             e.printStackTrace();
@@ -152,20 +165,11 @@ public class SaleController {
     }
 
     /**
-     * 【根据用户ID查询记录】
-     */
-    @RequestMapping(value = "/getSaleByCuId")
-    public List<Sale> getSaleByCuId(Integer cuId)
-    {
-       return saleService.getSaleById(cuId);
-    }
-
-    /**
      * 【修改销售备注】
      */
-    @RoleCheck(level = {1,3})
+    @RoleCheck(level = {3})
     @RequestMapping(value = "/updateOther.do")
-    public String updateOther(String val,Integer key)
+    public String setOther(String val,Integer key)
     {
         try {
             saleService.updateOther(key,val);
@@ -175,4 +179,5 @@ public class SaleController {
         }
         return "更新成功";
     }
+
 }

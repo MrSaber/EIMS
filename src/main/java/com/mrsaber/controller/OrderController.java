@@ -32,11 +32,12 @@ public class OrderController {
      * @param order
      * @return
      */
+    @RoleCheck(level = {3})
     @RequestMapping(value = "/add.do")
     public String addOrder(Order order)
     {
         try {
-            orderService.addOrder(order);
+            orderService.add(order);
             return "操作成功";
         } catch (Exception e) {
             e.printStackTrace();
@@ -54,7 +55,7 @@ public class OrderController {
     public String delOrder(Integer id)
     {
         try {
-            orderService.delOrderById(id);
+            orderService.delById(id);
         } catch (Exception e) {
             return "删除失败！";
         }
@@ -66,11 +67,12 @@ public class OrderController {
      * @return
      */
     @RequestMapping(value = "/getAll.do")
-    public List<Order> getAllOrder()
+    public List<Order> getListByPageAndRow()
     {
         try {
-            return orderService.getAllOrder();
+            return orderService.getList();
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -78,7 +80,7 @@ public class OrderController {
     @RequestMapping(value="/search.do")
     public List<Order> getLikeOrder(Integer id)
     {
-        return orderService.getGoodsInfoInBound(id);
+        return orderService.getListByInbound(id);
     }
 
     /**
@@ -88,7 +90,7 @@ public class OrderController {
     @RequestMapping(value = "/getCheck.do")
     public List<Order> getCheckOrder()
     {
-        return orderService.getOrderWhereCheck(1);
+        return orderService.getListByStatus(1);
     }
 
     /**
@@ -97,12 +99,13 @@ public class OrderController {
      * @param id
      * @return
      */
+    @RoleCheck(level = {3})
     @RequestMapping(value = "/inbound.do")
     public String orderInBound(Integer token,Integer id)
     {
         System.out.println(token+"|"+id);
         try {
-            orderService.orderInBound(id);
+            orderService.setBound(id);
         } catch (Exception e) {
             e.printStackTrace();
             return "入库失败";
@@ -114,21 +117,22 @@ public class OrderController {
      * @param like
      * @return
      */
-    @RequestMapping(value = "/getLike.do")
-    public List<Order> getLike(String like)
+    @RequestMapping(value = "/getListByLikeName.do")
+    public List<Order> getLike(String like,Integer type)
     {
         try {
-            return orderService.getLikeOrderInBound(like);
+            switch (type)
+            {
+                case 1:return orderService.getListByLikeName(like);
+                case 2:return orderService.getListByNo(like);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return  null;
     }
 
-    /**
-     * 【获得库存统计信息】
-     * @return
-     */
+/*
     @RequestMapping(value = "/getStatistics.do")
     public List<Statistics> getStatistics()
     {
@@ -139,6 +143,7 @@ public class OrderController {
         }
         return null;
     }
+*/
 
     /**
      * 【获得库存总额】
@@ -158,7 +163,7 @@ public class OrderController {
     public List<Order> getOrderByDateAndSupplierId(OfIdAndDateItem item)
     {
         try {
-            return orderService.getOrderByDateAndSupplierId(item);
+            return orderService.getListByDateAndSupId(item);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -171,17 +176,18 @@ public class OrderController {
     @RequestMapping(value = "/getBoundAlarm.do")
     public List<Order> getBoundAlarm()
     {
-        return orderService.getBoundAlarm();
+        return orderService.getListByAlarm();
     }
 
     /**
      * 【重设预计阀值】
      */
+    @RoleCheck(level = {3})
     @RequestMapping(value = "/resetAlarm.do")
     public String resetAlarm(Integer key,Integer val)
     {
         try {
-            orderService.resetAlarm(key,val);
+            orderService.setAlarm(key,val);
         }catch (Exception e)
         {
             e.printStackTrace();
@@ -195,6 +201,7 @@ public class OrderController {
      * @param key
      * @return
      */
+    @RoleCheck(level = {3})
     @RequestMapping(value = "/setInvoice.do")
     public String setInvoice(Integer key,Integer value)
     {
@@ -213,6 +220,7 @@ public class OrderController {
      * @param id
      * @return
      */
+    @RoleCheck(level = {3})
     @RequestMapping(value = "/setPayment.do")
     public String setPayment(Integer id)
     {
@@ -228,19 +236,29 @@ public class OrderController {
     /**
      * 获得所有进货信息根据排序
      */
-    @RequestMapping(value = "/getRecent.do")
-    public List<Order> getRecent()
+    @RequestMapping(value = "/getList.do")
+    public List<Order> getList()
     {
-      return  orderService.getAllOrder();
+        return  orderService.getList();
+    }
+
+
+    /**
+     * 获得所有进货信息根据排序
+     */
+    @RequestMapping(value = "/getRecent.do")
+    public List<Order> getListByPageAndRow(Integer page,Integer rows)
+    {
+        return  orderService.getListByPageAndRow(page,rows);
     }
 
     /**
      * 获得到期预警订单
      */
-    @RequestMapping(value = "/getDead.do")
-    public List<Order> getDead(String deaddate)
+    @RequestMapping(value = "/getListByDead.do")
+    public List<Order> getListByDead(String deaddate)
     {
-        SimpleDateFormat sdf =new SimpleDateFormat( "yyyy-MM-dd" );
+        SimpleDateFormat sdf =new SimpleDateFormat( "MM/dd/yyyy" );
         Date time = new Date();
         try {
              time =sdf.parse(deaddate);
@@ -248,34 +266,35 @@ public class OrderController {
         } catch (Exception e) {
 
         }
-        return orderService.getBoundDeadDate(time);
+        return orderService.getListByDead(time);
     }
     /**
+     *
      * 获得公司库存
      */
-    @RequestMapping(value = "/getBySupplierId.do")
+    @RequestMapping(value = "/getListBySupId.do")
     public List<Order> getBySupplierId(Integer id)
     {
-        return orderService.getBySupplierId(id);
+        return orderService.getListBySupId(id);
     }
 
-    /**
-     * 获得公司进货记录
-     */
-    @RequestMapping(value = "/getBySup.do")
-    public List<Order> getBySup(Integer id)
+
+    @RequestMapping(value = "/getById.do")
+    public Order getById(Integer id)
     {
-        return orderService.getBySupplierId(id);
+        return orderService.getById(id);
     }
+
 
     /**
      * 修改库存备注
      */
+    @RoleCheck(level = {3})
     @RequestMapping(value = "/updateOther.do")
     public String updateOther(String val,Integer key)
     {
         try {
-            orderService.updateOther(key,val);
+            orderService.setOther(key,val);
         } catch (Exception e) {
             e.printStackTrace();
             return e.getMessage();

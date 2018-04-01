@@ -1,5 +1,6 @@
 package com.mrsaber.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -10,25 +11,56 @@ public class Sale {
     private Integer sale_goods_id;
     private Integer sale_cu_id;
     private Integer sale_or_id;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date sale_date;
+
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
+    private Date sale_paydate;
+
     private Double sale_price;
     private Double sale_number;
     private Double sale_count;
     private String sale_other;
     private Integer sale_invoice; //是否开发票
     private Integer sale_payment; //付款状况
+    private String sale_commit;//
+
     //******关联表字段**********
     private String cu_name;
     private String su_name;
     private String su_storage;
     private String su_standard;
     private String su_orign;
-
+    private String su_No;
     private String of_name;
-
     private String supplier_office;
 
+
+    public String getSale_commit() {
+        return sale_commit;
+    }
+
+    public void setSale_commit(String sale_commit) {
+        this.sale_commit = sale_commit;
+    }
+
+    public Date getSale_paydate() {
+        return sale_paydate;
+    }
+
+    public void setSale_paydate(Date sale_paydate) {
+        this.sale_paydate = sale_paydate;
+    }
+
+    public String getSu_No() {
+        return su_No;
+    }
+
+    public void setSu_No(String su_No) {
+        this.su_No = su_No;
+    }
 
     public Integer getSale_payment() {
         return sale_payment;
@@ -119,21 +151,10 @@ public class Sale {
         this.sale_cu_id = sale_cu_id;
     }
 
-    @Override
-    public String toString() {
-        return "Sale{" +
-                "sale_id=" + sale_id +
-                ", sale_goods_id=" + sale_goods_id +
-                ", sale_date=" + sale_date +
-                ", sale_price=" + sale_price +
-                ", sale_number=" + sale_number +
-                ", sale_count=" + sale_count +
-                ", sale_other='" + sale_other + '\'' +
-                '}';
-    }
     public Integer getSale_id() {
         return sale_id;
     }
+
     public void setSale_id(Integer sale_id) {
         this.sale_id = sale_id;
     }

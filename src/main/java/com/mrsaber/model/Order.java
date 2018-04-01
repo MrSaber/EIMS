@@ -1,5 +1,6 @@
 package com.mrsaber.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.xml.crypto.Data;
@@ -12,7 +13,8 @@ public class Order {
     private Integer or_id;
     private Integer or_goods_id;
     private Integer or_supplier_id;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date or_date;//日期
     private Double or_price;//价格
     private Double or_number;//数量
@@ -21,15 +23,43 @@ public class Order {
     private String or_other; //备注
     private Integer or_check=0; //状态 0 表示订货状态
     private Integer or_initial; //订货量
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date or_deaddate;
     private Integer or_alarm;
     private Integer or_payment;
     //-----关联表查询属性-----//
+    private Integer su_id;
     private String su_name; //货品名称
+    private String su_No; //货品名称
     private String su_orign;
     private String su_standard;
     private String su_storage;
+    private Double su_listPrice;
+
+    public Double getSu_listPrice() {
+        return su_listPrice;
+    }
+
+    public void setSu_listPrice(Double su_listPrice) {
+        this.su_listPrice = su_listPrice;
+    }
+
+    public String getSu_No() {
+        return su_No;
+    }
+
+    public void setSu_No(String su_No) {
+        this.su_No = su_No;
+    }
+
+    public Integer getSu_id() {
+        return su_id;
+    }
+
+    public void setSu_id(Integer su_id) {
+        this.su_id = su_id;
+    }
 
     public Date getOr_deaddate() {
         return or_deaddate;

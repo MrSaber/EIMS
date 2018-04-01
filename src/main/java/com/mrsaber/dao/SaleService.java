@@ -3,6 +3,7 @@ package com.mrsaber.dao;
 import com.mrsaber.mapper.SaleMapper;
 import com.mrsaber.model.OfIdAndDateItem;
 import com.mrsaber.model.Sale;
+import org.omg.CORBA.INTERNAL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ public class SaleService {
     private SaleMapper saleMapper;
     @Autowired
     private OrderService orderService;
+
     public void addSale(Sale sale)
     {
         try {
@@ -33,11 +35,11 @@ public class SaleService {
     }
     public List<Sale> getAllSaleUnCheck()
     {
-        return saleMapper.getAllSaleUnCheck();
+        return saleMapper.getListSaleUnCheck();
     }
     public void delSaleById(Integer id)
     {
-        saleMapper.delSaleById(id);
+        saleMapper.delById(id);
     }
 
     /**
@@ -45,16 +47,16 @@ public class SaleService {
      * @param item
      * @return
      */
-    public List<Sale> getSaleByDateAndCuId(OfIdAndDateItem item)
+    public List<Sale> getListByDateAndCuId(OfIdAndDateItem item)
     {
-        return saleMapper.getSaleByDateAndCuId(item);
+        return saleMapper.getListByDateAndCuId(item);
     }
     /**
      * 根据订单号追踪用户
      */
-    public List<Sale> getSaledInfoByOrId(Integer id)
+    public List<Sale> getListByOrId(Integer id)
     {
-        return saleMapper.getSaledInfoByOrId(id);
+        return saleMapper.getListByOrId(id);
     }
     /**
      *退货
@@ -66,24 +68,24 @@ public class SaleService {
     /**
      * 按时间排列出货单
      */
-    public List<Sale> getRecentSales()
+    public List<Sale> getListByRecent()
     {
-        return saleMapper.getRecentSales();
+        return saleMapper.getListByRecent();
     }
     /**
      * 结账
      */
-    public void setPayment(Integer id)
+    public void setPayment(Sale sale)
     {
-        saleMapper.setPayment(id);
+        saleMapper.setPayment(sale);
     }
 
     /**
      * 获得
      * @param cuId
      */
-    public List<Sale> getSaleById(Integer cuId) {
-        return saleMapper.getSaleByCuId(cuId);
+    public List<Sale> getListByCuId(Integer cuId) {
+        return saleMapper.getListByCuId(cuId);
     }
     /**
      * 修改订单备注
@@ -91,6 +93,16 @@ public class SaleService {
     public void updateOther(Integer key, String val)
     {
         saleMapper.updateOther(val,key);
+    }
+
+    /**
+     * 获得具体订单
+     * @param saleId
+     * @return
+     */
+    public Sale getById(Integer saleId)
+    {
+        return saleMapper.getById(saleId);
     }
 
 }

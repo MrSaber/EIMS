@@ -7,11 +7,20 @@ public class ShopCart {
     private String car_other;
     //关联表信息
     private String su_name;
+    private String su_No;
     private String su_storage;
     private String su_standard;
     private String su_orign;
     private String supplier_office;
 
+
+    public String getSu_No() {
+        return su_No;
+    }
+
+    public void setSu_No(String su_No) {
+        this.su_No = su_No;
+    }
 
     public String getSupplier_office() {
         return supplier_office;

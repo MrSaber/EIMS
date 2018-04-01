@@ -18,8 +18,8 @@ import java.util.List;
  * 物品管理
  */
 @RestController
-@CrossOrigin
 @RequestMapping("goods")
+@CrossOrigin
 public class GoodsController {
     @Autowired
     private GoodsService goodsService;
@@ -28,17 +28,21 @@ public class GoodsController {
      * @return
      */
     @RequestMapping(value = "/get.do")
-    public List<Goods> getAllGoods()
+    public List<Goods> getAllGoods(@RequestParam(defaultValue = "1")Integer page,@RequestParam(defaultValue = "10")Integer rows )
     {
-        return goodsService.getAllGoods();
+        try {
+            return goodsService.getAllGoods();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  null;
     }
-
     /**
      * 【增加物品】
      * @param goods
      * @return
      */
-    @RoleCheck(level = {1,3})
+    @RoleCheck(level = {3})
     @RequestMapping(value = "/2.do",method = RequestMethod.POST)
     public String addGoods(Goods goods)
     {
@@ -73,10 +77,19 @@ public class GoodsController {
     /**
      *【模糊查询获得货品列表】
      */
-    @RequestMapping(value = "/getlike.do",method = RequestMethod.GET)
-    public List<Goods> getGoodsLike(String like)
+    @RequestMapping(value = "/getLike.do")
+    public List<Goods> getGoodsLike(String like,Integer type)
     {
-        return goodsService.getGoodsLike(like);
+        try {
+            switch (type)
+            {
+                case 1:return goodsService.getListByLikeName(like);
+                case 2:return  goodsService.getListByLikeNo(like);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  null;
     }
 
     /**
@@ -84,7 +97,7 @@ public class GoodsController {
      * @param goods
      * @return
      */
-    @RoleCheck(level = {1,3})
+    @RoleCheck(level = {3})
     @RequestMapping(value = "/update.do")
     public String updateGoods(Goods goods)
     {
@@ -96,6 +109,6 @@ public class GoodsController {
             e.printStackTrace();
             return e.getMessage();
         }
-        return "OK";
+        return "更新成功！";
     }
 }

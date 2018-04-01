@@ -35,27 +35,40 @@ public class CustomerService {
         return customerItem;
     }
 
-    public CustomerItem getLikeCustomer(String str)
+    /**
+     * 模糊查找客户信息
+     * @param str
+     * @return
+     */
+    public List<Customer> getListByLikeName1(String str)
     {
-        List<Customer> customers =  customerMapper.getLikeCustomer("%"+str+"%");
-        CustomerItem customerItem = new CustomerItem();
-        customerItem.setMsg("Hello");
-        customerItem.setCount(customers.size());
-        customerItem.setCode(0);
-        customerItem.setData(customers);
-        return customerItem;
+        return customerMapper.getListByLikeName("%"+str+"%");
     }
 
+
+
+    /**
+     * 更新客户信息
+     * @param customer
+     */
     public void update(Customer customer)
     {
         customerMapper.update(customer);
     }
 
+    /**
+     * 添加客户
+     * @param customer
+     */
     public void addCustomer(Customer customer)
     {
         customerMapper.addCustomer(customer);
     }
 
+    /**
+     * 删除客户
+     * @param id
+     */
     public void delCustomer(Integer id)
     {
         customerMapper.delCustomer(id);
@@ -70,6 +83,10 @@ public class CustomerService {
         return customerMapper.getCustomerByLabId(id);
     }
 
+    /**
+     * 获得客户树
+     * @return
+     */
     public TreeNode getCuTree()
     {
         TreeNode treeNode = new TreeNode();
@@ -90,7 +107,6 @@ public class CustomerService {
             officeNode.setId(String.valueOf(it_office.getOf_id()));
             officeNode.setText(it_office.getOf_name());
             officeNode.setIconCls("icon-more");
-
             TreeNodeAttr attr = new TreeNodeAttr();
             attr.setType(0);
             attr.setTargetVal(it_office.getOf_id());
@@ -112,39 +128,44 @@ public class CustomerService {
                 attr1.setType(1);
                 attr1.setTargetVal(it_branch.getBr_id());
                 branchNode.setAttributes(attr1);
-                branchNode.setState("closed");
 
-                    /*遍历负责人*/
-                    List<TreeNode> cuList = new ArrayList<>();
-                    Iterator<Customer> it_cu =customerMapper.getCustomerByLabId(it_branch.getBr_id()).iterator();
-                    while (it_cu.hasNext())
+                /*遍历负责人*/
+                List<TreeNode> cuList = new ArrayList<>();
+                List<Customer> list_cu = customerMapper.getCustomerByLabId(it_branch.getBr_id());
+                Iterator<Customer> it_cu =list_cu.iterator();
+                if(list_cu.size()<=0)
+                    branchNode.setState("open");
+                else
+                    branchNode.setState("closed");
+
+                while (it_cu.hasNext())
+                {
+                    Customer it_customer=it_cu.next();
+                    TreeNode cuNode = new TreeNode();
+                    cuNode.setText(it_customer.getCu_name());
+                    TreeNodeAttr attr3 = new TreeNodeAttr();
+                    attr3.setType(3);
+                    attr3.setTargetVal(it_customer.getCu_id());
+                    cuNode.setAttributes(attr3);
+                    cuNode.setIconCls("icon-man");
+                    /*遍历成员*/
+                    List<TreeNode> cusList = new ArrayList<>();
+                    Iterator<Customer> it_cus =customerMapper.getCustomerByFarId(it_customer.getCu_id()).iterator();
+                    while (it_cus.hasNext())
                     {
-                        Customer it_customer=it_cu.next();
-                        TreeNode cuNode = new TreeNode();
-                        cuNode.setText(it_customer.getCu_name());
-                        TreeNodeAttr attr3 = new TreeNodeAttr();
-                        attr3.setType(3);
-                        attr3.setTargetVal(it_customer.getCu_id());
-                        cuNode.setAttributes(attr3);
-                        cuNode.setIconCls("icon-man");
-                         /*遍历成员*/
-                        List<TreeNode> cusList = new ArrayList<>();
-                        Iterator<Customer> it_cus =customerMapper.getCustomerByFarId(it_customer.getCu_id()).iterator();
-                        while (it_cus.hasNext())
-                        {
-                            Customer it_customers=it_cus.next();
-                            TreeNode cusNode = new TreeNode();
-                            cusNode.setText(it_customers.getCu_name());
-                            cusNode.setIconCls("icon-man");
-                            TreeNodeAttr attr4 = new TreeNodeAttr();
-                            attr4.setType(4);
-                            attr4.setTargetVal(it_customers.getCu_id());
-                            cusNode.setAttributes(attr4);
-                            cusList.add(cusNode);
-                        }
-                        cuNode.setChildren(cusList);
-                        cuList.add(cuNode);
+                        Customer it_customers=it_cus.next();
+                        TreeNode cusNode = new TreeNode();
+                        cusNode.setText(it_customers.getCu_name());
+                        cusNode.setIconCls("icon-man");
+                        TreeNodeAttr attr4 = new TreeNodeAttr();
+                        attr4.setType(4);
+                        attr4.setTargetVal(it_customers.getCu_id());
+                        cusNode.setAttributes(attr4);
+                        cusList.add(cusNode);
                     }
+                    cuNode.setChildren(cusList);
+                    cuList.add(cuNode);
+                }
                 branchNode.setChildren(cuList);
                 branchList.add(branchNode);
             }
@@ -154,4 +175,5 @@ public class CustomerService {
         treeNode.setChildren(officeList);
         return treeNode;
     }
+
 }

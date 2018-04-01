@@ -10,96 +10,96 @@
     <script src="layui/layui.js"></script>
 </head>
 <body class="">
-    <div class="">
-        <!-- 内容主体区域 -->
-        <div style="padding: 15px;">
-            <!--选择物品-->
-            <div class="layui-form-item">
-                <label class="layui-form-label">选择物品：</label>
-                <!--输入框-->
-                <div class="layui-input-inline">
-                    <input type="text" id="likeStr" required="required"  lay-verify="required" placeholder="请输入物品" autocomplete="off" class="layui-input"/>
-                </div>
-                <!--选择框-->
-                <div class="layui-input-inline" >
-                    <select id="ajax-list"   class="ms_form_select_lg"></select>
-                </div>
+<div class="">
+    <!-- 内容主体区域 -->
+    <div style="padding: 15px;">
+        <!--选择物品-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">选择物品：</label>
+            <!--输入框-->
+            <div class="layui-input-inline">
+                <input type="text" id="likeStr" required="required"  lay-verify="required" placeholder="请输入物品" autocomplete="off" class="layui-input"/>
             </div>
-            <!--选择数量-->
-            <div class="layui-form-item">
-                <!--数量选择-->
-                <label class="layui-form-label">数量选择：</label>
-                <div class="layui-input-inline">
-                    <input type="number" min="0" max="0" value="0" id="sale_number"  required="required"  lay-verify="required" placeholder="数量" autocomplete="off" class="layui-input"  onclick="getMaxNum()" onblur="checkVal(this)"/>
-                </div>
+            <!--选择框-->
+            <div class="layui-input-inline" >
+                <select id="ajax-list"   class="ms_form_select_lg"></select>
             </div>
-            <!--售价-->
-            <div class="layui-form-item">
-                <label class="layui-form-label">售  价：</label>
-                <div class="layui-input-inline">
-                    <input type="text" id="sale_price"  required="required"  lay-verify="required" placeholder="价格" autocomplete="off" class="layui-input"/>
-                </div></div>
-            <!--日期选择-->
-            <div class="layui-form-item">
-                <label class="layui-form-label">出货日期：</label>
-                <div class="layui-input-inline">
-                    <input type="date" name="date" id="sale_date" required="required"    class="layui-input"/>
-                </div>
+        </div>
+        <!--选择数量-->
+        <div class="layui-form-item">
+            <!--数量选择-->
+            <label class="layui-form-label">数量选择：</label>
+            <div class="layui-input-inline">
+                <input type="number" min="0" max="0" value="0" id="sale_number"  required="required"  lay-verify="required" placeholder="数量" autocomplete="off" class="layui-input"  onclick="getMaxNum()" onblur="checkVal(this)"/>
             </div>
+        </div>
+        <!--售价-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">售  价：</label>
+            <div class="layui-input-inline">
+                <input type="text" id="sale_price"  required="required"  lay-verify="required" placeholder="价格" autocomplete="off" class="layui-input"/>
+            </div></div>
+        <!--日期选择-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">出货日期：</label>
+            <div class="layui-input-inline">
+                <input type="date" name="date" id="sale_date" required="required"    class="layui-input"/>
+            </div>
+        </div>
 
-            <div class="layui-form-item">
-                <label class="layui-form-label">付款状况：</label>
-                <div class="layui-input-inline" >
-                    <select id="sale_payment" name="interest"  class="ms_form_select_md">
-                        <option value="2">拖欠</option>
-                        <option value="0">现结转账</option>
-                        <option value="1">现结现金</option>
-                        <option value="3">预付款</option>
-                    </select>
-                </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">付款状况：</label>
+            <div class="layui-input-inline" >
+                <select id="sale_payment" name="interest"  class="ms_form_select_md">
+                    <option value="2">拖欠</option>
+                    <option value="0">现结转账</option>
+                    <option value="1">现结现金</option>
+                    <option value="3">预付款</option>
+                </select>
             </div>
+        </div>
 
-            <div class="layui-form-item">
-                <label class="layui-form-label">客户选择：</label>
-                <!--输入框-->
-                <div class="layui-input-inline">
-                    <input type="text" id="likeStr1" required="required"  lay-verify="required" placeholder="请输入收货人姓名" autocomplete="off" class="layui-input"/>
-                </div>
-                <!--选择框-->
-                <div class="layui-input-inline" >
-                    <select id="ajax-list1"   class="ms_form_select_lg"></select>
-                </div>
-                <!--选择用户-->
-                <div class="layui-input-inline" style="width: auto;">
-                    <button class="layui-btn layui-btn-sm" onclick="openForm_AddGoods()">
-                        <i class="layui-icon">&#xe654;</i>
-                    </button>
-                </div>
-                <script>
-                    function openForm_AddGoods() {
-                        window.open("app_cuTree.html","_blank","height=800,width=400");
-                    }
-                </script>
-                <!--添加按钮-->
-                <div class="layui-input-inline">
-                    <button class="layui-btn layui-btn-danger" onclick="addAjax()">出货</button>
-                </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">客户选择：</label>
+            <!--输入框-->
+            <div class="layui-input-inline">
+                <input type="text" id="likeStr1" required="required"  lay-verify="required" placeholder="请输入收货人姓名" autocomplete="off" class="layui-input"/>
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">备注信息：</label>
-                <div class="layui-input-block">
-                    <input class="layui-input" placeholder="输入备注信息" id="sale_other"/>
-                </div>
+            <!--选择框-->
+            <div class="layui-input-inline" >
+                <select id="ajax-list1"   class="ms_form_select_lg"></select>
             </div>
-            <div class="layui-collapse">
-                <div class="layui-colla-item">
-                    <h2 class="layui-colla-title">库存信息</h2>
-                    <div class="layui-colla-content layui-show" id="repertory">
-                    </div>
+            <!--选择用户-->
+            <div class="layui-input-inline" style="width: auto;">
+                <button class="layui-btn layui-btn-sm" onclick="openForm_AddGoods()">
+                    <i class="layui-icon">&#xe654;</i>
+                </button>
+            </div>
+            <script>
+                function openForm_AddGoods() {
+                    window.open("app_cuTree.html","_blank","height=800,width=400");
+                }
+            </script>
+            <!--添加按钮-->
+            <div class="layui-input-inline">
+                <button class="layui-btn layui-btn-danger" onclick="addAjax()">出货</button>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注信息：</label>
+            <div class="layui-input-block">
+                <input class="layui-input" placeholder="输入备注信息" id="sale_other"/>
+            </div>
+        </div>
+        <div class="layui-collapse">
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">库存信息</h2>
+                <div class="layui-colla-content layui-show" id="repertory">
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 <!--下拉框更新AJAX-->
 <script>
@@ -203,6 +203,5 @@
     }
     //环境初始化执行的操作
 </script>
-
 </body>
 </html>

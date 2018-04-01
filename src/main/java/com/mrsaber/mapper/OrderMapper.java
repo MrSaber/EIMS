@@ -25,14 +25,16 @@ public interface OrderMapper {
      * @return
      */
     @Select("SELECT ms_order.*,ms_supplier.supplier_office,ms_goods.* FROM gongxiao.ms_order,gongxiao.ms_supplier,gongxiao.ms_goods WHERE or_supplier_id=supplier_id and or_goods_id=su_id and or_check=3;")
-     List<Order> getAllOrder();
+    List<Order> getList();
 
+    @Select("SELECT ms_order.*,ms_supplier.supplier_office,ms_goods.* FROM gongxiao.ms_order,gongxiao.ms_supplier,gongxiao.ms_goods WHERE or_supplier_id=supplier_id and or_goods_id=su_id and or_check=3 LIMIT #{row} OFFSET #{page};")
+    List<Order> getListByPageAndRow(@Param("row")Integer row,@Param("page")Integer page);
 
     /**
      * 获得公司进货记录
      */
-    @Select("SELECT * FROM gongxiao.repertory WHERE supplier_id=#{id}")
-    List<Order> getBySup(Integer id);
+    @Select("SELECT * FROM gongxiao.repertory WHERE or_id=#{id}")
+    Order getById(Integer id);
 
     /**
      * 获得库存物品信息
@@ -62,7 +64,7 @@ public interface OrderMapper {
      * @param check
      * @return
      */
-    @Select("SELECT ms_order.*,ms_supplier.supplier_office,ms_goods.su_name FROM gongxiao.ms_order,gongxiao.ms_supplier,gongxiao.ms_goods WHERE or_supplier_id=supplier_id and or_goods_id=su_id and ms_order.or_check=#{check};")
+    @Select("SELECT ms_order.*,ms_supplier.supplier_office,ms_goods.* FROM gongxiao.ms_order,gongxiao.ms_supplier,gongxiao.ms_goods WHERE or_supplier_id=supplier_id and or_goods_id=su_id and ms_order.or_check=#{check};")
     List<Order> getOrderWhereCheck(Integer check);
 
     /**
@@ -86,6 +88,15 @@ public interface OrderMapper {
      */
     @Select("SELECT ms_order.*,ms_supplier.supplier_office,ms_goods.* FROM gongxiao.ms_order,gongxiao.ms_supplier,gongxiao.ms_goods where ms_goods.su_name like #{like} and or_supplier_id=supplier_id and or_check='3' and or_goods_id = su_id")
     List<Order> getLikeOrderInBound(String like);
+
+    /**
+     *查找货号的库存信息
+     * @param like
+     * @return
+     */
+    @Select("SELECT ms_order.*,ms_supplier.supplier_office,ms_goods.* FROM gongxiao.ms_order,gongxiao.ms_supplier,gongxiao.ms_goods where ms_goods.su_No like #{like} and or_supplier_id=supplier_id and or_check='3' and or_goods_id = su_id")
+    List<Order> getListByNo(String like);
+
 
     void updateOrderNumInBound(UpdateItem updateItem);
 
@@ -119,7 +130,7 @@ public interface OrderMapper {
      * @return
      */
     @Select("SELECT * FROM gongxiao.repertory WHERE or_deaddate<=#{s} and or_number >0;")
-    List<Order> getBoundDeadDate(Date time);
+    List<Order> getListByDead(Date time);
     /**
      * 重设预警值
      * @param val
@@ -130,8 +141,8 @@ public interface OrderMapper {
     /**
      * 根据公司ID获得库存信息
      */
-    @Select("SELECT * FROM gongxiao.repertory WHERE supplier_id=#{id}")
-    List<Order> getBySupplierId(Integer id);
+    @Select("SELECT ms_order.*,ms_supplier.supplier_office,ms_goods.* FROM gongxiao.ms_order,gongxiao.ms_supplier,gongxiao.ms_goods where or_supplier_id=supplier_id and or_check='3' and or_goods_id = su_id and supplier_id=#{id}")
+    List<Order> getListBySupId(Integer id);
 
     /**
      * 获得公司库存金额

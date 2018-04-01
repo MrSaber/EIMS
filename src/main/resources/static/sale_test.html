@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <title>供货存管理系统</title>
+    <script src="layui/lay/modules/jquery.min.js"></script>
+    <!--JQuery Easy UI 模块-->
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/bootstrap/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/icon.css"/>
+    <script type="text/javascript" src="jquery-easyui/jquery.easyui.min.js"></script>
+    <style>
+        .panel{float: left;}
+    </style>
+</head>
+<body>
+
+<div class="easyui-panel" title="出货台" style="width:100%;max-width:400px;padding:30px 60px;float: left">
+    <form id="ff" method="post">
+        <div style="margin-bottom:20px">
+            <input id="likeStr" style="width: 100%" class="easyui-textbox" data-options="label:'物品名称:',required:false"/>
+        </div>
+        <div style="margin-bottom:20px">
+            <input name="sale_number" style="width:100%" type="number"  class="easyui-numberbox" value="1" id="sale_number" data-options="label:'数 量:',required:true"/>
+        </div>
+        <div style="margin-bottom:20px">
+            <input name="sale_price" style="width:100%" type="number" class="easyui-numberbox" value="1"  data-options="label:'售 价:',required:true"/>
+        </div>
+        <div style="margin-bottom:20px">
+            <input  name="sale_date"  style="width:100%" type= "text" class= "easyui-datebox" required ="required" label="出货日期："> </input>
+        </div>
+        <div style="margin-bottom:20px">
+            <label class="textbox-label">付款状况：</label>
+            <select name="sale_payment" style="width:50%" class="easyui-combobox">
+                <option value="2">拖欠</option>
+                <option value="0">现结转账</option>
+                <option value="1">现结现金</option>
+                <option value="3">预付款</option>
+            </select>
+        </div>
+        <div style="margin-bottom:20px">
+            <input  id="likeStr1"  style="width:100%" class="easyui-textbox" name="name"  data-options="label:'客户名称:',required:false"/>
+        </div>
+        <div style="margin-bottom:20px">
+            <label class="textbox-label">客户选择</label>
+            <select id="customerSelect" style="width:50%" class="easyui-combobox" name="sale_cu_id">
+            </select>
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" style="width:100%" name="sale_other" data-options="label:'备注信息:',required:false"/>
+        </div>
+        <div style="text-align: center">
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="addAjax()" style="width:90px">保存</a>
+        </div>
+    </form>
+</div>
+<div id="p" class="easyui-panel" title="库存信息" style="width:580px;height:300px;padding:10px;">
+    <div class="layui-colla-content layui-show" id="repertory">
+        <table id="dg" class="easyui-datagrid" style="width:550px;height:250px"
+               data-options="url:'web/order/getLike.do',fitColumns:true,singleSelect:true">
+            <thead>
+            <tr>
+                <th data-options="field:'su_id',width:100,hidden:true">ID</th>
+                <th data-options="field:'su_name',width:100">名称</th>
+                <th data-options="field:'or_number',width:100">余量</th>
+                <th data-options="field:'supplier_office',width:100">厂家</th>
+                <th data-options="field:'or_price',width:100">进货价</th>
+                <th data-options="field:'or_date',width:100">进货日期</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+
+
+<!--下拉框更新AJAX-->
+<script>
+    /*<![CDATA[*/
+    $(function(){
+        $('#likeStr').textbox({
+            onChange:function()
+            {
+                $('#dg').datagrid("load",{
+                        like:$('#likeStr').val()
+                });
+            }
+        });
+
+        $('#likeStr1').textbox({
+            onChange:function()
+            {
+                $('#customerSelect').combobox({
+                    url:"/web/customer/getLike.do",
+                    queryParams:{
+                        like:$('#likeStr1').val()
+                    },
+                    valueField:'cu_id',
+                    textField:'cu_name'
+                });
+            }
+        })
+    });
+    /*]]>*/
+</script>
+<!--CURD代码-->
+<script>
+    <!--出货-->
+    function addAjax() {
+        var saleMax = $('#dg').datagrid('getSelected').or_number;
+        var saleNum = $('#sale_number').val();
+        if(saleNum >saleMax||saleNum<1)
+        {
+            $.messager.alert("无法出货","请检查出货数量输入合法性！");
+        }else{
+            $('#ff').form('submit', {
+                url: "/web/sale/add.do",
+                onSubmit: function (param) {
+                    param.su_id=$('#dg').datagrid('getSelected').su_id;
+                },
+                success: function (result) {
+                    $.messager.alert("反馈",result);
+                }
+            })
+        }
+    }
+</script>
+
+</body>
+</html>

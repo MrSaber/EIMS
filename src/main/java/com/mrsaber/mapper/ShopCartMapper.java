@@ -16,4 +16,6 @@ public interface ShopCartMapper {
     void addItem(ShopCart shopCart);
     @Delete("DELETE FROM ms_shopcar WHERE car_id =#{id}")
     void deleteItemById(Integer id);
+    @Delete("DELETE FROM ms_shopcar;")
+    void delteAll();
 }

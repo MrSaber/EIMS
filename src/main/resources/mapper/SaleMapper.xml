@@ -4,8 +4,8 @@
     <insert id="addSale" parameterType="com.mrsaber.model.Sale">
     INSERT INTO `gongxiao`.`ms_sale` (`sale_or_id`,`sale_goods_id`, `sale_cu_id`, `sale_date`, `sale_price`, `sale_number`, `sale_other`, `sale_invoice`,`sale_payment`) VALUES (#{sale_or_id},#{sale_goods_id}, #{sale_cu_id}, #{sale_date}, #{sale_price}, #{sale_number}, #{sale_other},2,#{sale_payment});
     </insert>
-    <select id="getSaleByDateAndCuId" parameterType="com.mrsaber.model.OfIdAndDateItem" resultType="com.mrsaber.model.Sale">
-    SELECT ms_sale.*,ms_customer.cu_name,ms_goods.su_name,su_orign,su_standard,su_storage,supplier_office
+    <select id="getListByDateAndCuId" parameterType="com.mrsaber.model.OfIdAndDateItem" resultType="com.mrsaber.model.Sale">
+    SELECT ms_sale.*,ms_customer.cu_name,ms_goods.*,supplier_office
 	  FROM gongxiao.ms_sale,gongxiao.ms_customer,gongxiao.ms_goods,gongxiao.ms_supplier
 		WHERE sale_cu_id=cu_id
 			and sale_goods_id=su_id
@@ -15,8 +15,9 @@
             and sale_check =1
             and (cu_id =#{key_id} or cu_farther=#{key_id});
     </select>
-    <select id="getRecentSales" resultType="com.mrsaber.model.Sale">
-        SELECT ms_sale.*,cu_name,su_name,su_orign,su_standard,su_storage
+
+    <select id="getListByRecent" resultType="com.mrsaber.model.Sale">
+        SELECT ms_sale.*,cu_name,ms_goods.*
         FROM gongxiao.ms_sale,gongxiao.ms_customer,gongxiao.ms_goods
         WHERE sale_cu_id=cu_id
         and sale_goods_id=su_id
@@ -24,8 +25,8 @@
         order by sale_date;
     </select>
 
-    <select id="getSaleByCuId" parameterType="com.mrsaber.model.OfIdAndDateItem" resultType="com.mrsaber.model.Sale">
-        SELECT ms_sale.*,cu_name,su_name,su_orign,su_standard,su_storage
+    <select id="getListByCuId" parameterType="com.mrsaber.model.OfIdAndDateItem" resultType="com.mrsaber.model.Sale">
+        SELECT ms_sale.*,cu_name,ms_goods.*
         FROM gongxiao.ms_sale,gongxiao.ms_customer,gongxiao.ms_goods
         WHERE sale_cu_id=cu_id
         and sale_goods_id=su_id

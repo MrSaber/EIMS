@@ -22,6 +22,7 @@ public class InvoiceController {
      * @param invoice
      * @return
      */
+    @RoleCheck(level = {3})
     @RequestMapping(value = "/add.do")
     public String add(Invoice invoice)
     {
@@ -49,6 +50,7 @@ public class InvoiceController {
      * 修改发票信息
      * @param invoice 发票信息
      */
+    @RoleCheck(level = {3})
     @RequestMapping(value = "/update.do")
     public String update(Invoice invoice)
     {

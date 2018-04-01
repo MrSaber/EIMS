@@ -28,12 +28,20 @@ public class GoodsService {
     {
         goodsMapper.delGoodsById(id);
     }
-    public List<Goods> getGoodsLike(String like)
+    public List<Goods> getListByLikeName(String like)
     {
         like="%"+like+"%";
-        List<Goods> goodses=goodsMapper.getGoodsLike(like);
+        List<Goods> goodses=goodsMapper.getListByLikeName(like);
         return goodses;
     }
+
+    public List<Goods> getListByLikeNo(String like)
+    {
+        like="%"+like+"%";
+        List<Goods> goodses=goodsMapper.getListByLikeNo(like);
+        return goodses;
+    }
+
 
     public Goods getGoodsById(Integer id)
     {

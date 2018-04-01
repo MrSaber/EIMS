@@ -17,9 +17,6 @@ public interface CustomerMapper {
     @Select("SELECT ms_customer.*,ms_office.of_name FROM gongxiao.ms_customer LEFT OUTER JOIN gongxiao.ms_office ON(ms_customer.cu_office=ms_office.of_id);")
      List<Customer> getAllCustomer();
 
-    @Select("SELECT ms_customer.* FROM gongxiao.ms_customer  WHERE cu_name like #{like};")
-    List<Customer> getLikeCustomer(String like);
-
     void addCustomer(Customer customer);
 
     @Delete("DELETE   FROM gongxiao.ms_customer WHERE cu_id=#{id}")
@@ -36,4 +33,7 @@ public interface CustomerMapper {
 
     @Select("SELECT * FROM gongxiao.ms_customer WHERE cu_id=#{id}")
     Customer getCustomerById(Integer id);
+
+    @Select("SELECT * FROM ms_customer WHERE cu_name like #{like};")
+    List<Customer> getListByLikeName(String like);
 }

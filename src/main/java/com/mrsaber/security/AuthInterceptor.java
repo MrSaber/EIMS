@@ -32,7 +32,6 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
                 }
                 else
                 {
-
                     User user = (User) request.getSession().getAttribute("user");
                     for(int i=0;i<roleCheck.level().length;i++)
                         if(roleCheck.level()[i]==user.getUser_role())

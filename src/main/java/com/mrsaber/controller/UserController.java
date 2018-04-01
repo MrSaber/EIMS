@@ -2,6 +2,7 @@ package com.mrsaber.controller;
 
 import com.mrsaber.mapper.UserMapper;
 import com.mrsaber.model.User;
+import com.mrsaber.security.RoleCheck;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +14,7 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserMapper userMapper;
-
+    @RoleCheck(level = {3})
     @RequestMapping("/add.do")
     public String add(User user)
     {
@@ -25,7 +26,7 @@ public class UserController {
         }
         return "添加成功";
     }
-
+    @RoleCheck(level = {3})
     @RequestMapping("/del.do")
     public String del(Integer userId)
     {
@@ -39,7 +40,7 @@ public class UserController {
         }
         return "删除成功";
     }
-
+    @RoleCheck(level = {3})
     @RequestMapping("/update.do")
     public String update(User user)
     {

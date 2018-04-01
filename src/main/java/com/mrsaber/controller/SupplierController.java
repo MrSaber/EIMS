@@ -27,7 +27,7 @@ public class SupplierController {
         System.out.println("Hello");
         return supplierService.getAllSupplierInfo().getData();
     }
-    @RoleCheck(level = {1,3})
+    @RoleCheck(level = {3})
     @RequestMapping(value = "add.do",method = RequestMethod.POST)
     public String addSupplier(Supplier supplier)
     {
@@ -55,7 +55,7 @@ public class SupplierController {
         }
         return "操作成功";
     }
-    @RoleCheck(level = {1,3})
+    @RoleCheck(level = {3})
     @RequestMapping(value = "update.do")
     public String update(Supplier su)
     {
@@ -68,4 +68,17 @@ public class SupplierController {
 
         return "操作成功";
     }
+
+    @RequestMapping(value = "/getListByLikeName.do")
+    public List<Supplier> getListByLikeName(String likeStr)
+    {
+        try{
+            return supplierService.getListByLikeName(likeStr);}
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

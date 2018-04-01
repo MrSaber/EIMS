@@ -18,6 +18,15 @@ public class HelloController {
     @Autowired
     private UserMapper userMapper;
 
+    /**
+     * 登录
+     * @param username
+     * @param password
+     * @param request
+     * @param response
+     * @return
+     * @throws IOException
+     */
     @RequestMapping("/login.do")
     public Boolean login(String username, String password, HttpServletRequest request, HttpServletResponse response) throws IOException {
         User user =new User();
@@ -34,13 +43,19 @@ public class HelloController {
         session.setAttribute("user",cUser);
         switch (cUser.getUser_role())
         {
-            case 3:response.sendRedirect("/web/admin.html");break;
+            case 3:response.sendRedirect("/web/page_admin.html");break;
             case 1:response.sendRedirect("/web/shenhe.html");break;
-            case 2:response.sendRedirect("/web/chakan.html");break;
+            case 2:response.sendRedirect("/web/page_index_viewer.html");break;
         }
         return true;
     }
 
+    /**
+     * 注销
+     * @param request
+     * @param response
+     * @return
+     */
     @RequestMapping("/logout.do")
     public Boolean Login(HttpServletRequest request,HttpServletResponse response)
     {

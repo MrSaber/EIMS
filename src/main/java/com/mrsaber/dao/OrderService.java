@@ -21,12 +21,14 @@ public class OrderService {
     @Autowired
     private SupplierService supplierService;
 
-    /**
-     * 【添加订单】
-     * @param order
-     * @return
-     */
-    public Order addOrder(Order order)
+
+    /*-----[CURD]-----*/
+    public void delById(Integer id){orderMapper.deleteOrderById(id);}
+    public Order getById(Integer id)
+    {
+        return orderMapper.getById(id);
+    }
+    public Order add(Order order)
     {
         Goods goods =goodsService.getGoodsById(order.getOr_goods_id());
         //设置供应商
@@ -39,120 +41,81 @@ public class OrderService {
         return order;
     }
 
-    /**
-     * 【获得所有库存】
-     * @return
-     */
-    public List<Order> getAllOrder()
+
+//  public List<Statistics> getStatistics(){return orderMapper.getStatistics();}
+    public Double getAmount()
     {
-        List<Order> orders = orderMapper.getAllOrder();
-        return orders;
-    }
-    public List<Order> getBySup(Integer id)
-    {
-        return orderMapper.getBySup(id);
+        return orderMapper.getAmount();
     }
 
-    public List<Order> getGoodsInfoInBound(Integer id)
-    {
-        return orderMapper.getGoodsInfoInBound(id);
-    }
-    public List<Order> getOrderWhereCheck(Integer i){return orderMapper.getOrderWhereCheck(i);}
 
-    /**
-     * 删除订单
-     * @param id
-     */
-    public void delOrderById(Integer id){orderMapper.deleteOrderById(id);}
-
-    /**
-     * 进货入库
-     * @return
-     */
-    public void orderInBound(Integer id)
+    public void setBound(Integer id)
     {
         orderMapper.orderInBound(id);
     }
 
-    /**
-     * 获得统计数据
-     * @return
-     */
-    public List<Statistics> getStatistics(){return orderMapper.getStatistics();}
-
-
-    public List<Order> getLikeOrderInBound(String like)
-    {
-        return orderMapper.getLikeOrderInBound("%"+like+"%");
-    }
-    public void updateOrderNumInBound(Integer or_id, Double cost){orderMapper.updateOrderNumInBound(new UpdateItem(or_id,cost));}
-
-    public void refreshOrderInBound()
-    {
-        orderMapper.refreshOrderInBound();
-    }
-    /**
-     * 根据供货商和日期获得进货记录
-     * */
-    public List<Order> getOrderByDateAndSupplierId(OfIdAndDateItem item){return orderMapper.getOrderByDateAndSupplierId(item);}
-    /**
-     * 获得库存预警信息
-     */
-    public List<Order> getBoundAlarm()
-    {
-        return orderMapper.getBoundAlarm();
-    }
-    /**
-     * 重设预警阀值
-     */
-    public void resetAlarm(Integer key,Integer val)
-    {
-        orderMapper.resetAlarm(val,key);
-    }
-    /**
-     * 设置发票状况
-     */
     public void setInvoice(Integer key,Integer value)
     {
         orderMapper.setInvoice(key,value);
     }
 
-    /**
-     * 结款
-     * @param id
-     */
     public void setPayment(Integer id)
     {
         orderMapper.setPayment(id);
     }
-    /**
-     * 到期预警订单
-     */
-    public List<Order> getBoundDeadDate(Date time)
+
+    public void setAlarm(Integer key,Integer val)
     {
-        return orderMapper.getBoundDeadDate(time);
+        orderMapper.resetAlarm(val,key);
     }
 
-    /**
-     *获得公司库存
-     */
-    public List<Order> getBySupplierId(Integer id)
-    {
-        return  orderMapper.getBySupplierId(id);
-    }
-    /**
-     * 获得库存金额
-     */
-    public Double getAmount()
-    {
-        return orderMapper.getAmount();
-    }
-    /**
-     * 修改订单备注
-     */
-    public void updateOther(Integer key, String val)
+    public void setOther(Integer key, String val)
     {
         orderMapper.updateOther(val,key);
     }
+
+
+
+    public List<Order> getList(){return orderMapper.getList();}
+
+    public List<Order> getListByAlarm()
+    {
+        return orderMapper.getBoundAlarm();
+    }
+
+    public List<Order> getListByLikeName(String like)
+    {
+        return orderMapper.getLikeOrderInBound("%"+like+"%");
+    }
+
+    public List<Order> getListByNo(String like)
+    {
+        return orderMapper.getListByNo("%"+like+"%");
+    }
+
+    public List<Order> getListByDead(Date time)
+    {
+        return orderMapper.getListByDead(time);
+    }
+
+    public List<Order> getListBySupId(Integer id)
+    {
+        return  orderMapper.getListBySupId(id);
+    }
+
+    public List<Order> getListByDateAndSupId(OfIdAndDateItem item){return orderMapper.getOrderByDateAndSupplierId(item);}
+
+    public List<Order> getListByStatus(Integer i){return orderMapper.getOrderWhereCheck(i);}
+
+    public List<Order> getListByPageAndRow(Integer page,Integer row)
+    {
+        List<Order> orders = orderMapper.getListByPageAndRow(row,(page-1)*row);
+        return orders;
+    }
+    public List<Order> getListByInbound(Integer id)
+    {
+        return orderMapper.getGoodsInfoInBound(id);
+    }
+
 }
 

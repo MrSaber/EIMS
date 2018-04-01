@@ -41,4 +41,9 @@ public class SupplierService {
     {
         supplierMapper.updateSu(supplier);
     }
+
+    public List<Supplier> getListByLikeName(String like)
+    {
+        return supplierMapper.getListByLikeName("%"+like+"%");
+    }
 }

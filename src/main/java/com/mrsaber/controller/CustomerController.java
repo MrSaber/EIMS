@@ -55,19 +55,21 @@ public class CustomerController {
         nodeTree[0] = customerService.getCuTree();
         return nodeTree;
     }
-    @RoleCheck(level = {1,3})
+
+    @RoleCheck(level = {3})
     @RequestMapping(value = "/add.do", method = RequestMethod.POST)
     public String addCustomer(Customer customer) {
         System.out.println(customer);
         try {
             customerService.addCustomer(customer);
         } catch (Exception e) {
-            return "出现异常";
+            e.printStackTrace();
+            return e.getMessage();
         }
-        return "添加成功";
+        return "操作成功";
     }
 
-    @RoleCheck(level = {1,3})
+    @RoleCheck(level = {3})
     @RequestMapping(value = "/update.do")
     public String update(Customer c)
     {
@@ -75,26 +77,26 @@ public class CustomerController {
         catch (Exception e)
         {
             e.printStackTrace();
-            return "ERROR";
+            return e.getMessage();
         }
 
-        return "OK";
+        return "操作成功";
     }
 
-    @RoleCheck(level = {1,3})
+    @RoleCheck(level = {3})
     @RequestMapping(value = "/del.do")
     public String delSupplier(Integer id) {
         try {
             customerService.delCustomer(id);
         } catch (Exception e) {
-            return "操作异常";
+            e.printStackTrace();
+            return e.getMessage();
         }
         return "操作成功";
     }
 
-
-    @RequestMapping(value = "/getLike.do")
-    public CustomerItem getLike(String likeStr) {
-        return customerService.getLikeCustomer(likeStr);
+    @RequestMapping(value = "/getListByLikeName.do")
+    public List<Customer> getListByLikeName(String likeStr) {
+        return customerService.getListByLikeName1(likeStr);
     }
 }

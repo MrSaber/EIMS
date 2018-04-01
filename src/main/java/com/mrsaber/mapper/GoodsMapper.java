@@ -15,8 +15,13 @@ public interface GoodsMapper {
      void addGoods(Goods goods);
     @Delete("DELETE FROM gongxiao.ms_goods WHERE su_id=#{id};")
      void delGoodsById(Integer id);
+
     @Select("SELECT ms_goods.*,ms_supplier.supplier_office FROM gongxiao.ms_goods,gongxiao.ms_supplier WHERE (su_supplier=supplier_id and su_name like #{like});")
-     List<Goods> getGoodsLike(String like);
+     List<Goods> getListByLikeName(String like);
+
+    @Select("SELECT ms_goods.*,ms_supplier.supplier_office FROM gongxiao.ms_goods,gongxiao.ms_supplier WHERE (su_supplier=supplier_id and su_No like #{like});")
+    List<Goods> getListByLikeNo(String like);
+
     @Select("SELECT * FROM gongxiao.ms_goods WHERE su_id=#{id};")
      Goods getGoodsById(Integer id);
     @Update("UPDATE `gongxiao`.`ms_goods` SET `su_name`=#{su_name}, `su_No`=#{su_No}, `su_orign`=#{su_orign}, `su_standard`=#{su_standard}, `su_storage`=#{su_storage},`su_listPrice`=#{su_listPrice}, `su_other`=#{su_other}  WHERE `su_id`=#{su_id};")

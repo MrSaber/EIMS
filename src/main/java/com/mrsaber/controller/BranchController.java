@@ -16,6 +16,7 @@ import java.util.List;
 public class BranchController {
     @Autowired
     private BranchService branchService;
+    @RoleCheck(level = {3})
     @RequestMapping("/add.do")
     public String add(Branch branch)
     {
@@ -50,6 +51,7 @@ public class BranchController {
         return branchService.getBranchByOfficeId(key);
     }
 
+    @RoleCheck(level = {1,3})
     @RequestMapping("/excel.do")
     public void excel(HttpServletResponse response,String txtContent)
     {

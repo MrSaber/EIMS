@@ -34,6 +34,7 @@ public class OfficeController {
      * @param office
      * @return
      */
+    @RoleCheck(level = {3})
     @RequestMapping(value = "/add.do")
     public String addOffice(Office office) {
         try {
@@ -65,11 +66,11 @@ public class OfficeController {
     /**
      * 修改单位信息
      */
+    @RoleCheck(level = {3})
     @RequestMapping(value = "/update.do")
     public String updateOffice(Office office)
     {
         try{
-            //
         }
         catch (Exception e)
         {

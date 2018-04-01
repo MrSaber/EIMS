@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <title>供销存管理系统</title>
+    <link rel="stylesheet" href="layui/css/layui.css"/>
+    <link rel="stylesheet" href="layui/css/ms.css"/>
+    <script src="layui/lay/modules/jquery.min.js"></script>
+    <script src="layui/layui.js"></script>
+    <!--JQuery Easy UI 模块-->
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/bootstrap/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/icon.css"/>
+    <script type="text/javascript" src="jquery-easyui/jquery.easyui.min.js"></script>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <table id="dg" class="easyui-datagrid" title="待出库订单" style="width:100%;height:800px"
+           data-options="rownumbers:true,singleSelect:false,url:'/web/sale/getCheck.do',method:'get', remoteSort:false,toolbar:'#tb'">
+        <thead>
+        <tr>
+            <th data-options="field:'ck',checkbox:true"></th>
+            <th data-options="field:'sale_id',width:80,sortable:true">流水号</th>
+            <th data-options="field:'sale_or_id',width:80,sortable:true,hidden:true">流水号</th>
+            <th data-options="field:'cu_name',width:80,sortable:true">顾客名称</th>
+            <th data-options="field:'supplier_office',width:100,sortable:true">供货商</th>
+            <th data-options="field:'su_name',width:80,sortable:true">货品名称</th>
+            <th data-options="field:'su_No',width:100,sortable:true">商品货号</th>
+            <th data-options="field:'su_storage',width:80,align:'right'">存储条件</th>
+            <th data-options="field:'su_orign',width:80,align:'right'">产地</th>
+            <th data-options="field:'su_standard',width:80,align:'right'">规格</th>
+            <th data-options="field:'sale_date',width:80,align:'right',sortable:true">出货日期</th>
+            <th data-options="field:'sale_price',width:80,align:'right',sortable:true">出货价</th>
+            <th data-options="field:'sale_number',width:80,align:'right',sortable:true">出货数量</th>
+            <th data-options="field:'sale_other',width:50,sortable:true">备注</th>
+            <th data-options="field:'_operate',width:80,align:'center',formatter:formatOper">操作</th>
+            <script>
+                function formatOper(val,row,index){
+                    return '<a href="#"  onclick="outbound('+row.sale_or_id+','+row.sale_number+','+row.sale_id+')">同意</a><a href="#"  onclick="delSale('+row.sale_id+')">拒绝</a>';
+                }
+            </script>
+        </tr>
+        </thead>
+    </table>
+    <div id="tb" style="height:auto">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="outboundList()">一键出库</a>
+    </div>
+</div>
+
+<!--CURD代码-->
+<script>
+    /*<![CDATA[*/
+    function outbound(or_id,number,sale_id)
+    {
+        $.messager.confirm("信息","确定要出库吗？",function(r){
+            if(r)
+            {
+                    $.ajax({
+                        url:"/web/sale/confirmSale.do",
+                        data:{
+                            sale_or_id:or_id,
+                            sale_number:number,
+                            sale_id:sale_id
+                        },
+                        success:function (msg) {
+                            $.messager.alert("反馈",msg);
+                            location.reload();
+                        }
+                    })
+                }
+        });
+    }
+
+    function delSale(btn) {
+        $.messager.confirm("信息","确定要删除吗？",function(r){
+            if(r) {
+                if(r)
+                {
+                    $.ajax({
+                        url:"/web/sale/del.do",
+                        data:{
+                            sale_id:btn
+                        },
+                        success:function (msg) {
+                            $.messager.alert("反馈",msg);
+                            location.reload();
+                        }
+                    })
+                }
+            }
+        });
+    }
+    function outboundList()
+    {
+        var rows = $('#dg').datagrid("getSelections");
+        for(var i=0;i<rows.length;i++)
+        {
+            $.ajax({
+                url:"/web/sale/confirmSale.do",
+                data:{
+                    sale_or_id:rows[i].sale_or_id,
+                    sale_number:rows[i].sale_number,
+                    sale_id:rows[i].sale_id
+                }
+            })
+        }
+        $.messager.alert("反馈","一键出库成功！")
+    }
+    /*]]>*/
+</script>
+</body>
+</html>
