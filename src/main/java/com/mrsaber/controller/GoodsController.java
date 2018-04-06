@@ -2,17 +2,12 @@ package com.mrsaber.controller;
 
 import com.mrsaber.dao.GoodsService;
 import com.mrsaber.model.Goods;
-import com.mrsaber.model.GoodsItem;
+import com.mrsaber.model.onePage;
 import com.mrsaber.security.RoleCheck;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-
 
 /**
  * 物品管理
@@ -28,6 +23,7 @@ public class GoodsController {
      * @return
      */
     @RequestMapping(value = "/get.do")
+    @Transactional
     public List<Goods> getAllGoods(@RequestParam(defaultValue = "1")Integer page,@RequestParam(defaultValue = "10")Integer rows )
     {
         try {
@@ -37,23 +33,40 @@ public class GoodsController {
         }
         return  null;
     }
+
+    @RequestMapping(value = "/getByPage.do")
+    @Transactional
+    public onePage getListByPage(@RequestParam(defaultValue = "1")Integer page, @RequestParam(defaultValue = "50")Integer rows )
+    {
+        try {
+            return goodsService.getListByPage(rows,(page-1)*rows);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  null;
+    }
+
+
     /**
      * 【增加物品】
      * @param goods
      * @return
      */
     @RoleCheck(level = {3})
-    @RequestMapping(value = "/2.do",method = RequestMethod.POST)
+    @RequestMapping(value = "/add.do",method = RequestMethod.POST)
     public String addGoods(Goods goods)
     {
         try {
             goodsService.addGoods(goods);
         }catch (Exception e)
         {
+            e.printStackTrace();
             return e.getMessage();
         }
         return "数据添加成功！";
     }
+
+
     /**
      * 【删除物品】
      * @param goodsID
@@ -73,7 +86,6 @@ public class GoodsController {
         return "数据删除成功";
     }
 
-
     /**
      *【模糊查询获得货品列表】
      */
@@ -91,6 +103,7 @@ public class GoodsController {
         }
         return  null;
     }
+
 
     /**
      * 【更新货品信息】
