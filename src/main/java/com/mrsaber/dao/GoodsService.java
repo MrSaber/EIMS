@@ -1,10 +1,12 @@
 package com.mrsaber.dao;
 
+
 import com.mrsaber.mapper.GoodsMapper;
 import com.mrsaber.model.Goods;
-import com.mrsaber.model.GoodsItem;
+import com.mrsaber.model.onePage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,6 +21,8 @@ public class GoodsService {
     {
         return  goodsMapper.getAllGoods();
     }
+
+    @Transactional
     public void addGoods(Goods goods)
     {
         goodsMapper.addGoods(goods);
@@ -42,10 +46,22 @@ public class GoodsService {
         return goodses;
     }
 
-
     public Goods getGoodsById(Integer id)
     {
          return  goodsMapper.getGoodsById(id);
     }
     public void updateById(Goods goods){goodsMapper.updateById(goods);}
+    /**
+     * 分页
+     * @param rows
+     * @param offset
+     * @return
+     */
+    public onePage getListByPage(Integer rows, Integer offset)
+    {
+        onePage<Goods> page = new onePage<>();
+        page.setTotal(goodsMapper.getCount());
+        page.setRows(goodsMapper.getListByPage(rows,offset));
+        return page;
+    }
 }

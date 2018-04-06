@@ -112,6 +112,15 @@ public class OrderService {
         List<Order> orders = orderMapper.getListByPageAndRow(row,(page-1)*row);
         return orders;
     }
+
+    public onePage getListByPage(Integer rows, Integer offset)
+    {
+        onePage<Order> page = new onePage<>();
+        page.setTotal(orderMapper.getCount());
+        page.setRows(orderMapper.getListByPage(rows,offset));
+        return page;
+    }
+
     public List<Order> getListByInbound(Integer id)
     {
         return orderMapper.getGoodsInfoInBound(id);

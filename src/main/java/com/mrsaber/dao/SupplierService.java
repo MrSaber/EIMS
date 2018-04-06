@@ -3,6 +3,7 @@ package com.mrsaber.dao;
 import com.mrsaber.mapper.SupplierMapper;
 import com.mrsaber.model.Supplier;
 import com.mrsaber.model.SupplierItem;
+import com.mrsaber.model.onePage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,5 +46,19 @@ public class SupplierService {
     public List<Supplier> getListByLikeName(String like)
     {
         return supplierMapper.getListByLikeName("%"+like+"%");
+    }
+
+    /**
+     * 分页
+     * @param rows
+     * @param offset
+     * @return
+     */
+    public onePage getListByPage(Integer rows, Integer offset)
+    {
+        onePage<Supplier> page = new onePage<>();
+        page.setTotal(supplierMapper.getCount());
+        page.setRows(supplierMapper.getListByPage(rows,offset));
+        return page;
     }
 }

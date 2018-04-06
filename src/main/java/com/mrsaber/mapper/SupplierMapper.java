@@ -1,10 +1,7 @@
 package com.mrsaber.mapper;
 
 import com.mrsaber.model.Supplier;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -25,4 +22,10 @@ public interface SupplierMapper {
 
     @Select("SELECT * FROM gongxiao.ms_supplier WHERE supplier_office like #{supplier_office};")
     List<Supplier> getListByLikeName(String supplier_office);
+
+    @Select("SELECT COUNT(*) FROM gongxiao.ms_supplier")
+    Integer getCount();
+
+    @Select("SELECT * FROM gongxiao.ms_supplier LIMIT #{rows} OFFSET #{offset}")
+    List<Supplier> getListByPage(@Param("rows")Integer rows, @Param("offset") Integer offset);
 }

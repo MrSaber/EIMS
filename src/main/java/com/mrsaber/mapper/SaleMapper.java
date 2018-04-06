@@ -19,7 +19,6 @@ public interface SaleMapper {
     @Select("SELECT ms_sale.*, ms_goods.*, ms_supplier.*,ms_customer.cu_name FROM gongxiao.ms_sale, ms_goods, ms_customer, ms_supplier WHERE sale_check = 0 AND sale_goods_id = su_id AND sale_cu_id = cu_id AND su_supplier = supplier_id;")
     List<Sale> getListSaleUnCheck();
 
-
     List<Sale> getListByDateAndCuId(OfIdAndDateItem item);
 
     @Select("SELECT ms_sale.sale_date,ms_sale.sale_price,ms_sale.sale_number,ms_customer.cu_name FROM gongxiao.ms_sale,ms_customer where sale_or_id=#{id} and sale_cu_id=cu_id;")
@@ -56,6 +55,13 @@ public interface SaleMapper {
     void backGoods(@Param("sale_id") Integer sale_id,@Param("back_num") Integer back_num,@Param("back_cause") String back_cause);
 
     List<Sale> getListByRecent();
+
+    @Select("SELECT COUNT(*) FROM ms_sale WHERE sale_check =1;")
+    Integer getCount();
+
+
+    @Select("SELECT ms_sale.*,cu_name,ms_goods.*  FROM gongxiao.ms_sale,gongxiao.ms_customer,gongxiao.ms_goods WHERE sale_cu_id=cu_id and sale_goods_id=su_id and sale_check =1 limit #{rows} offset #{offset};")
+    List<Sale> getListByPage(@Param("rows")Integer rows,@Param("offset") Integer offset);
 
     /**
      * 结款

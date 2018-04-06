@@ -3,7 +3,7 @@ package com.mrsaber.dao;
 import com.mrsaber.mapper.SaleMapper;
 import com.mrsaber.model.OfIdAndDateItem;
 import com.mrsaber.model.Sale;
-import org.omg.CORBA.INTERNAL;
+import com.mrsaber.model.onePage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -103,6 +103,20 @@ public class SaleService {
     public Sale getById(Integer saleId)
     {
         return saleMapper.getById(saleId);
+    }
+
+    /**
+     * 分页
+     * @param rows
+     * @param offset
+     * @return
+     */
+    public onePage getListByPage(Integer rows, Integer offset)
+    {
+        onePage<Sale> page = new onePage<>();
+        page.setTotal(saleMapper.getCount());
+        page.setRows(saleMapper.getListByPage(rows,offset));
+        return page;
     }
 
 }

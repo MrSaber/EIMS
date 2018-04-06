@@ -2,11 +2,11 @@ package com.mrsaber.controller;
 import com.mrsaber.dao.SupplierService;
 import com.mrsaber.model.Supplier;
 import com.mrsaber.model.SupplierItem;
+import com.mrsaber.model.onePage;
 import com.mrsaber.security.RoleCheck;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -17,19 +17,48 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("supplier")
+@CrossOrigin
 public class SupplierController {
     @Autowired
     private SupplierService supplierService;
-    @RequestMapping(value = "/getALlSupplierInfo.do")
-    public List<Supplier> getALlSupplierInfo(HttpServletResponse response)
+
+    /**
+     * 获得所有信息
+     * @return
+     */
+    @RequestMapping(value = "/getAllSupplierInfo.do")
+    public List<Supplier> getALlSupplierInfo()
     {
-        response.setHeader("Access-Control-Allow-Origin","*");//解决跨域请求问题
-        System.out.println("Hello");
-        return supplierService.getAllSupplierInfo().getData();
+        try {
+            return supplierService.getAllSupplierInfo().getData();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
+
+    /**
+     * 获得分页信息
+     * @param page
+     * @param rows
+     * @return
+     */
+    @RequestMapping(value = "/getByPage.do")
+    @Transactional
+    public onePage getListByPage(@RequestParam(defaultValue = "1")Integer page, @RequestParam(defaultValue = "50")Integer rows )
+    {
+        try {
+            return supplierService.getListByPage(rows,(page-1)*rows);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  null;
+    }
+
+
     @RoleCheck(level = {3})
     @RequestMapping(value = "add.do",method = RequestMethod.POST)
-    public String addSupplier(Supplier supplier)
+    public String add(Supplier supplier)
     {
         System.out.println(supplier);
         try {
@@ -44,7 +73,7 @@ public class SupplierController {
     }
     @RoleCheck(level = {3})
     @RequestMapping(value = "del.do")
-    public String delSupplier(Integer ID)
+    public String del(Integer ID)
     {
         try {
             supplierService.delSupplierById(ID);

@@ -1,107 +1,153 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml" lang="en">
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml" lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <title>供销存管理系统</title>
-    <link rel="stylesheet" href="layui/css/layui.css"/>
-    <link rel="stylesheet" href="layui/css/ms.css"/>
+    <link rel="stylesheet" href="layui/css/layui.css" />
+    <link rel="stylesheet" href="layui/css/ms.css" />
     <script src="layui/lay/modules/jquery.min.js"></script>
     <script src="layui/layui.js"></script>
     <!--JQuery Easy UI 模块-->
-    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/bootstrap/easyui.css"/>
-    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/icon.css"/>
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/bootstrap/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/icon.css" />
     <script type="text/javascript" src="jquery-easyui/jquery.easyui.min.js"></script>
+    <style>
+        .panel{
+            float:left;
+        }
+    </style>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
-        <div style="padding: 15px;">
-            <!--日期选择-->
-            <div class="layui-inline">
-                <label class="layui-form-label">机构选择</label>
-                <select class="ms_form_select_lg" id="ms_office">
-                </select>
-                <button class="layui-btn" onclick="getBySup()">查询</button>
-                &nbsp;&nbsp;日期范围 &nbsp;&nbsp;
+    <div style="padding: 15px;">
+        <!--日期选择-->
+        <div class="layui-inline">
+
+            <div id="p" class="easyui-panel" title="供应商筛查" style="width:200px;height:150px;padding:10px;">
+                <div style="margin-bottom:10px">
+                    <input  id="likeStr1"  style="width:150px" class="easyui-textbox"   data-options="required:false"/>
+                </div>
+                <div style="margin-bottom:10px">
+                    <select id="customerSelect" style="width:150px" class="easyui-combobox" name="su_supplier">
+                    </select>
+                </div>
+                <button class="easyui-linkbutton" onclick="getBySup()">查询</button>
+            </div>
+
+            <div id="p1" class="easyui-panel" title="日期范围" style="width:400px;height:150px;padding:10px;">
                 <div class="layui-input-inline" style="width: 150px;">
-                    <input id="begin_date" type="date" name="price_min" autocomplete="off" class="layui-input"/>
+                    <input id="begin_date" type="date" name="price_min" autocomplete="off" class="layui-input" />
                 </div>
                 至
                 <div class="layui-input-inline" style="width: 150px;">
-                    <input id="end_date" type="date" name="price_max"  autocomplete="off" class="layui-input"/>
+                    <input id="end_date" type="date" name="price_max" autocomplete="off" class="layui-input" />
                 </div>
-                <div class="layui-btn-group">
-                    <button class="layui-btn layui-btn-sm" onclick="queryHistory()">查询</button>
-                    <button class="layui-btn layui-btn-sm" onclick="Export('导出excel', $('#dg'));">打印报表</button>
-                    <button class="layui-btn layui-btn-sm" onclick="colorRow()">着色</button>
+                <div style="margin-top: 20px">
+                    <button class="easyui-linkbutton" onclick="queryHistory()">查询</button>
                 </div>
             </div>
-
-            <table id="dg" class="easyui-datagrid" title="进货历史列表" style="width:100%;height:700px"
-                   data-options="rownumbers:true,singleSelect:true,url:'/web/order/getList.do',method:'get', remoteSort:false,pagination:true">
-                <thead>
-                <tr>
-                    <th data-options="field:'or_id',width:80,sortable:true">流水号</th>
-                    <th data-options="field:'supplier_office',width:100,sortable:true">供货商</th>
-                    <th data-options="field:'su_name',width:100,sortable:true">货品名称</th>
-                    <th data-options="field:'su_No',width:80,editor:'textbox',sortable:true">商品货号</th>
-                    <th data-options="field:'or_supplier_id',width:100,hidden:true,sortable:true">供货商ID</th>
-                    <th data-options="field:'su_storage',width:80,align:'right',sortable:true">存储条件</th>
-                    <th data-options="field:'su_orign',width:80,align:'right',sortable:true">产地</th>
-                    <th data-options="field:'su_standard',width:80,align:'right',sortable:true">规格</th>
-                    <th data-options="field:'or_date',width:80,align:'right',sortable:true">进货日期</th>
-                    <th data-options="field:'or_deaddate',width:80,align:'right',sortable:true">到期日期</th>
-                    <th data-options="field:'or_initial',width:80,align:'right',sortable:true">购货数量</th>
-                    <th data-options="field:'or_price',width:80,align:'right',sortable:true">购价</th>
-                    <th data-options="field:'or_number',width:80,align:'right',sortable:true">剩余数量</th>
-                    <th data-options="field:'or_total',width:80,align:'right',sortable:true">总价</th>
-                    <th data-options="field:'or_invoice',width:60,sortable:true">发票状况</th>
-                    <th data-options="field:'or_payment',width:60,sortable:true">结款状态</th>
-                    <th data-options="field:'or_other',width:180">备注</th>
-                </tr>
-                </thead>
-            </table>
-            <!--右键菜单-->
-            <div id="mm" class="easyui-menu" style="width:120px;">
-                <div onclick="delOrder()" data-options="iconCls:'icon-remove'">删除订单</div>
-                <div onclick="$('#dlg_updateOther').dialog('open');" data-options="iconCls:'icon-edit'">修改备注</div>
-                <div onclick="$('#dlg_invoice').dialog('open');" data-options="iconCls:'icon-edit'">修改发票状况</div>
-                <div onclick=" $('#dlg').dialog('open');" data-options="iconCls:'icon-remove'">退货</div>
-            </div>
-            <!--退货面板-->
-            <div id="dlg" class="easyui-dialog" title="退货面板"  closed="true" data-options="iconCls:'icon-save'" style="width:300px;height:200px;padding:10px">
-                <form id="ff_back" method="post">
-                    <div style="margin-bottom:10px">
-                        <td><input class="easyui-textbox" label="退货数量：" type="number"  id="backNum" data-options="required:true"/></td>
-                    </div>
-                    <div style="margin-bottom:10px">
-                        <td><input class="easyui-textbox" label="退货原因：" type="text"  id="backCause" data-options="required:true"/></td>
-                    </div>
-                    <div style="margin-bottom:10px">
-                        <td><input class="easyui-datebox" label="退货时间：" type="text"  id="backDate" data-options="required:true"/></td>
-                    </div>
-                </form>
-                <div style="text-align:center;padding:5px 0">
-                    <a  class="easyui-linkbutton" onclick="backP()" style="width:80px">提交</a>
+            <script>
+                $(function(){
+                    $('#likeStr1').textbox({
+                        onChange:function()
+                        {
+                            $('#customerSelect').combobox({
+                                url:"/web/supplier/getListByLikeName.do",
+                                queryParams:{
+                                    likeStr:$('#likeStr1').val()
+                                },
+                                valueField:'supplier_id',
+                                textField:'supplier_office'
+                            });
+                        }
+                    })
+                })
+            </script>
+        </div>
+        <table id="dg" class="easyui-datagrid" title="进货历史列表" style="width:100%;height:600px" data-options="rownumbers:true,singleSelect:true,url:'/web/order/getByPage.do',method:'get', remoteSort:false,pagination:true,pageSize:50" toolbar="#toolbar">
+            <thead>
+            <tr>
+                <th data-options="field:'or_id',width:80,sortable:true">流水号</th>
+                <th data-options="field:'supplier_office',width:100,sortable:true">供货商</th>
+                <th data-options="field:'su_name',width:100,sortable:true">货品名称</th>
+                <th data-options="field:'su_No',width:80,editor:'textbox',sortable:true">商品货号</th>
+                <th data-options="field:'or_supplier_id',width:100,hidden:true,sortable:true">供货商ID</th>
+                <th data-options="field:'su_storage',width:80,align:'right',sortable:true">存储条件</th>
+                <th data-options="field:'su_orign',width:80,align:'right',sortable:true">产地</th>
+                <th data-options="field:'su_standard',width:80,align:'right',sortable:true">规格</th>
+                <th data-options="field:'or_date',width:80,align:'right',sortable:true">进货日期</th>
+                <th data-options="field:'or_deaddate',width:80,align:'right',sortable:true">到期日期</th>
+                <th data-options="field:'or_initial',width:80,align:'right',sortable:true">购货数量</th>
+                <th data-options="field:'or_price',width:80,align:'right',sortable:true">购价</th>
+                <th data-options="field:'or_number',width:80,align:'right',sortable:true">剩余数量</th>
+                <th data-options="field:'or_total',width:80,align:'right',sortable:true">总价</th>
+                <th data-options="field:'or_invoice',width:60,sortable:true">发票状况</th>
+                <th data-options="field:'or_payment',width:60,sortable:true">结款状态</th>
+                <th data-options="field:'or_other',width:180">备注</th>
+            </tr>
+            </thead>
+        </table>
+        <!--工具栏菜单-->
+        <div id="toolbar">
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="calcSUM()">合计金额</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="colorRow()">高亮区分</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-print" plain="true" onclick="Export('导出excel', $('#dg'))">打印报表</a>
+        </div>
+        <script>
+            /*<![CDATA[*/
+            function calcSUM() {
+                var rows = $('#dg').datagrid("getRows");
+                var sum =0.0;
+                for(var i=0;i<rows.length;i++)
+                {
+                    sum=sum+rows[i].or_total;
+                }
+                $.messager.alert("消息","当前页总价为"+sum+"元!");
+            }
+            /*]]>*/
+        </script>
+        <!--右键菜单-->
+        <div id="mm" class="easyui-menu" style="width:120px;">
+            <div onclick="delOrder()" data-options="iconCls:'icon-remove'">删除订单</div>
+            <div onclick="$('#dlg_updateOther').dialog('open');" data-options="iconCls:'icon-edit'">修改备注</div>
+            <div onclick="$('#dlg_invoice').dialog('open');" data-options="iconCls:'icon-edit'">修改发票状况</div>
+            <div onclick=" $('#dlg').dialog('open');" data-options="iconCls:'icon-remove'">退货</div>
+        </div>
+        <!--退货面板-->
+        <div id="dlg" class="easyui-dialog" title="退货面板" closed="true" data-options="iconCls:'icon-save'" style="width:300px;height:200px;padding:10px">
+            <form id="ff_back" method="post">
+                <div style="margin-bottom:10px">
+                    <td><input class="easyui-textbox" label="退货数量：" type="number" id="backNum" data-options="required:true" /></td>
                 </div>
-            </div>
-            <!--开发票面板-->
-            <div id="dlg_invoice" class="easyui-dialog" title="修改发票状况"  closed="true" data-options="iconCls:'icon-save'" style="width:400px;height:80px;padding:10px">
-                <select id="cc" class="easyui-combobox" name="dept" style="width:200px;">
-                    <option value="1">有</option>
-                    <option value="2">无</option>
-                    <option value="3">拖欠</option>
-                </select>
-                <button class="easyui-linkbutton" onclick="updateIn()">确定</button>
-            </div>
-
-            <!--更新备注-->
-            <div id="dlg_updateOther" class="easyui-dialog" title="更新备注"  closed="true" data-options="iconCls:'icon-save'" style="width:400px;height:120px;">
-                <input id="other" class="easyui-textbox" label="新备注:" labelPosition="top" style="width:90%;height:52px"/>
-                <button class="easyui-linkbutton" onclick="updateOther()">确定</button>
+                <div style="margin-bottom:10px">
+                    <td><input class="easyui-textbox" label="退货原因：" type="text" id="backCause" data-options="required:true" /></td>
+                </div>
+                <div style="margin-bottom:10px">
+                    <td><input class="easyui-datebox" label="退货时间：" type="text" id="backDate" data-options="required:true" /></td>
+                </div>
+            </form>
+            <div style="text-align:center;padding:5px 0">
+                <a class="easyui-linkbutton" onclick="backP()" style="width:80px">提交</a>
             </div>
         </div>
+        <!--开发票面板-->
+        <div id="dlg_invoice" class="easyui-dialog" title="修改发票状况" closed="true" data-options="iconCls:'icon-save'" style="width:400px;height:80px;padding:10px">
+            <select id="cc" class="easyui-combobox" name="dept" style="width:200px;">
+                <option value="1">有</option>
+                <option value="2">无</option>
+                <option value="3">拖欠</option>
+            </select>
+            <button class="easyui-linkbutton" onclick="updateIn()">确定</button>
+        </div>
+
+        <!--更新备注-->
+        <div id="dlg_updateOther" class="easyui-dialog" title="更新备注" closed="true" data-options="iconCls:'icon-save'" style="width:400px;height:120px;">
+            <input id="other" class="easyui-textbox" label="新备注:" labelPosition="top" style="width:90%;height:52px" />
+            <button class="easyui-linkbutton" onclick="updateOther()">确定</button>
+        </div>
     </div>
+</div>
 <!--CURD代码-->
 <script>
     /*<![CDATA[*/
@@ -109,27 +155,14 @@
     function queryHistory() {
         var $begin_date = $('#begin_date').val();
         var $end_date =$('#end_date').val();
-        var $of_id = $('#ms_office').val();
+        var $of_id = $('#customerSelect').combobox('getValue');
+        $('#dg').datagrid({url:"/web/order/getOrderByDateAndSupplierId.do"});
         $('#dg').datagrid("load",{
             begin_date:$begin_date,end_date:$end_date,key_id:$of_id
         });
     }
     // 自动获得机构信息并添加到选择框中
     $(function () {
-        $(function () {
-            $.ajax({
-                type:"GET",
-                url:"/web/supplier/getALlSupplierInfo.do",
-                success:function (datas) {
-                    console.log(datas);
-                    var i;
-                    for(i=0;i<datas.length;i++)
-                    {
-                        $('#ms_office').append("<option value='"+datas[i].supplier_id+"'>"+datas[i].supplier_office+"</option>")
-                    }
-                }
-            });
-        });
         $('#dg').datagrid({
             onLoadSuccess:function (data) {
                 var rows=$('#dg').datagrid("getRows");
@@ -152,8 +185,8 @@
                 $('#mm').menu('show',{
                     left:e.pageX,
                     top:e.pageY});
-        }
-    });});
+            }
+        });});
     //更正发票信息
     function modify_invoice(val)
     {
@@ -223,7 +256,7 @@
             url:"/web/order/updateOther.do",
             data:{key:or_id,val:checkVal},
             success:function (data) {
-               $.messager.alert("消息",data);
+                $.messager.alert("消息",data);
             }
         })
     }
@@ -244,7 +277,7 @@
     }
     // 获得公司订单
     function getBySup() {
-        var $of_id = $('#ms_office').val();
+        var $of_id = $('#customerSelect').combobox('getValue');
         $('#dg').datagrid({url:"/web/order/getListBySupId.do"});
         $('#dg').datagrid("load",{
             id:$of_id

@@ -27,6 +27,14 @@ public interface OrderMapper {
     @Select("SELECT ms_order.*,ms_supplier.supplier_office,ms_goods.* FROM gongxiao.ms_order,gongxiao.ms_supplier,gongxiao.ms_goods WHERE or_supplier_id=supplier_id and or_goods_id=su_id and or_check=3;")
     List<Order> getList();
 
+
+    @Select("SELECT COUNT(*) FROM ms_sale WHERE sale_check =1;")
+    Integer getCount();
+
+    @Select("SELECT ms_order.*,ms_supplier.supplier_office,ms_goods.* FROM gongxiao.ms_order,gongxiao.ms_supplier,gongxiao.ms_goods WHERE or_supplier_id=supplier_id and or_goods_id=su_id and or_check=3 limit #{rows} offset #{offset};;")
+    List<Order> getListByPage(@Param("rows")Integer rows,@Param("offset") Integer offset);
+
+
     @Select("SELECT ms_order.*,ms_supplier.supplier_office,ms_goods.* FROM gongxiao.ms_order,gongxiao.ms_supplier,gongxiao.ms_goods WHERE or_supplier_id=supplier_id and or_goods_id=su_id and or_check=3 LIMIT #{row} OFFSET #{page};")
     List<Order> getListByPageAndRow(@Param("row")Integer row,@Param("page")Integer page);
 

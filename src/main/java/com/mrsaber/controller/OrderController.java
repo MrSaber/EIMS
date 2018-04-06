@@ -1,15 +1,14 @@
 package com.mrsaber.controller;
 
 import com.mrsaber.dao.OrderService;
-import com.mrsaber.model.OfIdAndDateItem;
-import com.mrsaber.model.Order;
-import com.mrsaber.model.OrderItem;
-import com.mrsaber.model.Statistics;
+import com.mrsaber.model.*;
 import com.mrsaber.security.RoleCheck;
 import com.sun.tools.corba.se.idl.constExpr.Or;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
@@ -132,19 +131,6 @@ public class OrderController {
         return  null;
     }
 
-/*
-    @RequestMapping(value = "/getStatistics.do")
-    public List<Statistics> getStatistics()
-    {
-        try {
-            return orderService.getStatistics();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-*/
-
     /**
      * 【获得库存总额】
      * @return
@@ -242,6 +228,23 @@ public class OrderController {
         return  orderService.getList();
     }
 
+    /**
+     * 分页信息查询
+     * @param page
+     * @param rows
+     * @return
+     */
+    @RequestMapping(value = "/getByPage.do")
+    @Transactional
+    public onePage getListByPage(@RequestParam(defaultValue = "1")Integer page, @RequestParam(defaultValue = "50")Integer rows )
+    {
+        try {
+            return orderService.getListByPage(rows,(page-1)*rows);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  null;
+    }
 
     /**
      * 获得所有进货信息根据排序

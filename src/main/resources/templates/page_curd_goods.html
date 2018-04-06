@@ -17,12 +17,13 @@
         <table id="dg" class="easyui-datagrid" title="商品列表" style="width:100%;height:700px"
                data-options="rownumbers:true,
                    singleSelect:true,
-                   url:'/web/goods/get.do',
+                   url:'/web/goods/getByPage.do',
                    method:'get',
                    toolbar:'#tb',
-                    onDblClickRow: onDBClickRow,
+                   onDblClickRow: onDBClickRow,
                    remoteSort:false,
-pagination:true">
+                   pagination:true,
+                    pageSize:50">
             <thead>
             <tr>
                 <th data-options="field:'su_id',width:80,hidden:true,sortable:true">流水号</th>
@@ -279,7 +280,7 @@ pagination:true">
         function addGoodsAjax()
         {
             $('#fm').form('submit', {
-                url: "/web/goods/2.do",
+                url: "/web/goods/add.do",
                 onSubmit: function () {
                 },
                 success: function (result) {

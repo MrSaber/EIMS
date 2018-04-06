@@ -3,13 +3,14 @@ package com.mrsaber.controller;
 import com.mrsaber.dao.SaleService;
 import com.mrsaber.model.OfIdAndDateItem;
 import com.mrsaber.model.Sale;
+import com.mrsaber.model.onePage;
 import com.mrsaber.security.RoleCheck;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -110,6 +111,19 @@ public class SaleController {
         return saleService.getListByRecent();
     }
 
+
+    @RequestMapping(value = "/getByPage.do")
+    @Transactional
+    public onePage getListByPage(@RequestParam(defaultValue = "1")Integer page, @RequestParam(defaultValue = "50")Integer rows )
+    {
+        try {
+            return saleService.getListByPage(rows,(page-1)*rows);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  null;
+    }
+
     /**
      * 【获得订单的售货记录】
      */
@@ -138,11 +152,6 @@ public class SaleController {
     {
             return saleService.getListByDateAndCuId(item);
     }
-
-
-
-
-
     /**
      * 【设置结账情况】
      * @param
@@ -179,5 +188,7 @@ public class SaleController {
         }
         return "更新成功";
     }
+
+
 
 }

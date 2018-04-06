@@ -14,7 +14,6 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println("拦截器开始执行.....");
         boolean flag= true;
         if(handler instanceof HandlerMethod)
         {
