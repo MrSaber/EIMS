@@ -28,8 +28,9 @@
                 <th data-options="field:'su_orign',width:80,align:'right'">产地</th>
                 <th data-options="field:'su_standard',width:80,align:'right'">规格</th>
                 <th data-options="field:'or_date',width:80,align:'right',sortable:true">购货日期</th>
-                <th data-options="field:'or_price',width:80,align:'right',sortable:true">购货价</th>
-                <th data-options="field:'or_number',width:80,align:'right',sortable:true">购货数量</th>
+                <th data-options="field:'or_number',width:80,align:'right',sortable:true">数量</th>
+                <th data-options="field:'or_price',width:80,align:'right',sortable:true">单价</th>
+                <th data-options="field:'or_sum',width:80,align:'right',sortable:true">总价</th>
                 <th data-options="field:'or_invoice',width:80,align:'right'">发票状况</th>
                 <th data-options="field:'or_other',width:50,sortable:true">备注</th>
                 <th data-options="field:'_operate',width:80,align:'center',formatter:formatOper">操作</th>
@@ -47,6 +48,7 @@
 <!--CURD代码-->
 <script>
     /*<![CDATA[*/
+    //入库
     function inbound(btn)
     {
         $.messager.confirm("信息","确定要入库吗？",function(r){
@@ -67,6 +69,7 @@
                 }
         });
     }
+    //删除订单
     function delOrder(btn) {
         $.messager.confirm("信息","确定要删除吗？",function(r){
             if(r) {
@@ -86,6 +89,7 @@
             }
         });
     }
+    //一键入库
     function inboundList()
     {
         var rows = $('#dg').datagrid("getSelections");
@@ -101,6 +105,20 @@
         }
         $.messager.alert("反馈","一键入库成功！")
     }
+    //计算总价
+    $('#dg').datagrid({
+        onLoadSuccess: function (data) {
+            var rows = $('#dg').datagrid("getRows");
+            for (var i = 0; i < rows.length; i++) {
+                $('#dg').datagrid('updateRow', {
+                    index: i,
+                    row: {
+                        or_sum: rows[i].or_number * rows[i].or_price
+                    }
+                });
+            }
+        }
+    });
     /*]]>*/
 </script>
 </body>

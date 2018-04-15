@@ -243,7 +243,6 @@
                         index: i,
                         row: {
                             sale_count:rows[i].sale_number*rows[i].sale_price,
-                            sale_date:new Date(rows[i].sale_date).toLocaleDateString(),
                             sale_invoice:modify_invoice(rows[i].sale_invoice),
                             sale_payment:modify_payment(rows[i].sale_payment)
                         }
@@ -258,7 +257,7 @@
                 {
                     count=rows[i].sale_count+count;
                 }
-                $('#tongji1').text("已选中金额为："+count);
+                $('#tongji1').text("已选中金额为："+count.toFixed(2));
             },
             //当用户取消一行时自动计算
             onUnselect:function() {
@@ -268,7 +267,7 @@
                 {
                     count=rows[i].sale_count+count;
                 }
-                $('#tongji1').text("已选中金额为："+count);
+                $('#tongji1').text("已选中金额为："+count.toFixed(2));
             }
         });
     });
@@ -399,7 +398,7 @@
             {donePay+=rows[i].sale_count;}
         }
         $('#dg').datagrid('loadData',rows);
-        $('#tongji').text("【统计信息】：已付款："+donePay+" 未付款： "+toDoPay+" 合计金额："+(donePay+toDoPay));
+        $('#tongji').text("【统计信息】：已付款："+donePay.toFixed(2)+" 未付款： "+toDoPay.toFixed(2)+" 合计金额："+(donePay+toDoPay).toFixed(2));
     }
 
     // 自动获得层级信息并添加到选择框中

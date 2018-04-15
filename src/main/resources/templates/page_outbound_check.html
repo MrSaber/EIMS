@@ -30,8 +30,9 @@
             <th data-options="field:'su_orign',width:80,align:'right'">产地</th>
             <th data-options="field:'su_standard',width:80,align:'right'">规格</th>
             <th data-options="field:'sale_date',width:80,align:'right',sortable:true">出货日期</th>
-            <th data-options="field:'sale_price',width:80,align:'right',sortable:true">出货价</th>
-            <th data-options="field:'sale_number',width:80,align:'right',sortable:true">出货数量</th>
+            <th data-options="field:'sale_number',width:80,align:'right',sortable:true">数量</th>
+            <th data-options="field:'sale_price',width:80,align:'right',sortable:true">单价</th>
+            <th data-options="field:'sale_sum',width:80,align:'right',sortable:true">总价</th>
             <th data-options="field:'sale_other',width:50,sortable:true">备注</th>
             <th data-options="field:'_operate',width:80,align:'center',formatter:formatOper">操作</th>
             <script>
@@ -50,6 +51,7 @@
 <!--CURD代码-->
 <script>
     /*<![CDATA[*/
+    //入库
     function outbound(or_id,number,sale_id)
     {
         $.messager.confirm("信息","确定要出库吗？",function(r){
@@ -70,7 +72,7 @@
                 }
         });
     }
-
+    //删除订单
     function delSale(btn) {
         $.messager.confirm("信息","确定要删除吗？",function(r){
             if(r) {
@@ -90,6 +92,7 @@
             }
         });
     }
+    //一键出库
     function outboundList()
     {
         var rows = $('#dg').datagrid("getSelections");
@@ -106,6 +109,20 @@
         }
         $.messager.alert("反馈","一键出库成功！")
     }
+    //计算总价
+    $('#dg').datagrid({
+        onLoadSuccess: function (data) {
+            var rows = $('#dg').datagrid("getRows");
+            for (var i = 0; i < rows.length; i++) {
+                $('#dg').datagrid('updateRow', {
+                    index: i,
+                    row: {
+                        sale_sum: rows[i].sale_number * rows[i].sale_price
+                    }
+                });
+            }
+        }
+    });
     /*]]>*/
 </script>
 </body>

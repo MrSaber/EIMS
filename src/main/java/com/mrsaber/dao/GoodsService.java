@@ -32,6 +32,7 @@ public class GoodsService {
     {
         goodsMapper.delGoodsById(id);
     }
+
     public List<Goods> getListByLikeName(String like)
     {
         like="%"+like+"%";

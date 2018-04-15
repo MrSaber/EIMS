@@ -65,7 +65,9 @@
                 })
             </script>
         </div>
-        <table id="dg" class="easyui-datagrid" title="进货历史列表" style="width:100%;height:600px" data-options="rownumbers:true,singleSelect:true,url:'/web/order/getByPage.do',method:'get', remoteSort:false,pagination:true,pageSize:50" toolbar="#toolbar">
+        <table id="dg" class="easyui-datagrid" title="进货历史列表" style="width:100%;height:600px"
+               data-options="rownumbers:true,singleSelect:true,url:'/web/order/getByPage.do',method:'get', remoteSort:false,pagination:true,pageSize:50"
+               toolbar="#toolbar">
             <thead>
             <tr>
                 <th data-options="field:'or_id',width:80,sortable:true">流水号</th>
@@ -90,12 +92,16 @@
         </table>
         <!--工具栏菜单-->
         <div id="toolbar">
+            隐藏数量低于此值的行
+            <input class="easyui-numberbox" value="1" id="filterNum" style="width: 150px"/>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cut" plain="true" onclick="cutRows()">隐藏</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="calcSUM()">合计金额</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="colorRow()">高亮区分</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-print" plain="true" onclick="Export('导出excel', $('#dg'))">打印报表</a>
         </div>
         <script>
             /*<![CDATA[*/
+            //计算当页总和
             function calcSUM() {
                 var rows = $('#dg').datagrid("getRows");
                 var sum =0.0;
@@ -103,7 +109,23 @@
                 {
                     sum=sum+rows[i].or_total;
                 }
-                $.messager.alert("消息","当前页总价为"+sum+"元!");
+                $.messager.alert("消息","当前页总价为"+sum.toFixed(2)+"元!");
+            }
+            //删除数量少的行
+            function cutRows() {
+                var rows = $('#dg').datagrid("getRows");
+                var low = $('#filterNum').numberbox("getValue");
+                var selectRows = [];
+                for (var i= 0; i< rows.length; i++) {
+                    if(rows[i].or_number<low)
+                    {
+                        selectRows.push(rows[i]);
+                    }
+                }
+                for(var j =0;j<selectRows.length;j++){
+                    var index = $('#dg').datagrid('getRowIndex',selectRows[j]);
+                    $('#dg').datagrid('deleteRow',index);
+                }
             }
             /*]]>*/
         </script>
@@ -140,7 +162,6 @@
             </select>
             <button class="easyui-linkbutton" onclick="updateIn()">确定</button>
         </div>
-
         <!--更新备注-->
         <div id="dlg_updateOther" class="easyui-dialog" title="更新备注" closed="true" data-options="iconCls:'icon-save'" style="width:400px;height:120px;">
             <input id="other" class="easyui-textbox" label="新备注:" labelPosition="top" style="width:90%;height:52px" />
@@ -171,7 +192,7 @@
                     $('#dg').datagrid('updateRow',{
                         index: i,
                         row: {
-                            or_total:rows[i].or_initial*rows[i].or_price,
+                            or_total:(rows[i].or_initial*rows[i].or_price).toFixed(2),
                             or_date:new Date(rows[i].or_date).toLocaleDateString(),
                             or_deaddate:new Date(rows[i].or_deaddate).toLocaleDateString(),
                             or_invoice:modify_invoice(rows[i].or_invoice),
@@ -186,7 +207,8 @@
                     left:e.pageX,
                     top:e.pageY});
             }
-        });});
+        });
+    });
     //更正发票信息
     function modify_invoice(val)
     {

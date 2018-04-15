@@ -39,6 +39,10 @@
             </thead>
         </table>
         <div id="tb" style="height:auto">
+            筛选
+            <input class="easyui-textbox" id="likeName" style="width:100px"/>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" onclick="getLikeList()">查找</a>
+
             <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="$('#dlg').dialog('open').dialog('center').dialog('setTitle','添加货品');">添加</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="delSu()">删除</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="updateRow()">保存选中项</a>
@@ -144,6 +148,11 @@
                     $.messager.alert("提示信息",data);
                 }
             })
+        }
+        //查询相似物品
+        function getLikeList() {
+            $('#dg').datagrid({url:"/web/goods/getLike.do"});
+            $('#dg').datagrid('load',{type:1,like:$('#likeName').val()});
         }
     </script>
     <script>
@@ -277,6 +286,7 @@
         </div>
     </div>
     <script>
+        //添加物品
         function addGoodsAjax()
         {
             $('#fm').form('submit', {
@@ -290,6 +300,7 @@
                 }
             })
         }
+        //获得供货商列表
         $(function(){
             $('#likeStr1').textbox({
                 onChange:function()
