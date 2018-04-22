@@ -60,7 +60,7 @@
 <div id="p" class="easyui-panel" title="库存信息" style="width:580px;height:465px;padding:10px;">
     <div class="layui-colla-content layui-show" id="repertory">
         <table id="dg" class="easyui-datagrid" style="width:550px;height:410px"
-               data-options="url:'/web/order/getListByLikeName.do',fitColumns:true,singleSelect:true">
+               data-options="url:'/web/order/getListByLikeName.do',fitColumns:true,singleSelect:true"  toolbar="#toolbar">
             <thead>
             <tr>
                 <th data-options="field:'su_id',width:100,hidden:true">ID</th>
@@ -73,8 +73,34 @@
             </tr>
             </thead>
         </table>
+        <div id="toolbar">
+            隐藏数量低于此值的行
+            <input class="easyui-numberbox" value="1" id="filterNum" style="width: 150px"/>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cut" plain="true" onclick="cutRows()">隐藏</a>
+        </div>
     </div>
 </div>
+
+<script>
+    /*<![CDATA[*/
+    //删除数量少的行
+    function cutRows() {
+        var rows = $('#dg').datagrid("getRows");
+        var low = $('#filterNum').numberbox("getValue");
+        var selectRows = [];
+        for (var i= 0; i< rows.length; i++) {
+            if(rows[i].or_number<low)
+            {
+                selectRows.push(rows[i]);
+            }
+        }
+        for(var j =0;j<selectRows.length;j++){
+            var index = $('#dg').datagrid('getRowIndex',selectRows[j]);
+            $('#dg').datagrid('deleteRow',index);
+        }
+    }
+    /*]]>*/
+</script>
 
 
 

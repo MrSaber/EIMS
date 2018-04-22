@@ -242,7 +242,7 @@
                     $('#dg').datagrid('updateRow',{
                         index: i,
                         row: {
-                            sale_count:rows[i].sale_number*rows[i].sale_price,
+                            sale_count:(rows[i].sale_number*rows[i].sale_price).toFixed(2),
                             sale_invoice:modify_invoice(rows[i].sale_invoice),
                             sale_payment:modify_payment(rows[i].sale_payment)
                         }

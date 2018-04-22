@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-
 /**
  * 物品管理
  */
@@ -33,7 +32,12 @@ public class GoodsController {
         }
         return  null;
     }
-
+    /**
+     * 【获得分页数据】
+     * @param page
+     * @param rows
+     * @return
+     */
     @RequestMapping(value = "/getByPage.do")
     @Transactional
     public onePage getListByPage(@RequestParam(defaultValue = "1")Integer page, @RequestParam(defaultValue = "50")Integer rows )
@@ -45,7 +49,6 @@ public class GoodsController {
         }
         return  null;
     }
-
 
     /**
      * 【增加物品】
@@ -96,14 +99,13 @@ public class GoodsController {
             switch (type)
             {
                 case 1:return goodsService.getListByLikeName(like);
-                case 2:return  goodsService.getListByLikeNo(like);
+                case 2:return goodsService.getListByLikeNo(like);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return  null;
     }
-
 
     /**
      * 【更新货品信息】

@@ -4,57 +4,71 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <title>供货存管理系统</title>
-    <link rel="stylesheet" href="layui/css/layui.css" />
     <link rel="stylesheet" href="layui/css/ms.css" />
     <script src="layui/lay/modules/jquery.min.js"></script>
-    <script src="layui/Chart.js"></script>
     <!--JQuery Easy UI 模块-->
     <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/bootstrap/easyui.css" />
     <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/icon.css" />
     <script type="text/javascript" src="jquery-easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="jquery-easyui/datagrid-filter.js"></script>
+    <style>
+        .panel{
+            float: left;
+        }
+    </style>
 </head>
 <body class="">
 <div class="">
     <!-- 内容主体区域 -->
     <div style="padding: 15px;">
-        <blockquote class="layui-elem-quote" id="amount"></blockquote>
-        <fieldset class="layui-elem-field layui-field-title">
-            <legend>库存查询</legend>
-        </fieldset>
-        <div class="layui-form-item">
-            <!--输入框-->
-            <label class="layui-form-label">物品名称</label>
-            <div class="layui-input-inline">
-                <input type="text" id="likeStr" required="required" lay-verify="required" placeholder="请输入物品" autocomplete="off" class="layui-input" />
+        <blockquote  id="amount"></blockquote>
+        <div id="p1" class="easyui-panel" title="供应商查询" style="width:400px;height:150px;padding:10px;">
+            <div style="margin: 10px">
+                <input type="text" id="likeStr1" class="easyui-textbox" placeholder="请输入货号" label="物品货号："/>
+                <button class="easyui-linkbutton" onclick="reloadTable2()">查询</button>
             </div>
-            <!--查询按钮-->
-            <div class="layui-input-inline">
-                <button class="layui-btn layui-btn-danger" onclick="reloadTable()">查询</button>
+            <div style="margin: 10px">
+                <input type="text" id="likeStr" placeholder="请输入物品" class="easyui-textbox" label="物品名称："/>
+                <button class="easyui-linkbutton" onclick="reloadTable()">查询</button>
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">供货商：</label>
-            <div class="layui-input-inline">
-                <select id="su_supplier" name="su_supplier" class="ms_form_select_lg">
+
+        <div id="p" class="easyui-panel" title="供应商查询" style="width:200px;height:150px;padding:10px;">
+            <div style="margin-bottom:10px">
+                <input  id="su_supplier"  style="width:150px" class="easyui-textbox"   data-options="required:false"/>
+            </div>
+            <div style="margin-bottom:10px">
+                <select id="customerSelect" style="width:150px" class="easyui-combobox" name="su_supplier">
                 </select>
             </div>
-            <!--查询按钮-->
-            <div class="layui-input-inline">
-                <button class="layui-btn layui-btn-danger" onclick="reloadTable1()">查询</button>
-            </div>
+            <button class="easyui-linkbutton" onclick="reloadTable1()">查询</button>
         </div>
-        <fieldset class="layui-elem-field layui-field-title">
-            <legend>库存清单</legend>
-        </fieldset>
-        <table id="dg" class="easyui-datagrid" title="存信息" style="width:100%;height:800px"
+        <script>
+            $(function(){
+                $('#su_supplier').textbox({
+                    onChange:function()
+                    {
+                        $('#customerSelect').combobox({
+                            url:"/web/supplier/getListByLikeName.do",
+                            queryParams:{
+                                likeStr:$('#su_supplier').val()
+                            },
+                            valueField:'supplier_id',
+                            textField:'supplier_office'
+                        });
+                    }
+                })
+            })
+        </script>
+
+        <table id="dg" class="easyui-datagrid" title="库存信息" style="width:100%;height:800px"
                data-options="rownumbers:true,singleSelect:true,method:'get', remoteSort:false,url:'/web/order/search.do'"
                toolbar="#toolbar">
             <thead>
             <tr>
                 <th data-options="field:'supplier_office',width:100,sortable:true">供货商</th>
                 <th data-options="field:'su_name',width:80,sortable:true">货品名称</th>
-                <th data-options="field:'su_No',width:80,sortable:true">货品名称</th>
+                <th data-options="field:'su_No',width:80,sortable:true">商品货号</th>
                 <th data-options="field:'su_orign',width:100,sortable:true">产地</th>
                 <th data-options="field:'su_standard',width:100,sortable:true">规格</th>
                 <th data-options="field:'su_storage',width:100,sortable:true">存储条件</th>
@@ -154,12 +168,12 @@
             }
         });
     });
-
     /*]]>*/
 </script>
 <script>
     /*<![CDATA[*/
     //重新加载表格
+    //名称查询
     function reloadTable() {
         var $str =$('#likeStr').val();
         $('#dg').datagrid({url:"/web/order/getListByLikeName.do"});
@@ -194,10 +208,46 @@
             }
         });
     }
+    //货号查询
+    function reloadTable2() {
+        var $str =$('#likeStr1').val();
+        $('#dg').datagrid({url:"/web/order/getListByLikeName.do"});
+        $('#dg').datagrid('load',{like:$str,type:2});
+        $('#dg').datagrid({
+            onLoadSuccess:function (data) {
+                var rows=$('#dg').datagrid("getRows");
+                for(var i=0;i<rows.length;i++)
+                {
+                    var invoiceStr="";
+                    switch(rows[i].or_invoice) {
+                        case 1:
+                            invoiceStr = "有";
+                            break;
+                        case 2:
+                            invoiceStr = "无";
+                            break;
+                        case 3:
+                            invoiceStr = "拖欠";
+                            break;
+                    }
+                    $('#dg').datagrid('updateRow',{
+                        index: i,
+                        row: {
+                            /*                            or_date:new Date(rows[i].or_date).toLocaleDateString(),
+                                                        or_deaddate:new Date(rows[i].or_deaddate).toLocaleDateString(),*/
+                            or_invoice:invoiceStr,
+                            or_total:rows[i].or_price*rows[i].or_number
+                        }
+                    });
+                }
+            }
+        });
+    }
+    //供货商查询
     function reloadTable1() {
-        var $str =$('#su_supplier').val();
+        var $of_id = $('#customerSelect').combobox('getValue');
         $('#dg').datagrid({url:"/web/order/getListBySupId.do"});
-        $('#dg').datagrid('load',{id:$str});
+        $('#dg').datagrid('load',{id:$of_id});
         $('#dg').datagrid({
             onLoadSuccess:function (data) {
                 var rows=$('#dg').datagrid("getRows");

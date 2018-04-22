@@ -21,7 +21,6 @@
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div style="padding: 15px;">
-        <!--日期选择-->
         <div class="layui-inline">
 
             <div id="p" class="easyui-panel" title="供应商筛查" style="width:200px;height:150px;padding:10px;">
@@ -66,7 +65,7 @@
             </script>
         </div>
         <table id="dg" class="easyui-datagrid" title="进货历史列表" style="width:100%;height:600px"
-               data-options="rownumbers:true,singleSelect:true,url:'/web/order/getByPage.do',method:'get', remoteSort:false,pagination:true,pageSize:50"
+               data-options="rownumbers:true,singleSelect:false,url:'/web/order/getByPage.do',method:'get', remoteSort:false,pagination:true,pageSize:50"
                toolbar="#toolbar">
             <thead>
             <tr>
@@ -261,14 +260,19 @@
     // 修改发票状况
     function updateIn() {
         var checkVal = $('#cc').val();
-        var or_id =$('#dg').datagrid("getSelected").or_id;
-        $.ajax({
-            url:"/web/order/setInvoice.do",
-            data:{key:or_id,value:checkVal},
-            success:function (data) {
-                $.messager.alert("消息",data);
-            }
-        })
+        var rows =$('#dg').datagrid("getSelections");
+        for(var i=0;i<rows.length;i++)
+        {
+            $.ajax({
+                url:"/web/order/setInvoice.do",
+                data:{key:rows[i].or_id,value:checkVal},
+            });
+            //此处进行延时
+            for(var j=0;j<200;j++)
+            {}
+        }
+        $.messager.alert("消息","一键结发票完成！（受限于网络传输，请再次检查是否有遗漏）");
+        $('#dg').datagrid('reload');
     }
     // 更新备注状况
     function updateOther() {
@@ -279,6 +283,7 @@
             data:{key:or_id,val:checkVal},
             success:function (data) {
                 $.messager.alert("消息",data);
+                $('#dg').datagrid('reload');
             }
         })
     }
@@ -292,6 +297,7 @@
                     data:{id:orId},
                     success:function (data) {
                         $.messager.alert("消息",data);
+                        $('#dg').datagrid('reload');
                     }
                 })
             }
