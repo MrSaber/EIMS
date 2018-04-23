@@ -295,13 +295,15 @@
         for(var i=0;i<rows.length;i++)
         {
             $.ajax({
-                url:"/web/sale/setPayment.do",
+                url:"/web/order/setPayment.do",
                 data:{id:rows[i].or_id}
             });
             //此处进行延时
             for(var j=0;j<200;j++)
             {}
         }
+        $.messager.alert("消息","一键结账完成！（受限于网络传输，请再次检查是否有遗漏）");
+        $('#dg').datagrid('reload');
     }
     // 删除订单
     function delOrder() {

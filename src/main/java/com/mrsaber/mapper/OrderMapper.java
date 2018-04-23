@@ -64,7 +64,7 @@ public interface OrderMapper {
      * @param id
      * @return
      */
-    @Update("UODATE `gongxiao`.`ms_order` SET `or_payment`=6 WHERE `or_id`=#{id}; ")
+    @Update("UPDATE `gongxiao`.`ms_order` SET `or_payment`=6 WHERE `or_id`=#{id};")
     void setPayment(Integer id);
 
     /**

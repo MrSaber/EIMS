@@ -24,7 +24,7 @@
             <input id="likeNo" style="width: 100%" class="easyui-textbox" data-options="label:'货 号:',required:false"/>
         </div>
         <div style="margin-bottom:20px">
-            <input name="sale_number" style="width:100%" type="number"  class="easyui-numberbox" value="1" id="sale_number" data-options="label:'数 量:',required:true"/>
+            <input name="sale_number" style="width:100%" type="number"  class="easyui-numberbox" value="1" id="sale_number" data-options="label:'数 量:',min:0,precision:2,required:true"/>
         </div>
         <div style="margin-bottom:20px">
             <input name="sale_price" style="width:100%" type="number" class="easyui-numberbox" value="1"  data-options="label:'售 价:',required:true,min:0,precision:2"/>
@@ -68,7 +68,7 @@
                 <th data-options="field:'su_No',width:80">货号</th>
                 <th data-options="field:'or_number',width:100">余量</th>
                 <th data-options="field:'supplier_office',width:100">厂家</th>
-                <th data-options="field:'or_price',width:100">目录价</th>
+                <th data-options="field:'su_listPrice',width:100">目录价</th>
                 <th data-options="field:'or_date',width:100">进货日期</th>
             </tr>
             </thead>
@@ -146,7 +146,7 @@
     function addAjax() {
         var saleMax = $('#dg').datagrid('getSelected').or_number;
         var saleNum = $('#sale_number').val();
-        if(saleNum >saleMax||saleNum<1)
+        if(saleNum >saleMax||saleNum<0)
         {
             $.messager.alert("无法出货","请检查出货数量输入合法性！");
         }else{

@@ -17,6 +17,7 @@ import java.util.List;
 public class GoodsService {
     @Autowired
     private GoodsMapper goodsMapper;
+
     public List<Goods> getAllGoods()
     {
         return  goodsMapper.getAllGoods();
