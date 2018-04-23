@@ -117,7 +117,7 @@
                 $('#dg').datagrid('updateRow', {
                     index: i,
                     row: {
-                        sale_sum: rows[i].sale_number * rows[i].sale_price
+                        sale_sum: (rows[i].sale_number * rows[i].sale_price).toFixed(2)
                     }
                 });
             }

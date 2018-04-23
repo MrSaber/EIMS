@@ -94,6 +94,7 @@
             隐藏数量低于此值的行
             <input class="easyui-numberbox" value="1" id="filterNum" style="width: 150px"/>
             <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cut" plain="true" onclick="cutRows()">隐藏</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" plain="true" onclick="updatePay()">一键结账</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="calcSUM()">合计金额</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="colorRow()">高亮区分</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-print" plain="true" onclick="Export('导出excel', $('#dg'))">打印报表</a>
@@ -106,7 +107,7 @@
                 var sum =0.0;
                 for(var i=0;i<rows.length;i++)
                 {
-                    sum=sum+rows[i].or_total;
+                    sum=sum+parseFloat(rows[i].or_total);
                 }
                 $.messager.alert("消息","当前页总价为"+sum.toFixed(2)+"元!");
             }
@@ -226,6 +227,7 @@
             case 3:return "预付款";
             case 4:return "月结";
             case 5:return "现结";
+            case 6:return "结清";
         }
     }
     //退货
@@ -286,6 +288,20 @@
                 $('#dg').datagrid('reload');
             }
         })
+    }
+    // 修改结账状况
+    function updatePay() {
+        var rows =$('#dg').datagrid("getSelections");
+        for(var i=0;i<rows.length;i++)
+        {
+            $.ajax({
+                url:"/web/sale/setPayment.do",
+                data:{id:rows[i].or_id}
+            });
+            //此处进行延时
+            for(var j=0;j<200;j++)
+            {}
+        }
     }
     // 删除订单
     function delOrder() {

@@ -154,7 +154,7 @@
             onDblClickRow: function(index,row){
                 var info="";
                 $.ajax({
-                    url:"/web/sale/getSaledInfoByOrId.do" ,
+                    url:"/web/sale/getListByOrId.do" ,
                     data:{id:row.or_id},
                     success:function (data) {
                         for(var i=0;i<data.length;i++)

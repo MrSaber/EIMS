@@ -113,7 +113,7 @@
                 $('#dg').datagrid('updateRow', {
                     index: i,
                     row: {
-                        or_sum: rows[i].or_number * rows[i].or_price
+                        or_sum: (rows[i].or_number * rows[i].or_price).toFixed(2)
                     }
                 });
             }

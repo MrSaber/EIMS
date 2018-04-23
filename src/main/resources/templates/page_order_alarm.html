@@ -17,7 +17,7 @@
         <div style="padding: 15px;">
             <!--JQuery Easy UI 表格-->
             <table id="dg" class="easyui-datagrid" title="库存预警" style="width:100%;height:800px"
-                   data-options="rownumbers:true,singleSelect:true,url:'/web/order/getBoundAlarm.do',method:'get'">
+                   data-options="rownumbers:true,singleSelect:true,url:'/web/order/getBoundAlarm.do',method:'get'" toolbar="#toolbar">
                 <thead>
                 <tr>
                     <th data-options="field:'or_id',width:80">流水号</th>
@@ -36,7 +36,32 @@
                 </tr>
                 </thead>
             </table>
+            <div id="toolbar">
+                隐藏数量低于此值的行
+                <input class="easyui-numberbox" value="1" id="filterNum" style="width: 150px"/>
+                <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cut" plain="true" onclick="cutRows()">隐藏</a>
+            </div>
         </div>
+        <script>
+            /*<![CDATA[*/
+            //删除数量少的行
+            function cutRows() {
+                var rows = $('#dg').datagrid("getRows");
+                var low = $('#filterNum').numberbox("getValue");
+                var selectRows = [];
+                for (var i= 0; i< rows.length; i++) {
+                    if(rows[i].or_number<low)
+                    {
+                        selectRows.push(rows[i]);
+                    }
+                }
+                for(var j =0;j<selectRows.length;j++){
+                    var index = $('#dg').datagrid('getRowIndex',selectRows[j]);
+                    $('#dg').datagrid('deleteRow',index);
+                }
+            }
+            /*]]>*/
+        </script>
     <!--右键菜单-->
     <div id="mm" class="easyui-menu" style="width:120px;">
         <div onclick="addCart()" data-options="iconCls:'icon-add'">加入购物车</div>
