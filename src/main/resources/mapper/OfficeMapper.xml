@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mrsaber.mapper.OfficeMappper">
     <insert id="addOffice" parameterType="com.mrsaber.model.Goods">
-      INSERT INTO `gongxiao`.`ms_office` (`of_name`, `of_principal`, `of_addr`, `of_other`) VALUES (#{of_name}, #{of_principal}, #{of_addr}, #{of_other});
+        INSERT INTO `gongxiao`.`ms_office` (`of_name`, `of_principal`, `of_addr`, `of_other`) VALUES (#{of_name},
+        #{of_principal}, #{of_addr}, #{of_other});
     </insert>
 </mapper>
 

@@ -13,7 +13,7 @@ public class Order {
     private Integer or_id;
     private Integer or_goods_id;
     private Integer or_supplier_id;
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date or_date;//日期
     private Double or_price;//价格
@@ -21,9 +21,9 @@ public class Order {
     private Double or_total;//总结额
     private Integer or_invoice;//是否有订单
     private String or_other; //备注
-    private Integer or_check=0; //状态 0 表示订货状态
+    private Integer or_check = 0; //状态 0 表示订货状态
     private Integer or_initial; //订货量
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date or_deaddate;
     private Integer or_alarm;
@@ -110,6 +110,7 @@ public class Order {
     }
 
     private String supplier_office;
+
     public String getSu_name() {
         return su_name;
     }

@@ -18,47 +18,49 @@ import java.util.List;
 public class SupplierService {
     @Autowired
     private SupplierMapper supplierMapper;
-    public SupplierItem getAllSupplierInfo()
-    {
+
+    public SupplierItem getAllSupplierInfo() {
 
         SupplierItem supplierItem = new SupplierItem();
-        List<Supplier> suppliers =supplierMapper.getAllSupplierInfo();
+        List<Supplier> suppliers = supplierMapper.getAllSupplierInfo();
         supplierItem.setData(suppliers);
         supplierItem.setCount(suppliers.size());
         supplierItem.setCode(0);
         supplierItem.setMsg("supplier_info");
         return supplierItem;
     }
-    public void addSupplier(Supplier supplier)
-    {
+
+    public void addSupplier(Supplier supplier) {
         supplierMapper.addSupplier(supplier);
     }
-    public void delSupplierById(Integer id)
-    {
+
+    public void delSupplierById(Integer id) {
         supplierMapper.delSupplierById(id);
     }
-    public Supplier getSupplierById(Integer id){return supplierMapper.getSupplierById(id);}
-    public void updateSu(Supplier supplier)
-    {
+
+    public Supplier getSupplierById(Integer id) {
+        return supplierMapper.getSupplierById(id);
+    }
+
+    public void updateSu(Supplier supplier) {
         supplierMapper.updateSu(supplier);
     }
 
-    public List<Supplier> getListByLikeName(String like)
-    {
-        return supplierMapper.getListByLikeName("%"+like+"%");
+    public List<Supplier> getListByLikeName(String like) {
+        return supplierMapper.getListByLikeName("%" + like + "%");
     }
 
     /**
      * 分页
+     *
      * @param rows
      * @param offset
      * @return
      */
-    public onePage getListByPage(Integer rows, Integer offset)
-    {
+    public onePage getListByPage(Integer rows, Integer offset) {
         onePage<Supplier> page = new onePage<>();
         page.setTotal(supplierMapper.getCount());
-        page.setRows(supplierMapper.getListByPage(rows,offset));
+        page.setRows(supplierMapper.getListByPage(rows, offset));
         return page;
     }
 }

@@ -11,6 +11,7 @@ public class Office {
     private String of_other;
     //************关联表查询*************
     private String cu_name; //负责人信息
+
     public String getCu_name() {
         return cu_name;
     }

@@ -11,6 +11,7 @@ import java.util.List;
 public interface BackPMapper {
     @Insert("INSERT INTO `gongxiao`.`ms_backP` (`bp_or_id`, `bp_number`, `bp_date`, `bp_other`,`bp_su_id`) VALUES (#{bp_or_id}, #{bp_number}, #{bp_date}, #{bp_other},#{bp_su_id});")
     void add(BackP p);
+
     @Select("SELECT * FROM gongxiao.ms_backP WHERE bp_su_id=#{id};")
     List<BackP> get(Integer id);
 }

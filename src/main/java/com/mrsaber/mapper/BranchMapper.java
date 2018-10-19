@@ -12,6 +12,7 @@ import java.util.List;
 public interface BranchMapper {
     @Select("SELECT * FROM ms_branch WHERE br_office_id=#{id}")
     List<Branch> getBranchByOfficeId(Integer id);
+
     @Insert("INSERT INTO `gongxiao`.`ms_branch` (`br_office_id`, `br_name`, `br_other`) VALUES (#{br_office_id}, #{br_name}, #{br_other})")
     void addBranch(Branch branch);
 

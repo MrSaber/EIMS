@@ -9,7 +9,7 @@ public class BackP {
     private Integer bp_id;
     private Integer bp_or_id;
     private Integer bp_number;
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date bp_date;
     private String bp_other;

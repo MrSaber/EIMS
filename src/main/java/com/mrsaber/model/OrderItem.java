@@ -1,7 +1,6 @@
 package com.mrsaber.model;
 
 
-
 import java.util.List;
 
 /**

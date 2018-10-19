@@ -8,7 +8,7 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
     @Insert("INSERT INTO `gongxiao`.`ms_user` (`user_name`, `user_password`, `user_role`, `user_other`) VALUES (#{user_name}, #{user_password}, #{user_role}, #{user_other});")
-    void  add(User user);
+    void add(User user);
 
     @Select("SELECT * FROM `gongxiao`.`ms_user` WHERE user_name=#{user_name} and user_password = #{user_password}")
     User get(User user);

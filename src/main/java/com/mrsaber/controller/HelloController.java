@@ -20,6 +20,7 @@ public class HelloController {
 
     /**
      * 登录
+     *
      * @param username
      * @param password
      * @param request
@@ -29,37 +30,41 @@ public class HelloController {
      */
     @RequestMapping("/login.do")
     public Boolean login(String username, String password, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        User user =new User();
+        User user = new User();
         user.setUser_name(username);
         user.setUser_password(password);
 
         User cUser = userMapper.get(user);
-        if(cUser==null)
-        {
+        if (cUser == null) {
             response.sendRedirect("/web/index.html");
             return false;
         }
 
-        session.setAttribute("user",cUser);
-        switch (cUser.getUser_role())
-        {
-            case 3:response.sendRedirect("/web/page_admin.html");break;
-            case 1:response.sendRedirect("/web/shenhe.html");break;
-            case 2:response.sendRedirect("/web/page_index_viewer.html");break;
+        session.setAttribute("user", cUser);
+        switch (cUser.getUser_role()) {
+            case 3:
+                response.sendRedirect("/web/page_admin.html");
+                break;
+            case 1:
+                response.sendRedirect("/web/shenhe.html");
+                break;
+            case 2:
+                response.sendRedirect("/web/page_index_viewer.html");
+                break;
         }
         return true;
     }
 
     /**
      * 注销
+     *
      * @param request
      * @param response
      * @return
      */
     @RequestMapping("/logout.do")
-    public Boolean Login(HttpServletRequest request,HttpServletResponse response)
-    {
-        request.getSession().setAttribute("isLogin","false");
+    public Boolean Login(HttpServletRequest request, HttpServletResponse response) {
+        request.getSession().setAttribute("isLogin", "false");
         try {
             response.sendRedirect("/web/index.html");
         } catch (IOException e) {

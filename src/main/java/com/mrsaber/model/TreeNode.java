@@ -5,11 +5,11 @@ import java.util.List;
 public class TreeNode {
     /**
      * id: node id, which is important to load remote data
-     text: node text to show
-     state: node state, 'open' or 'closed', default is 'open'. When set to 'closed', the node have children nodes and will load them from remote site
-     checked: Indicate whether the node is checked selected.
-     attributes: custom attributes can be added to a node
-     children: an array nodes defines some children nodes
+     * text: node text to show
+     * state: node state, 'open' or 'closed', default is 'open'. When set to 'closed', the node have children nodes and will load them from remote site
+     * checked: Indicate whether the node is checked selected.
+     * attributes: custom attributes can be added to a node
+     * children: an array nodes defines some children nodes
      */
     private String id;
     private String text;

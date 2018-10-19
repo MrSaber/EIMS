@@ -10,7 +10,9 @@
     <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/icon.css"/>
     <script type="text/javascript" src="jquery-easyui/jquery.easyui.min.js"></script>
     <style>
-        .panel{float: left;}
+        .panel {
+            float: left;
+        }
     </style>
 </head>
 <body>
@@ -25,19 +27,24 @@
             <input id="likeNo" style="width: 100%" class="easyui-textbox" data-options="label:'货 号:',required:false"/>
         </div>
         <div style="margin-bottom:20px">
-            <input name="or_number" style="width:100%" type="number"  class="easyui-numberbox" value="1" id="order_number" data-options="label:'数 量:',required:true"/>
+            <input name="or_number" style="width:100%" type="number" class="easyui-numberbox" value="1"
+                   id="order_number" data-options="label:'数 量:',required:true"/>
         </div>
         <div style="margin-bottom:20px">
-            <input name="or_price" style="width:100%" type="number" class="easyui-numberbox" value="1"  data-options="label:'进 价:',required:true,min:0,precision:2"/>
+            <input name="or_price" style="width:100%" type="number" class="easyui-numberbox" value="1"
+                   data-options="label:'进 价:',required:true,min:0,precision:2"/>
         </div>
         <div style="margin-bottom:20px">
-            <input name="or_alarm" style="width:100%" type="number" class="easyui-numberbox" value="1"  data-options="label:'预警阈值:',required:true"/>
+            <input name="or_alarm" style="width:100%" type="number" class="easyui-numberbox" value="1"
+                   data-options="label:'预警阈值:',required:true"/>
         </div>
         <div style="margin-bottom:20px">
-            <input  id="or_date" name="or_date"  style="width:100%" type= "text" class= "easyui-datebox" required ="required" label="进货日期："> </input>
+            <input id="or_date" name="or_date" style="width:100%" type="text" class="easyui-datebox" required="required"
+                   label="进货日期："> </input>
         </div>
         <div style="margin-bottom:20px">
-            <input  id="or_deaddate" name="or_deaddate"  style="width:100%" type= "text" class= "easyui-datebox" required ="required" label="到期日期："> </input>
+            <input id="or_deaddate" name="or_deaddate" style="width:100%" type="text" class="easyui-datebox"
+                   required="required" label="到期日期："> </input>
         </div>
         <div style="margin-bottom:20px">
             <label class="textbox-label">发票状况：</label>
@@ -57,10 +64,12 @@
         </div>
 
         <div style="margin-bottom:20px">
-            <input class="easyui-textbox" style="width:100%" name="or_other" data-options="label:'备注信息:',required:false"/>
+            <input class="easyui-textbox" style="width:100%" name="or_other"
+                   data-options="label:'备注信息:',required:false"/>
         </div>
         <div style="text-align: center">
-            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="addAjax()" style="width:90px">保存</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="addAjax()"
+               style="width:90px">保存</a>
         </div>
     </form>
 </div>
@@ -89,52 +98,50 @@
 
 <script>
     /*<![CDATA[*/
-    $(function(){
+    $(function () {
         $('#or_date').datebox({
-            onSelect:function(date)
-            {
-                var newYear = date.getFullYear()+5;
-                var newDate = date.getMonth()+"/"+date.getDay()+"/"+newYear;
-                $('#or_deaddate').datebox("setValue",newDate);
+            onSelect: function (date) {
+                var newYear = date.getFullYear() + 5;
+                var newDate = date.getMonth() + "/" + date.getDay() + "/" + newYear;
+                $('#or_deaddate').datebox("setValue", newDate);
             }
         });
 
         $('#likeStr').textbox({
-            onChange:function()
-            {
-                $('#dg').datagrid("load",{
-                    like:$('#likeStr').val(),
-                    type:1
+            onChange: function () {
+                $('#dg').datagrid("load", {
+                    like: $('#likeStr').val(),
+                    type: 1
                 });
             }
         });
         $('#likeNo').textbox({
-            onChange:function()
-            {
-                $('#dg').datagrid("load",{
-                    like:$('#likeNo').val(),
-                    type:2
+            onChange: function () {
+                $('#dg').datagrid("load", {
+                    like: $('#likeNo').val(),
+                    type: 2
                 });
             }
         });
     });
+
     function addAjax() {
         var orderNum = $('#order_number').val();
-        if(orderNum <1)
-        {
-            $.messager.alert("错误","进货数量不能小于1！");
-        }else{
+        if (orderNum < 1) {
+            $.messager.alert("错误", "进货数量不能小于1！");
+        } else {
             $('#ff').form('submit', {
                 url: "/web/order/add.do",
                 onSubmit: function (param) {
-                    param.or_goods_id=$('#dg').datagrid('getSelected').su_id;
+                    param.or_goods_id = $('#dg').datagrid('getSelected').su_id;
                 },
                 success: function (result) {
-                    $.messager.alert("反馈",result);
+                    $.messager.alert("反馈", result);
                 }
             })
         }
     }
+
     /*]]>*/
 </script>
 

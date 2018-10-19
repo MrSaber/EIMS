@@ -1,6 +1,7 @@
 package com.mrsaber.model;
 
 import com.github.pagehelper.Page;
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;

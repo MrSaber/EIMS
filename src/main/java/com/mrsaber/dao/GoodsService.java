@@ -18,52 +18,50 @@ public class GoodsService {
     @Autowired
     private GoodsMapper goodsMapper;
 
-    public List<Goods> getAllGoods()
-    {
-        return  goodsMapper.getAllGoods();
+    public List<Goods> getAllGoods() {
+        return goodsMapper.getAllGoods();
     }
 
     @Transactional
-    public void addGoods(Goods goods)
-    {
+    public void addGoods(Goods goods) {
         goodsMapper.addGoods(goods);
     }
 
-    public void delGoodsById(Integer id)
-    {
+    public void delGoodsById(Integer id) {
         goodsMapper.delGoodsById(id);
     }
 
-    public List<Goods> getListByLikeName(String like)
-    {
-        like="%"+like+"%";
-        List<Goods> goodses=goodsMapper.getListByLikeName(like);
+    public List<Goods> getListByLikeName(String like) {
+        like = "%" + like + "%";
+        List<Goods> goodses = goodsMapper.getListByLikeName(like);
         return goodses;
     }
 
-    public List<Goods> getListByLikeNo(String like)
-    {
-        like="%"+like+"%";
-        List<Goods> goodses=goodsMapper.getListByLikeNo(like);
+    public List<Goods> getListByLikeNo(String like) {
+        like = "%" + like + "%";
+        List<Goods> goodses = goodsMapper.getListByLikeNo(like);
         return goodses;
     }
 
-    public Goods getGoodsById(Integer id)
-    {
-         return  goodsMapper.getGoodsById(id);
+    public Goods getGoodsById(Integer id) {
+        return goodsMapper.getGoodsById(id);
     }
-    public void updateById(Goods goods){goodsMapper.updateById(goods);}
+
+    public void updateById(Goods goods) {
+        goodsMapper.updateById(goods);
+    }
+
     /**
      * 分页
+     *
      * @param rows
      * @param offset
      * @return
      */
-    public onePage getListByPage(Integer rows, Integer offset)
-    {
+    public onePage getListByPage(Integer rows, Integer offset) {
         onePage<Goods> page = new onePage<>();
         page.setTotal(goodsMapper.getCount());
-        page.setRows(goodsMapper.getListByPage(rows,offset));
+        page.setRows(goodsMapper.getListByPage(rows, offset));
         return page;
     }
 }

@@ -12,13 +12,15 @@
     <div class="layui-form-item">
         <label class="layui-form-label">货号</label>
         <div class="layui-input-block">
-            <input type="text" name="su_No" required="required"  lay-verify="required" placeholder="货号" autocomplete="off" class="layui-input" id="ms_goods_No"/>
+            <input type="text" name="su_No" required="required" lay-verify="required" placeholder="货号"
+                   autocomplete="off" class="layui-input" id="ms_goods_No"/>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">名称</label>
         <div class="layui-input-block">
-            <input type="text" name="su_name" required="required"  lay-verify="required" placeholder="名称" autocomplete="off" class="layui-input" id="ms_goods_name"/>
+            <input type="text" name="su_name" required="required" lay-verify="required" placeholder="名称"
+                   autocomplete="off" class="layui-input" id="ms_goods_name"/>
         </div>
     </div>
     <div class="layui-form-item">
@@ -35,27 +37,29 @@
         </div>
         <script>
             function openForm_AddSupplier() {
-                window.open("form_addSupplier.html","_blank","height=600,width=400");
+                window.open("form_addSupplier.html", "_blank", "height=600,width=400");
             }
         </script>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">产地</label>
         <div class="layui-input-block">
-            <input type="text" name="su_orign" required="required"  lay-verify="required" placeholder="产地" autocomplete="off" class="layui-input" id="ms_goods_orign"/>
+            <input type="text" name="su_orign" required="required" lay-verify="required" placeholder="产地"
+                   autocomplete="off" class="layui-input" id="ms_goods_orign"/>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">标准</label>
         <div class="layui-input-block">
-            <input type="text" name="su_standard" required="required"  lay-verify="required" placeholder="标准" autocomplete="off" class="layui-input" id="ms_goods_standard"/>
+            <input type="text" name="su_standard" required="required" lay-verify="required" placeholder="标准"
+                   autocomplete="off" class="layui-input" id="ms_goods_standard"/>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">存储条件</label>
         <div class="layui-input-block">
             <!--<input type="text" name="su_storage" required="required"  lay-verify="required" placeholder="存储条件" autocomplete="off" class="layui-input" id="ms_goods_storage"/>-->
-            <select id="ms_goods_storage"  class="ms_form_select_lg">
+            <select id="ms_goods_storage" class="ms_form_select_lg">
                 <option value="4°C">4°C</option>
                 <option value="RT">RT</option>
                 <option value="-20°C">-20°C</option>
@@ -70,7 +74,8 @@
     <div class="layui-form-item">
         <label class="layui-form-label">目录价</label>
         <div class="layui-input-block">
-            <input type="text" name="su_listPrice" required="required"  lay-verify="required" placeholder="目录价" autocomplete="off" class="layui-input" id="ms_goods_listPrice"/>
+            <input type="text" name="su_listPrice" required="required" lay-verify="required" placeholder="目录价"
+                   autocomplete="off" class="layui-input" id="ms_goods_listPrice"/>
         </div>
     </div>
     <div class="layui-form-item">
@@ -83,18 +88,18 @@
 <script>
     $(function () {
         $.ajax({
-            type:"GET",
-            url:"/web/supplier/getALlSupplierInfo.do",
-            success:function (datas) {
+            type: "GET",
+            url: "/web/supplier/getALlSupplierInfo.do",
+            success: function (datas) {
                 console.log(datas);
                 var i;
-                for(i=0;i<datas.length;i++)
-                {
-                    $('#su_supplier').append("<option value='"+datas[i].supplier_id+"'>"+datas[i].supplier_office+"</option>")
+                for (i = 0; i < datas.length; i++) {
+                    $('#su_supplier').append("<option value='" + datas[i].supplier_id + "'>" + datas[i].supplier_office + "</option>")
                 }
             }
         });
     });
+
     function addGoodsAjax() {
         var $goods_No = $('#ms_goods_No').val();
         var $goods_name = $('#ms_goods_name').val();
@@ -105,25 +110,26 @@
         var $goods_warranty = $('#ms_goods_warranty').val();
         var $goods_cost = $('#ms_goods_cost').val();
         var $goods_listPrice = $('#ms_goods_listPrice').val();
-        var $addGoods_request  = $.ajax({
-            type:"POST",
-            url:"/web/goods/2.do",
-            data:{
-                su_No:$goods_No,
-                su_name:$goods_name,
-                su_orign:$goods_orign,
-                su_standard:$goods_standard,
-                su_storage:$goods_storage,
-                su_supplier:$goods_supplier,
-                su_warranty:$goods_warranty,
-                su_cost:$goods_cost,
-                su_listPrice:$goods_listPrice
+        var $addGoods_request = $.ajax({
+            type: "POST",
+            url: "/web/goods/2.do",
+            data: {
+                su_No: $goods_No,
+                su_name: $goods_name,
+                su_orign: $goods_orign,
+                su_standard: $goods_standard,
+                su_storage: $goods_storage,
+                su_supplier: $goods_supplier,
+                su_warranty: $goods_warranty,
+                su_cost: $goods_cost,
+                su_listPrice: $goods_listPrice
             }
         });
         $addGoods_request.done(function (msg) {
             alert(msg);
             location.reload();
-        });}
+        });
+    }
 </script>
 </body>
 </html>

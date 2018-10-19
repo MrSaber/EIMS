@@ -9,7 +9,7 @@ import java.util.Date;
  * Created by ZY on 2017/11/9.
  */
 public class Goods {
-    private Integer su_id=0;
+    private Integer su_id = 0;
     private String su_name;
     private String su_No;
     private Integer su_supplier;

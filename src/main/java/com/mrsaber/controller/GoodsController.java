@@ -7,7 +7,9 @@ import com.mrsaber.security.RoleCheck;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
+
 /**
  * 物品管理
  */
@@ -17,52 +19,54 @@ import java.util.List;
 public class GoodsController {
     @Autowired
     private GoodsService goodsService;
-    /**、
+
+    /**
+     * 、
      * 【获得所有物品信息】
+     *
      * @return
      */
     @RequestMapping(value = "/get.do")
     @Transactional
-    public List<Goods> getAllGoods(@RequestParam(defaultValue = "1")Integer page,@RequestParam(defaultValue = "10")Integer rows )
-    {
+    public List<Goods> getAllGoods(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer rows) {
         try {
             return goodsService.getAllGoods();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return  null;
+        return null;
     }
+
     /**
      * 【获得分页数据】
+     *
      * @param page
      * @param rows
      * @return
      */
     @RequestMapping(value = "/getByPage.do")
     @Transactional
-    public onePage getListByPage(@RequestParam(defaultValue = "1")Integer page, @RequestParam(defaultValue = "50")Integer rows )
-    {
+    public onePage getListByPage(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "50") Integer rows) {
         try {
-            return goodsService.getListByPage(rows,(page-1)*rows);
+            return goodsService.getListByPage(rows, (page - 1) * rows);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return  null;
+        return null;
     }
 
     /**
      * 【增加物品】
+     *
      * @param goods
      * @return
      */
     @RoleCheck(level = {3})
-    @RequestMapping(value = "/add.do",method = RequestMethod.POST)
-    public String addGoods(Goods goods)
-    {
+    @RequestMapping(value = "/add.do", method = RequestMethod.POST)
+    public String addGoods(Goods goods) {
         try {
             goodsService.addGoods(goods);
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             return e.getMessage();
         }
@@ -72,17 +76,16 @@ public class GoodsController {
 
     /**
      * 【删除物品】
+     *
      * @param goodsID
      * @return
      */
     @RoleCheck(level = {3})
-    @RequestMapping(value = "/del.do",method = RequestMethod.POST)
-    public String delGoods(Integer goodsID)
-    {
+    @RequestMapping(value = "/del.do", method = RequestMethod.POST)
+    public String delGoods(Integer goodsID) {
         try {
             goodsService.delGoodsById(goodsID);
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             return e.getMessage();
         }
@@ -90,37 +93,35 @@ public class GoodsController {
     }
 
     /**
-     *【模糊查询获得货品列表】
+     * 【模糊查询获得货品列表】
      */
     @RequestMapping(value = "/getLike.do")
-    public List<Goods> getGoodsLike(String like,Integer type)
-    {
+    public List<Goods> getGoodsLike(String like, Integer type) {
         try {
-            switch (type)
-            {
-                case 1:return goodsService.getListByLikeName(like);
-                case 2:return goodsService.getListByLikeNo(like);
+            switch (type) {
+                case 1:
+                    return goodsService.getListByLikeName(like);
+                case 2:
+                    return goodsService.getListByLikeNo(like);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return  null;
+        return null;
     }
 
     /**
      * 【更新货品信息】
+     *
      * @param goods
      * @return
      */
     @RoleCheck(level = {3})
     @RequestMapping(value = "/update.do")
-    public String updateGoods(Goods goods)
-    {
+    public String updateGoods(Goods goods) {
         try {
             goodsService.updateById(goods);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             return e.getMessage();
         }

@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:v-bind="http://www.w3.org/1999/xhtml" lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <title>供货存管理系统</title>
-    <link rel="stylesheet" href="layui/css/ms.css" />
+    <link rel="stylesheet" href="layui/css/ms.css"/>
     <script src="layui/lay/modules/jquery.min.js"></script>
     <!--JQuery Easy UI 模块-->
-    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/bootstrap/easyui.css" />
-    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/icon.css" />
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/bootstrap/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/icon.css"/>
     <script type="text/javascript" src="jquery-easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="jquery-easyui/datagrid-filter.js"></script>
     <style>
-        .panel{
+        .panel {
             float: left;
         }
     </style>
@@ -21,7 +21,7 @@
 <div class="">
     <!-- 内容主体区域 -->
     <div style="padding: 15px;">
-        <blockquote  id="amount"></blockquote>
+        <blockquote id="amount"></blockquote>
         <div id="p1" class="easyui-panel" title="供应商查询" style="width:400px;height:150px;padding:10px;">
             <div style="margin: 10px">
                 <input type="text" id="likeStr1" class="easyui-textbox" placeholder="请输入货号" label="物品货号："/>
@@ -35,7 +35,7 @@
 
         <div id="p" class="easyui-panel" title="供应商查询" style="width:200px;height:150px;padding:10px;">
             <div style="margin-bottom:10px">
-                <input  id="su_supplier"  style="width:150px" class="easyui-textbox"   data-options="required:false"/>
+                <input id="su_supplier" style="width:150px" class="easyui-textbox" data-options="required:false"/>
             </div>
             <div style="margin-bottom:10px">
                 <select id="customerSelect" style="width:150px" class="easyui-combobox" name="su_supplier">
@@ -44,17 +44,16 @@
             <button class="easyui-linkbutton" onclick="reloadTable1()">查询</button>
         </div>
         <script>
-            $(function(){
+            $(function () {
                 $('#su_supplier').textbox({
-                    onChange:function()
-                    {
+                    onChange: function () {
                         $('#customerSelect').combobox({
-                            url:"/web/supplier/getListByLikeName.do",
-                            queryParams:{
-                                likeStr:$('#su_supplier').val()
+                            url: "/web/supplier/getListByLikeName.do",
+                            queryParams: {
+                                likeStr: $('#su_supplier').val()
                             },
-                            valueField:'supplier_id',
-                            textField:'supplier_office'
+                            valueField: 'supplier_id',
+                            textField: 'supplier_office'
                         });
                     }
                 })
@@ -84,25 +83,26 @@
             </thead>
         </table>
         <div id="toolbar">
-            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-reload" plain="true" onclick="filterRows()">激活过滤</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-reload" plain="true"
+               onclick="filterRows()">激活过滤</a>
             <script>
-                function filterRows()
-                {
+                function filterRows() {
                     //过滤行元素
                     $('#dg').datagrid('enableFilter', [{
-                        field:'or_number',
-                        type:'numberbox',
-                        options:{precision:1},
-                        op:['equal','notequal','less','greater']
-                    },{
-                        field:'or_price',
-                        type:'numberbox',
-                        options:{precision:1},
-                        op:['equal','notequal','less','greater']
+                        field: 'or_number',
+                        type: 'numberbox',
+                        options: {precision: 1},
+                        op: ['equal', 'notequal', 'less', 'greater']
+                    }, {
+                        field: 'or_price',
+                        type: 'numberbox',
+                        options: {precision: 1},
+                        op: ['equal', 'notequal', 'less', 'greater']
                     }]);
                 }
             </script>
-            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-print" plain="true" onclick="Export('导出excel', $('#dg'));">打印报表</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-print" plain="true"
+               onclick="Export('导出excel', $('#dg'));">打印报表</a>
         </div>
     </div>
 </div>
@@ -112,20 +112,24 @@
     <div onclick=" $('#dlg_updateOther').dialog('open');" data-options="iconCls:'icon-add'">修改备注</div>
 </div>
 <!--添加物品-->
-<div id="dlg_Cart" class="easyui-dialog" title="加入购物车" data-options="iconCls:'icon-save'" closed="true" style="width:450px;height:200px;padding:10px">
+<div id="dlg_Cart" class="easyui-dialog" title="加入购物车" data-options="iconCls:'icon-save'" closed="true"
+     style="width:450px;height:200px;padding:10px">
     <div style="margin-bottom:20px">
-        <input class="easyui-numberbox" id="car_number" name="number" style="width:100%" data-options="label:'数量:',required:true" />
+        <input class="easyui-numberbox" id="car_number" name="number" style="width:100%"
+               data-options="label:'数量:',required:true"/>
     </div>
     <div style="margin-bottom:20px">
-        <input class="easyui-textbox" id="car_other" name="subject" style="width:100%" data-options="label:'备注:',required:true" />
+        <input class="easyui-textbox" id="car_other" name="subject" style="width:100%"
+               data-options="label:'备注:',required:true"/>
     </div>
     <div style="text-align:center;padding:5px 0">
         <a href="javascript:void(0)" class="easyui-linkbutton" onclick="addToCar()" style="width:80px">确认</a>
     </div>
 </div>
 <!--更新备注-->
-<div id="dlg_updateOther" class="easyui-dialog" title="更新备注" closed="true" data-options="iconCls:'icon-save'" style="width:400px;height:120px;">
-    <input id="other" class="easyui-textbox" label="新备注:" labelPosition="top" style="width:90%;height:52px" />
+<div id="dlg_updateOther" class="easyui-dialog" title="更新备注" closed="true" data-options="iconCls:'icon-save'"
+     style="width:400px;height:120px;">
+    <input id="other" class="easyui-textbox" label="新备注:" labelPosition="top" style="width:90%;height:52px"/>
     <button class="easyui-linkbutton" onclick="updateOther()">确定</button>
 </div>
 
@@ -133,36 +137,33 @@
 <script>
     /*<![CDATA[*/
     $(function () {
-        $('#likeStr').bind("blur",function () {
-            var likeStr= $('#likeStr').val();
+        $('#likeStr').bind("blur", function () {
+            var likeStr = $('#likeStr').val();
             $.ajax({
-                type:"GET",
-                data:{like:likeStr},
-                url:"/web/order/getLike.do",
-                success:function (data) {
+                type: "GET",
+                data: {like: likeStr},
+                url: "/web/order/getLike.do",
+                success: function (data) {
                     var i;
                     $('#ajax-list').empty();
-                    for(i=0;i<data.length;i++)
-                    {
-                        $('#ajax-list').append("<option value='"+data[i].or_goods_id+"'>"+data[i].su_name+"【"+data[i].supplier_office+"】</option>");
-                        console.log("<option value='"+data[i].or_goods_id+"'>"+data[i].su_name+"【"+data[i].supplier_office+"】</option>");
+                    for (i = 0; i < data.length; i++) {
+                        $('#ajax-list').append("<option value='" + data[i].or_goods_id + "'>" + data[i].su_name + "【" + data[i].supplier_office + "】</option>");
+                        console.log("<option value='" + data[i].or_goods_id + "'>" + data[i].su_name + "【" + data[i].supplier_office + "】</option>");
                     }
                 }
             })
         });
         $('#dg').datagrid({
-            onDblClickRow: function(index,row){
-                var info="";
+            onDblClickRow: function (index, row) {
+                var info = "";
                 $.ajax({
-                    url:"/web/sale/getListByOrId.do" ,
-                    data:{id:row.or_id},
-                    success:function (data) {
-                        for(var i=0;i<data.length;i++)
-                        {
-                            var time =new Date(parseInt(data[i].sale_date));
-                            info=info+"购买人： "+data[i].cu_name+" 购买数量： "+data[i].sale_number+" 购买时间： "+time.toLocaleDateString()+"</br>"
+                    url: "/web/sale/getListByOrId.do",
+                    data: {id: row.or_id},
+                    success: function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            info = info + "购买人： " + data[i].cu_name + " 购买数量： " + data[i].sale_number + " 购买时间： " + data[i].sale_date + "</br>"
                         }
-                        $.messager.alert('出售记录',info);
+                        $.messager.alert('出售记录', info);
                     }
                 });
             }
@@ -175,16 +176,15 @@
     //重新加载表格
     //名称查询
     function reloadTable() {
-        var $str =$('#likeStr').val();
-        $('#dg').datagrid({url:"/web/order/getListByLikeName.do"});
-        $('#dg').datagrid('load',{like:$str,type:1});
+        var $str = $('#likeStr').val();
+        $('#dg').datagrid({url: "/web/order/getListByLikeName.do"});
+        $('#dg').datagrid('load', {like: $str, type: 1});
         $('#dg').datagrid({
-            onLoadSuccess:function (data) {
-                var rows=$('#dg').datagrid("getRows");
-                for(var i=0;i<rows.length;i++)
-                {
-                    var invoiceStr="";
-                    switch(rows[i].or_invoice) {
+            onLoadSuccess: function (data) {
+                var rows = $('#dg').datagrid("getRows");
+                for (var i = 0; i < rows.length; i++) {
+                    var invoiceStr = "";
+                    switch (rows[i].or_invoice) {
                         case 1:
                             invoiceStr = "有";
                             break;
@@ -195,66 +195,31 @@
                             invoiceStr = "拖欠";
                             break;
                     }
-                    $('#dg').datagrid('updateRow',{
-                        index: i,
-                        row: {
-/*                            or_date:new Date(rows[i].or_date).toLocaleDateString(),
-                            or_deaddate:new Date(rows[i].or_deaddate).toLocaleDateString(),*/
-                            or_invoice:invoiceStr,
-                            or_total:rows[i].or_price*rows[i].or_number
-                        }
-                    });
-                }
-            }
-        });
-    }
-    //货号查询
-    function reloadTable2() {
-        var $str =$('#likeStr1').val();
-        $('#dg').datagrid({url:"/web/order/getListByLikeName.do"});
-        $('#dg').datagrid('load',{like:$str,type:2});
-        $('#dg').datagrid({
-            onLoadSuccess:function (data) {
-                var rows=$('#dg').datagrid("getRows");
-                for(var i=0;i<rows.length;i++)
-                {
-                    var invoiceStr="";
-                    switch(rows[i].or_invoice) {
-                        case 1:
-                            invoiceStr = "有";
-                            break;
-                        case 2:
-                            invoiceStr = "无";
-                            break;
-                        case 3:
-                            invoiceStr = "拖欠";
-                            break;
-                    }
-                    $('#dg').datagrid('updateRow',{
+                    $('#dg').datagrid('updateRow', {
                         index: i,
                         row: {
                             /*                            or_date:new Date(rows[i].or_date).toLocaleDateString(),
                                                         or_deaddate:new Date(rows[i].or_deaddate).toLocaleDateString(),*/
-                            or_invoice:invoiceStr,
-                            or_total:rows[i].or_price*rows[i].or_number
+                            or_invoice: invoiceStr,
+                            or_total: rows[i].or_price * rows[i].or_number
                         }
                     });
                 }
             }
         });
     }
-    //供货商查询
-    function reloadTable1() {
-        var $of_id = $('#customerSelect').combobox('getValue');
-        $('#dg').datagrid({url:"/web/order/getListBySupId.do"});
-        $('#dg').datagrid('load',{id:$of_id});
+
+    //货号查询
+    function reloadTable2() {
+        var $str = $('#likeStr1').val();
+        $('#dg').datagrid({url: "/web/order/getListByLikeName.do"});
+        $('#dg').datagrid('load', {like: $str, type: 2});
         $('#dg').datagrid({
-            onLoadSuccess:function (data) {
-                var rows=$('#dg').datagrid("getRows");
-                for(var i=0;i<rows.length;i++)
-                {
-                    var invoiceStr="";
-                    switch(rows[i].or_invoice) {
+            onLoadSuccess: function (data) {
+                var rows = $('#dg').datagrid("getRows");
+                for (var i = 0; i < rows.length; i++) {
+                    var invoiceStr = "";
+                    switch (rows[i].or_invoice) {
                         case 1:
                             invoiceStr = "有";
                             break;
@@ -265,66 +230,105 @@
                             invoiceStr = "拖欠";
                             break;
                     }
-                    $('#dg').datagrid('updateRow',{
+                    $('#dg').datagrid('updateRow', {
                         index: i,
                         row: {
-                            or_invoice:invoiceStr,
-                            or_total:rows[i].or_price*rows[i].or_number
+                            /*                            or_date:new Date(rows[i].or_date).toLocaleDateString(),
+                                                        or_deaddate:new Date(rows[i].or_deaddate).toLocaleDateString(),*/
+                            or_invoice: invoiceStr,
+                            or_total: rows[i].or_price * rows[i].or_number
                         }
                     });
                 }
             }
         });
     }
+
+    //供货商查询
+    function reloadTable1() {
+        var $of_id = $('#customerSelect').combobox('getValue');
+        $('#dg').datagrid({url: "/web/order/getListBySupId.do"});
+        $('#dg').datagrid('load', {id: $of_id});
+        $('#dg').datagrid({
+            onLoadSuccess: function (data) {
+                var rows = $('#dg').datagrid("getRows");
+                for (var i = 0; i < rows.length; i++) {
+                    var invoiceStr = "";
+                    switch (rows[i].or_invoice) {
+                        case 1:
+                            invoiceStr = "有";
+                            break;
+                        case 2:
+                            invoiceStr = "无";
+                            break;
+                        case 3:
+                            invoiceStr = "拖欠";
+                            break;
+                    }
+                    $('#dg').datagrid('updateRow', {
+                        index: i,
+                        row: {
+                            or_invoice: invoiceStr,
+                            or_total: rows[i].or_price * rows[i].or_number
+                        }
+                    });
+                }
+            }
+        });
+    }
+
     //右键菜单
     $(function () {
         $('#dg').datagrid({
-            onRowContextMenu:function (e, index, row) {
+            onRowContextMenu: function (e, index, row) {
                 e.preventDefault();
-                $('#mm').menu('show',{
-                    left:e.pageX,
-                    top:e.pageY
+                $('#mm').menu('show', {
+                    left: e.pageX,
+                    top: e.pageY
                 })
             }
         });
         //计算库存余额
         $.ajax({
-            url:"/web/order/getAmount.do",
-            success:function (data) {
-                $('#amount').text("库存总额为:"+data.toFixed(2)+"元");
+            url: "/web/order/getAmount.do",
+            success: function (data) {
+                $('#amount').text("库存总额为:" + data.toFixed(2) + "元");
             }
         });
     });
+
     //加入购物车
     function addToCar() {
-        var car_su_id=$('#dg').datagrid('getSelected').or_goods_id;
-        var car_number=$("#car_number").val();
-        var car_other=$("#car_other").val();
+        var car_su_id = $('#dg').datagrid('getSelected').or_goods_id;
+        var car_number = $("#car_number").val();
+        var car_other = $("#car_other").val();
         $.ajax({
-            url:"/web/sc/add.do",
-            method:"post",
-            data:{
-                car_su_id:car_su_id,
-                car_su_number:car_number,
-                car_other:car_other
+            url: "/web/sc/add.do",
+            method: "post",
+            data: {
+                car_su_id: car_su_id,
+                car_su_number: car_number,
+                car_other: car_other
             },
-            success:function (data) {
-                $.messager.alert("提示信息",data);
+            success: function (data) {
+                $.messager.alert("提示信息", data);
             }
         })
     }
+
     // 更新备注状况
     function updateOther() {
         var checkVal = $('#other').val();
-        var or_id =$('#dg').datagrid("getSelected").or_id;
+        var or_id = $('#dg').datagrid("getSelected").or_id;
         $.ajax({
-            url:"/web/order/updateOther.do",
-            data:{key:or_id,val:checkVal},
-            success:function (data) {
-                $.messager.alert("消息",data);
+            url: "/web/order/updateOther.do",
+            data: {key: or_id, val: checkVal},
+            success: function (data) {
+                $.messager.alert("消息", data);
             }
         })
     }
+
     /*]]>*/
 </script>
 
@@ -333,14 +337,13 @@
     /*<![CDATA[*/
     $(function () {
         $.ajax({
-            type:"GET",
-            url:"/web/supplier/getAllSupplierInfo.do",
-            success:function (datas) {
+            type: "GET",
+            url: "/web/supplier/getAllSupplierInfo.do",
+            success: function (datas) {
                 console.log(datas);
                 var i;
-                for(i=0;i<datas.length;i++)
-                {
-                    $('#su_supplier').append("<option value='"+datas[i].supplier_id+"'>"+datas[i].supplier_office+"</option>")
+                for (i = 0; i < datas.length; i++) {
+                    $('#su_supplier').append("<option value='" + datas[i].supplier_id + "'>" + datas[i].supplier_office + "</option>")
                 }
             }
         });
@@ -418,6 +421,7 @@
         tableString += '\n</table>';
         return tableString;
     }
+
     function Export(strXlsName, exportGrid) {
         var f = $('<form action="/web/branch/excel.do" method="post" id="fm1"></form>');
         var i = $('<input type="hidden" id="txtContent" name="txtContent" />');
@@ -429,6 +433,7 @@
         f.appendTo(document.body).submit();
         document.body.removeChild(f);
     }
+
     /*]]>*/
 </script>
 </body>

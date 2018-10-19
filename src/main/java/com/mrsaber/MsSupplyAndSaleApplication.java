@@ -13,14 +13,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @SpringBootApplication
 @EnableTransactionManagement
 public class MsSupplyAndSaleApplication {
-	public static void main(String[] args) {
-		SpringApplication.run(MsSupplyAndSaleApplication.class, args);
-	}
-	@Configuration
-	static class WebMvcConfigurer extends WebMvcConfigurerAdapter {
-		@Override
-		public void addInterceptors(InterceptorRegistry registry) {
-			registry.addInterceptor(new AuthInterceptor());
-		}
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(MsSupplyAndSaleApplication.class, args);
+    }
+
+    @Configuration
+    static class WebMvcConfigurer extends WebMvcConfigurerAdapter {
+        @Override
+        public void addInterceptors(InterceptorRegistry registry) {
+            registry.addInterceptor(new AuthInterceptor());
+        }
+    }
 }

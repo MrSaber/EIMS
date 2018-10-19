@@ -13,82 +13,91 @@
     <script type="text/javascript" src="jquery-easyui/jquery.easyui.min.js"></script>
 </head>
 <body>
-        <!-- 内容主体区域 -->
-        <div style="padding: 15px;">
-            <!--JQuery Easy UI 表格-->
-            <table id="dg" class="easyui-datagrid" title="库存预警" style="width:100%;height:800px"
-                   data-options="rownumbers:true,singleSelect:true,url:'/web/order/getBoundAlarm.do',method:'get'" toolbar="#toolbar">
-                <thead>
-                <tr>
-                    <th data-options="field:'or_id',width:80">流水号</th>
-                    <th data-options="field:'su_name',width:80">物品名称</th>
-                    <th data-options="field:'or_price',width:80">进货价</th>
-                    <th data-options="field:'supplier_office',width:100">供货商</th>
-                    <th data-options="field:'su_standard',width:100">规格</th>
-                    <th data-options="field:'su_storage',width:80,align:'right'">存储条件</th>
-                    <th data-options="field:'su_orgin',width:80,align:'right'">产地</th>
-                    <th data-options="field:'or_deaddate',width:80,align:'right'">到期日期</th>
-                    <th data-options="field:'or_number',width:80,align:'right'">库存余量</th>
-                    <th data-options="field:'or_alarm',width:80,align:'right'">报警阀值</th>
-                    <th data-options="field:'sale_other',width:180,align:'right'">备注</th>
-                    <th data-options="field:'sale_invoice',width:220">结款状态</th>
-                    <th data-options="field:'su_goods_id',width:220,hidden:true">商品编号</th>
-                </tr>
-                </thead>
-            </table>
-            <div id="toolbar">
-                隐藏数量低于此值的行
-                <input class="easyui-numberbox" value="1" id="filterNum" style="width: 150px"/>
-                <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cut" plain="true" onclick="cutRows()">隐藏</a>
-            </div>
-        </div>
-        <script>
-            /*<![CDATA[*/
-            //删除数量少的行
-            function cutRows() {
-                var rows = $('#dg').datagrid("getRows");
-                var low = $('#filterNum').numberbox("getValue");
-                var selectRows = [];
-                for (var i= 0; i< rows.length; i++) {
-                    if(rows[i].or_number<low)
-                    {
-                        selectRows.push(rows[i]);
-                    }
-                }
-                for(var j =0;j<selectRows.length;j++){
-                    var index = $('#dg').datagrid('getRowIndex',selectRows[j]);
-                    $('#dg').datagrid('deleteRow',index);
-                }
+<!-- 内容主体区域 -->
+<div style="padding: 15px;">
+    <!--JQuery Easy UI 表格-->
+    <table id="dg" class="easyui-datagrid" title="库存预警" style="width:100%;height:800px"
+           data-options="rownumbers:true,singleSelect:true,url:'/web/order/getBoundAlarm.do',method:'get'"
+           toolbar="#toolbar">
+        <thead>
+        <tr>
+            <th data-options="field:'or_id',width:80">流水号</th>
+            <th data-options="field:'su_name',width:80">物品名称</th>
+            <th data-options="field:'or_price',width:80">进货价</th>
+            <th data-options="field:'supplier_office',width:100">供货商</th>
+            <th data-options="field:'su_standard',width:100">规格</th>
+            <th data-options="field:'su_storage',width:80,align:'right'">存储条件</th>
+            <th data-options="field:'su_orgin',width:80,align:'right'">产地</th>
+            <th data-options="field:'or_deaddate',width:80,align:'right'">到期日期</th>
+            <th data-options="field:'or_number',width:80,align:'right'">库存余量</th>
+            <th data-options="field:'or_alarm',width:80,align:'right'">报警阀值</th>
+            <th data-options="field:'sale_other',width:180,align:'right'">备注</th>
+            <th data-options="field:'sale_invoice',width:220">结款状态</th>
+            <th data-options="field:'su_goods_id',width:220,hidden:true">商品编号</th>
+        </tr>
+        </thead>
+    </table>
+    <div id="toolbar">
+        隐藏数量低于此值的行
+        <input class="easyui-numberbox" value="1" id="filterNum" style="width: 150px"/>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cut" plain="true"
+           onclick="cutRows()">隐藏</a>
+    </div>
+</div>
+<script>
+    /*<![CDATA[*/
+    //删除数量少的行
+    function cutRows() {
+        var rows = $('#dg').datagrid("getRows");
+        var low = $('#filterNum').numberbox("getValue");
+        var selectRows = [];
+        for (var i = 0; i < rows.length; i++) {
+            if (rows[i].or_number < low) {
+                selectRows.push(rows[i]);
             }
-            /*]]>*/
-        </script>
-    <!--右键菜单-->
-    <div id="mm" class="easyui-menu" style="width:120px;">
-        <div onclick="addCart()" data-options="iconCls:'icon-add'">加入购物车</div>
-        <div onclick="$('#dlg').dialog('open')" data-options="iconCls:'icon-remove'">预警设置</div>
-    </div>
-    <!--设置预警-->
-    <div id="dlg" class="easyui-dialog" title="预警设置" data-options="iconCls:'icon-save'" style="width:300px;height:120px;padding:10px">
-        <table cellpadding="2">
-            <tr>
-                <td>单击右侧直接取消警告</td>
-                <td><button class="easyui-linkbutton" onclick="cancelAlarm()">取消警告</button></td>
-            </tr>
-            <tr>
-                <td><input class="easyui-textbox" type="text" name="name" id="alarmVal" data-options="required:true"></input></td>
-                <td><button class="easyui-linkbutton" onclick="cancelAlarm($('#alarmVal').val())">重设警告</button></td>
-            </tr>
-        </table>
-    </div>
-    <!--添加物品-->
-    <div id="dlg_Cart" class="easyui-dialog" title="补货" data-options="iconCls:'icon-save'" style="width:450px;height:650px;padding:10px">
-        <iframe id="form_purchase" src="form_purchase.html" width="100%" height="100%">
-        </iframe>
-    </div>
+        }
+        for (var j = 0; j < selectRows.length; j++) {
+            var index = $('#dg').datagrid('getRowIndex', selectRows[j]);
+            $('#dg').datagrid('deleteRow', index);
+        }
+    }
+
+    /*]]>*/
+</script>
+<!--右键菜单-->
+<div id="mm" class="easyui-menu" style="width:120px;">
+    <div onclick="addCart()" data-options="iconCls:'icon-add'">加入购物车</div>
+    <div onclick="$('#dlg').dialog('open')" data-options="iconCls:'icon-remove'">预警设置</div>
+</div>
+<!--设置预警-->
+<div id="dlg" class="easyui-dialog" title="预警设置" data-options="iconCls:'icon-save'"
+     style="width:300px;height:120px;padding:10px">
+    <table cellpadding="2">
+        <tr>
+            <td>单击右侧直接取消警告</td>
+            <td>
+                <button class="easyui-linkbutton" onclick="cancelAlarm()">取消警告</button>
+            </td>
+        </tr>
+        <tr>
+            <td><input class="easyui-textbox" type="text" name="name" id="alarmVal"
+                       data-options="required:true"></input></td>
+            <td>
+                <button class="easyui-linkbutton" onclick="cancelAlarm($('#alarmVal').val())">重设警告</button>
+            </td>
+        </tr>
+    </table>
+</div>
+<!--添加物品-->
+<div id="dlg_Cart" class="easyui-dialog" title="补货" data-options="iconCls:'icon-save'"
+     style="width:450px;height:650px;padding:10px">
+    <iframe id="form_purchase" src="form_purchase.html" width="100%" height="100%">
+    </iframe>
+</div>
 <!--Layui启动代码-->
 <script>
     //JavaScript代码区域
-    layui.use('element', function(){
+    layui.use('element', function () {
         var element = layui.element;
     });
 
@@ -98,41 +107,44 @@
     /*<![CDATA[*/
     //JQuery 右键菜单
     $(function () {
-       $('#dlg').dialog("close");
-       $('#dlg_Cart').dialog("close");
+        $('#dlg').dialog("close");
+        $('#dlg_Cart').dialog("close");
     });
     $('#dg').datagrid({
-        onRowContextMenu:function (e, index, row) {
+        onRowContextMenu: function (e, index, row) {
             e.preventDefault();
-            $('#mm').menu('show',{
-                left:e.pageX,
-                top:e.pageY
+            $('#mm').menu('show', {
+                left: e.pageX,
+                top: e.pageY
             })
         }
     })
+
     function cancelAlarm(val) {
-        if(val==undefined){
-            val=-1;
+        if (val == undefined) {
+            val = -1;
         }
-        key=$('#dg').datagrid('getSelected').or_id;
+        key = $('#dg').datagrid('getSelected').or_id;
         $.ajax({
-            url:"/web/order/resetAlarm.do",
-            data:{
-                key:key,
-                val:val
+            url: "/web/order/resetAlarm.do",
+            data: {
+                key: key,
+                val: val
             },
-            success:function (data) {
+            success: function (data) {
                 alert(data);
             }
         })
     }
+
     function addCart() {
-        var key=$('#dg').datagrid('getSelected').or_goods_id;
-        var url = "form_purchase.html?key="+key;
+        var key = $('#dg').datagrid('getSelected').or_goods_id;
+        var url = "form_purchase.html?key=" + key;
         alert(key);
-        $('#form_purchase').attr('src',url);
+        $('#form_purchase').attr('src', url);
         $('#dlg_Cart').dialog('open');
     }
+
     /*]]>*/
 </script>
 </body>

@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html xmlns:v-bind="http://www.w3.org/1999/xhtml" lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <title>供销存管理系统</title>
-    <link rel="stylesheet" href="layui/css/layui.css" />
-    <link rel="stylesheet" href="layui/css/ms.css" />
+    <link rel="stylesheet" href="layui/css/layui.css"/>
+    <link rel="stylesheet" href="layui/css/ms.css"/>
     <!--JQuery Easy UI 模块-->
-    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/bootstrap/easyui.css" />
-    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/icon.css" />
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/bootstrap/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/icon.css"/>
     <script type="text/javascript" src="layui/lay/modules/jquery.min.js"></script>
     <script type="text/javascript" src="jquery-easyui/jquery.easyui.min.js"></script>
     <style>
-        .panel{
-            float:left;
+        .panel {
+            float: left;
         }
-        .blockquote{
+
+        .blockquote {
             background: #F5F5F5;
             border: 1px #D4D4D4 solid;
             width: 600px;
@@ -42,18 +43,19 @@
             <div class="layui-input-block">
                 <label class="layui-form-label">选择日期</label>
                 <div class="layui-input-inline" style="width: 150px;">
-                    <input id="begin_date" type="date" name="price_min" autocomplete="off" class="layui-input" />
+                    <input id="begin_date" type="date" name="price_min" autocomplete="off" class="layui-input"/>
                 </div>
                 至
                 <div class="layui-input-inline" style="width: 150px;">
-                    <input id="end_date" type="date" name="price_max" autocomplete="off" class="layui-input" />
+                    <input id="end_date" type="date" name="price_max" autocomplete="off" class="layui-input"/>
                 </div>
                 <button class="layui-btn layui-btn-sm" onclick="queryHistory()">查询</button>
             </div>
         </div>
         <div id="p" class="easyui-panel" title="根据客户查找" style="width:350px;height:130px;padding:10px;">
             <div style="margin-bottom:10px;text-align: center">
-                <input id="likeStr1" style="width:200px" class="easyui-textbox" data-options="label:'客户名称:',required:false" />
+                <input id="likeStr1" style="width:200px" class="easyui-textbox"
+                       data-options="label:'客户名称:',required:false"/>
             </div>
             <div style="margin-bottom:10px;text-align: center">
                 <label class="textbox-label">客户选择</label>
@@ -63,28 +65,29 @@
             </div>
         </div>
         <script>
-            $(function(){
+            $(function () {
                 $('#likeStr1').textbox({
-                    onChange:function()
-                    {
+                    onChange: function () {
                         $('#customerSelect').combobox({
-                            url:"/web/customer/getListByLikeName.do",
-                            queryParams:{
-                                likeStr:$('#likeStr1').val()
+                            url: "/web/customer/getListByLikeName.do",
+                            queryParams: {
+                                likeStr: $('#likeStr1').val()
                             },
-                            valueField:'cu_id',
-                            textField:'cu_name'
+                            valueField: 'cu_id',
+                            textField: 'cu_name'
                         });
                     }
                 })
             })
         </script>
-        <hr />
+        <hr/>
         <!--统计信息-->
         <blockquote class="blockquote" id="tongji"></blockquote>
         <blockquote class="blockquote" id="tongji1"></blockquote>
         <!--JQuery Easy UI 表格-->
-        <table id="dg" class="easyui-datagrid" title="出货历史列表" style="width:100%;height:600px" data-options="rownumbers:true,singleSelect:false,url:'/web/sale/getByPage.do',method:'get', remoteSort:false,pagination:true,pageSize:50" toolbar="#toolbar">
+        <table id="dg" class="easyui-datagrid" title="出货历史列表" style="width:100%;height:600px"
+               data-options="rownumbers:true,singleSelect:false,url:'/web/sale/getByPage.do',method:'get', remoteSort:false,pagination:true,pageSize:50"
+               toolbar="#toolbar">
             <thead>
             <tr>
                 <th data-options="field:'ck',checkbox:true"></th>
@@ -110,10 +113,14 @@
 </div>
 <!--工具栏菜单-->
 <div id="toolbar">
-    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-redo" plain="true" onclick="reloadTable()">统计</a>
-    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="colorRow()">高亮区分</a>
-    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-sum" plain="true" onclick="$('#dlg_onekeypaid').dialog('open')">一键结账</a>
-    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-print" plain="true" onclick="Export('导出excel', $('#dg'))">打印报表</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-redo" plain="true"
+       onclick="reloadTable()">统计</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true"
+       onclick="colorRow()">高亮区分</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-sum" plain="true"
+       onclick="$('#dlg_onekeypaid').dialog('open')">一键结账</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-print" plain="true"
+       onclick="Export('导出excel', $('#dg'))">打印报表</a>
 </div>
 <!--右键菜单-->
 <div id="mm" class="easyui-menu" style="width:120px;">
@@ -122,13 +129,16 @@
     <div onclick=" $('#dlg').dialog('open');" data-options="iconCls:'icon-add'">退货</div>
 </div>
 <!--退货面板-->
-<div id="dlg" class="easyui-dialog" title="退货面板" data-options="iconCls:'icon-save'" closed="true" style="width:300px;height:160px;padding:10px">
+<div id="dlg" class="easyui-dialog" title="退货面板" data-options="iconCls:'icon-save'" closed="true"
+     style="width:300px;height:160px;padding:10px">
     <form id="ff_back" method="post">
         <div style="margin-bottom:10px">
-            <td><input class="easyui-textbox" label="退货数量：" type="number" name="name" id="backNum" data-options="required:true" /></td>
+            <td><input class="easyui-textbox" label="退货数量：" type="number" name="name" id="backNum"
+                       data-options="required:true"/></td>
         </div>
         <div style="margin-bottom:10px">
-            <td><input class="easyui-textbox" label="退货原因：" type="text" name="name" id="backCause" data-options="required:true" /></td>
+            <td><input class="easyui-textbox" label="退货原因：" type="text" name="name" id="backCause"
+                       data-options="required:true"/></td>
         </div>
     </form>
     <div style="text-align:center;padding:5px 0">
@@ -136,8 +146,10 @@
     </div>
 </div>
 <!--开发票面板-->
-<div id="dlg_invoice" class="easyui-dialog" title="开发票" data-options="iconCls:'icon-save'" closed="true" style="width:800px;height:300px;padding:10px">
-    <table id="dg_invoice" class="easyui-datagrid" title="发票状况" style="width:700px;height:auto" data-options="     iconCls: 'icon-edit',     singleSelect: true,     toolbar: '#tb',     url: 'datagrid_data1.json',     method: 'get',    ">
+<div id="dlg_invoice" class="easyui-dialog" title="开发票" data-options="iconCls:'icon-save'" closed="true"
+     style="width:800px;height:300px;padding:10px">
+    <table id="dg_invoice" class="easyui-datagrid" title="发票状况" style="width:700px;height:auto"
+           data-options="     iconCls: 'icon-edit',     singleSelect: true,     toolbar: '#tb',     url: 'datagrid_data1.json',     method: 'get',    ">
         <thead>
         <tr>
             <th data-options="field:'in_id',width:80,hidden:true">流水号</th>
@@ -148,12 +160,15 @@
         </thead>
     </table>
     <div id="tb" style="height:auto">
-        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="$('#dlg_addInvoice').dialog('open')">添加</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="removeit()">删除</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true"
+           onclick="$('#dlg_addInvoice').dialog('open')">添加</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true"
+           onclick="removeit()">删除</a>
     </div>
 </div>
 <!--添加发票-->
-<div id="dlg_addInvoice" class="easyui-dialog" title="添加发票" data-options="iconCls:'icon-save'" closed="true" style="width:300px;height:180px;padding:10px">
+<div id="dlg_addInvoice" class="easyui-dialog" title="添加发票" data-options="iconCls:'icon-save'" closed="true"
+     style="width:300px;height:180px;padding:10px">
     <table cellpadding="2">
         <tr>
             <td>开票金额</td>
@@ -169,18 +184,22 @@
         </tr>
         <tr>
             <td></td>
-            <td><button class="easyui-linkbutton" onclick="addInvoice()">添加发票</button></td>
+            <td>
+                <button class="easyui-linkbutton" onclick="addInvoice()">添加发票</button>
+            </td>
         </tr>
     </table>
 </div>
 <!--一键结账面板-->
-<div id="dlg_onekeypaid" class="easyui-dialog" title="结账设置" data-options="iconCls:'icon-save'" closed="true" style="width:300px;height:200px;padding:10px">
+<div id="dlg_onekeypaid" class="easyui-dialog" title="结账设置" data-options="iconCls:'icon-save'" closed="true"
+     style="width:300px;height:200px;padding:10px">
     <form id="ff" method="post">
         <div style="margin-bottom:10px">
-            <input class="easyui-datebox" name="sale_paydate" label="结账时间:" required="required" style="width:100%;" />
+            <input class="easyui-datebox" name="sale_paydate" label="结账时间:" required="required" style="width:100%;"/>
         </div>
         <div style="margin-bottom:10px">
-            <input class="easyui-textbox" name="sale_commit" data-options="label:'结账说明:',required:true" style="width:100%" />
+            <input class="easyui-textbox" name="sale_commit" data-options="label:'结账说明:',required:true"
+                   style="width:100%"/>
         </div>
     </form>
     <div style="text-align:center;padding:5px 0">
@@ -188,8 +207,9 @@
     </div>
 </div>
 <!--更新备注-->
-<div id="dlg_updateOther" class="easyui-dialog" title="更新备注" closed="true" data-options="iconCls:'icon-save'" style="width:200px;height:120px;">
-    <input id="other" class="easyui-textbox" label="新备注:" labelPosition="top" style="width:90%;height:52px" />
+<div id="dlg_updateOther" class="easyui-dialog" title="更新备注" closed="true" data-options="iconCls:'icon-save'"
+     style="width:200px;height:120px;">
+    <input id="other" class="easyui-textbox" label="新备注:" labelPosition="top" style="width:90%;height:52px"/>
     <button class="easyui-linkbutton" onclick="updateOther()">确定</button>
 </div>
 <!--CURD代码-->
@@ -197,254 +217,257 @@
     /*<![CDATA[*/
     //双击显示结款信息
     $('#dg').datagrid({
-        onDblClickRow: function(index,row){
-            $.messager.alert("付款信息","结账时间："+row.sale_paydate +" 结账说明："+row.sale_commit);
+        onDblClickRow: function (index, row) {
+            $.messager.alert("付款信息", "结账时间：" + row.sale_paydate + " 结账说明：" + row.sale_commit);
         }
     });
+
     // 查询客户订单
     function queryByCuId() {
         var cuId = $('#customerSelect').combobox('getValue'); //客户Id
         $('#dg').datagrid({
-            url:"/web/sale/getListByCuId.do"
+            url: "/web/sale/getListByCuId.do"
         });
-        $('#dg').datagrid("load",{
-            cuId:cuId
+        $('#dg').datagrid("load", {
+            cuId: cuId
         });
     }
+
     // 查询历史订单
     function queryHistory() {
         var $begin_date = $('#begin_date').val();
-        var $end_date =$('#end_date').val();
+        var $end_date = $('#end_date').val();
         var $of_id = $('#ms_customer').val();
         $('#dg').datagrid({
-            url:"/web/sale/getListByDateAndCuId.do"
+            url: "/web/sale/getListByDateAndCuId.do"
         });
-        $('#dg').datagrid("load",{
-            begin_date:$begin_date,end_date:$end_date,key_id:$of_id
+        $('#dg').datagrid("load", {
+            begin_date: $begin_date, end_date: $end_date, key_id: $of_id
         })
     }
+
     //右键菜单
     $(function () {
         //弹出菜单
         $('#dg').datagrid({
-            onRowContextMenu:function (e,index,row) {
+            onRowContextMenu: function (e, index, row) {
                 e.preventDefault();
-                $('#mm').menu('show',{
-                    left:e.pageX,
-                    top:e.pageY});
-            }});
+                $('#mm').menu('show', {
+                    left: e.pageX,
+                    top: e.pageY
+                });
+            }
+        });
         //替换日期格式、计算表单数据
         $('#dg').datagrid({
-            onLoadSuccess:function (data) {
-                var rows=$('#dg').datagrid("getRows");
-                for(var i=0;i<rows.length;i++)
-                {
-                    $('#dg').datagrid('updateRow',{
+            onLoadSuccess: function (data) {
+                var rows = $('#dg').datagrid("getRows");
+                for (var i = 0; i < rows.length; i++) {
+                    $('#dg').datagrid('updateRow', {
                         index: i,
                         row: {
-                            sale_count:(rows[i].sale_number*rows[i].sale_price).toFixed(2),
-                            sale_invoice:modify_invoice(rows[i].sale_invoice),
-                            sale_payment:modify_payment(rows[i].sale_payment)
+                            sale_count: (rows[i].sale_number * rows[i].sale_price).toFixed(2),
+                            sale_invoice: modify_invoice(rows[i].sale_invoice),
+                            sale_payment: modify_payment(rows[i].sale_payment)
                         }
                     });
                 }
             },
             //当用户选择行时自动计算
-            onSelect:function() {
+            onSelect: function () {
                 var rows = $('#dg').datagrid("getSelections");
-                var count =0.0;
-                for(var i=0;i<rows.length;i++)
-                {
-                    count=rows[i].sale_count+count;
+                var count = 0.0;
+                for (var i = 0; i < rows.length; i++) {
+                    count = rows[i].sale_count + count;
                 }
-                $('#tongji1').text("已选中金额为："+count.toFixed(2));
+                $('#tongji1').text("已选中金额为：" + count.toFixed(2));
             },
             //当用户取消一行时自动计算
-            onUnselect:function() {
+            onUnselect: function () {
                 var rows = $('#dg').datagrid("getSelections");
-                var count =0.0;
-                for(var i=0;i<rows.length;i++)
-                {
-                    count=rows[i].sale_count+count;
+                var count = 0.0;
+                for (var i = 0; i < rows.length; i++) {
+                    count = rows[i].sale_count + count;
                 }
-                $('#tongji1').text("已选中金额为："+count.toFixed(2));
+                $('#tongji1').text("已选中金额为：" + count.toFixed(2));
             }
         });
     });
+
     //FUN_修改行颜色
     function colorRow() {
         $('#dg').datagrid({
-            rowStyler: function(index,row){
-                var style="";
-                if (row.sale_invoice=="有" && row.sale_payment=="拖欠"){
-                    style= 'background-color:#5FB878;color:#fff;';  //有发票但是没有结账
+            rowStyler: function (index, row) {
+                var style = "";
+                if (row.sale_invoice == "有" && row.sale_payment == "拖欠") {
+                    style = 'background-color:#5FB878;color:#fff;';  //有发票但是没有结账
                 }
-                if (row.sale_payment=="现结"){
-                    style ='background-color:#6293BB;color:#fff;';  //结账
+                if (row.sale_payment == "现结") {
+                    style = 'background-color:#6293BB;color:#fff;';  //结账
                 }
-                if (row.sale_payment=="转账"){
-                    style ='background-color:#6293BB;color:#fff;';  //结账
+                if (row.sale_payment == "转账") {
+                    style = 'background-color:#6293BB;color:#fff;';  //结账
                 }
-                if (row.sale_payment=="拖欠"){
-                    style ='background-color:#FF5722;color:#fff;';  //拖欠
+                if (row.sale_payment == "拖欠") {
+                    style = 'background-color:#FF5722;color:#fff;';  //拖欠
                 }
                 return style;
             }
         });
     }
+
     //FUN_开发票
-    function doInvoice(){
-        var row =$('#dg').datagrid("getSelected").sale_id;
+    function doInvoice() {
+        var row = $('#dg').datagrid("getSelected").sale_id;
         $('#dlg_invoice').dialog("open");
         $('#dg_invoice').datagrid({
-            url:"/web/in/get.do"
+            url: "/web/in/get.do"
         });
-        $('#dg_invoice').datagrid('load',{saleId:row});
+        $('#dg_invoice').datagrid('load', {saleId: row});
     }
+
     //开发票
     function addInvoice() {
         var rows = $('#dg').datagrid("getSelections");
-        var $in_money=$('#in_money').val();
-        var $in_date=$('#in_date').val();
-        var $in_other=$('#in_other').val();
+        var $in_money = $('#in_money').val();
+        var $in_date = $('#in_date').val();
+        var $in_other = $('#in_other').val();
         alert(rows.length);
-        for(var i=0;i<rows.length;i++) {
+        for (var i = 0; i < rows.length; i++) {
             $.ajax({
-                url:"/web/in/add.do",
-                method:'post',
-                data:{
-                    in_money:$in_money,
-                    in_date:$in_date,
-                    in_other:$in_other,
-                    in_sale_id:rows[i].sale_id
+                url: "/web/in/add.do",
+                method: 'post',
+                data: {
+                    in_money: $in_money,
+                    in_date: $in_date,
+                    in_other: $in_other,
+                    in_sale_id: rows[i].sale_id
                 }
             });
-            for(var j=0;j<1000;j++)
-            {
+            for (var j = 0; j < 1000; j++) {
                 j++;
             }
         }
-        $.messager.alert("消息","开票成功");
+        $.messager.alert("消息", "开票成功");
     }
+
     //删除发票
     function removeit() {
-        var id=$("#dg_invoice").datagrid("getSelected").in_id;
+        var id = $("#dg_invoice").datagrid("getSelected").in_id;
         $.ajax({
-            url:"/web/in/del.do",
-            data:{inId:id},
-            success:function (data) {
-                $.messager.alert('消息',data);
+            url: "/web/in/del.do",
+            data: {inId: id},
+            success: function (data) {
+                $.messager.alert('消息', data);
             }
         })
     }
+
     //退货代码
     function backGoodsAjax() {
-        var node=$('#dg').datagrid('getSelected');
-        if($('#backNum').val()<=node.sale_number)
-        {
+        var node = $('#dg').datagrid('getSelected');
+        if ($('#backNum').val() <= node.sale_number) {
             $.ajax({
-                url:"/web/sale/backGoods.do",
-                data:{
-                    sale_id:node.sale_id,
-                    or_id:node.sale_or_id,
-                    back_num:$('#backNum').val(),
-                    back_cause:$('#backCause').val()
+                url: "/web/sale/backGoods.do",
+                data: {
+                    sale_id: node.sale_id,
+                    or_id: node.sale_or_id,
+                    back_num: $('#backNum').val(),
+                    back_cause: $('#backCause').val()
                 },
-                success:function (data) {
-                    $.messager.alert("消息",data);
+                success: function (data) {
+                    $.messager.alert("消息", data);
                 }
             })
-        }else
-        {
-            $.messager.alert("消息","请检查退货数量合法性！")
+        } else {
+            $.messager.alert("消息", "请检查退货数量合法性！")
         }
     }
+
     // 一键结账且提示刷新
     function oneKeyPaid() {
         var rows = $('#dg').datagrid("getSelections");
         for (var i = 0; i < rows.length; i++) {
-            $('#ff').form('submit',{
+            $('#ff').form('submit', {
                     url: "/web/sale/setPayment.do",
                     onSubmit: function (param) {
                         param.sale_id = rows[i].sale_id;
                     },
                     error: function (data) {
-                        $.messager.alert("消息",rows[i].sale_id+"结账失败，请重新结账！");
+                        $.messager.alert("消息", rows[i].sale_id + "结账失败，请重新结账！");
                     }
                 }
             );
-            for(var j=0;j<1000;j++)
-            {
+            for (var j = 0; j < 1000; j++) {
                 j++;
             }
         }
-        $.messager.confirm('确认对话框', '一键结账成功，是否要刷新页面？', function(r){
-            if (r){
+        $.messager.confirm('确认对话框', '一键结账成功，是否要刷新页面？', function (r) {
+            if (r) {
                 $('#dg').datagrid("reload");
             }
         });
     }
+
     // 统计信息和修正列信息
     function reloadTable() {
         //修正列信息
-        var rows =$('#dg').datagrid('getRows');
-        var donePay=0.0,toDoPay=0.0;
-        for(var i=0;i<rows.length;i++)
-        {
-            rows[i].sale_count=rows[i].sale_number*rows[i].sale_price;
-            if(rows[i].sale_payment=="拖欠")
-            {toDoPay+=rows[i].sale_count;}
-            else
-            {donePay+=rows[i].sale_count;}
+        var rows = $('#dg').datagrid('getRows');
+        var donePay = 0.0, toDoPay = 0.0;
+        for (var i = 0; i < rows.length; i++) {
+            rows[i].sale_count = rows[i].sale_number * rows[i].sale_price;
+            if (rows[i].sale_payment == "拖欠") {
+                toDoPay += rows[i].sale_count;
+            }
+            else {
+                donePay += rows[i].sale_count;
+            }
         }
-        $('#dg').datagrid('loadData',rows);
-        $('#tongji').text("【统计信息】：已付款："+donePay.toFixed(2)+" 未付款： "+toDoPay.toFixed(2)+" 合计金额："+(donePay+toDoPay).toFixed(2));
+        $('#dg').datagrid('loadData', rows);
+        $('#tongji').text("【统计信息】：已付款：" + donePay.toFixed(2) + " 未付款： " + toDoPay.toFixed(2) + " 合计金额：" + (donePay + toDoPay).toFixed(2));
     }
 
     // 自动获得层级信息并添加到选择框中
     $(function () {
         $('#ms_office').blur(function () {
-            var var1=$('#ms_office').val();
+            var var1 = $('#ms_office').val();
             $('#ms_branch').empty();
             $.ajax({
-                type:"GET",
-                url:"/web/branch/gets.do?key="+var1,
-                success:function (datas) {
+                type: "GET",
+                url: "/web/branch/gets.do?key=" + var1,
+                success: function (datas) {
                     console.log(datas);
                     var i;
-                    for(i=0;i<datas.length;i++)
-                    {
-                        $('#ms_branch').append("<option value='"+datas[i].br_id+"'>"+datas[i].br_name+"</option>")
+                    for (i = 0; i < datas.length; i++) {
+                        $('#ms_branch').append("<option value='" + datas[i].br_id + "'>" + datas[i].br_name + "</option>")
                     }
                 }
             });
         });
         $('#ms_branch').blur(function () {
-            var var1=$('#ms_branch').val();
+            var var1 = $('#ms_branch').val();
             $('#ms_customer').empty();
             $.ajax({
-                type:"GET",
-                url:"/web/customer/getP.do?key="+var1,
-                success:function (datas) {
+                type: "GET",
+                url: "/web/customer/getP.do?key=" + var1,
+                success: function (datas) {
                     console.log(datas);
                     var i;
-                    for(i=0;i<datas.length;i++)
-                    {
-                        $('#ms_customer').append("<option value='"+datas[i].cu_id+"'>"+datas[i].cu_name+"</option>")
+                    for (i = 0; i < datas.length; i++) {
+                        $('#ms_customer').append("<option value='" + datas[i].cu_id + "'>" + datas[i].cu_name + "</option>")
                     }
                 }
             });
         });
         $(function () {
             $.ajax({
-                type:"GET",
-                url:"/web/office/get.do",
-                success:function (datas) {
+                type: "GET",
+                url: "/web/office/get.do",
+                success: function (datas) {
                     console.log(datas);
                     var i;
-                    for(i=0;i<datas.data.length;i++)
-                    {
-                        $('#ms_office').append("<option value='"+datas.data[i].of_id+"'>"+datas.data[i].of_name+"</option>")
+                    for (i = 0; i < datas.data.length; i++) {
+                        $('#ms_office').append("<option value='" + datas.data[i].of_id + "'>" + datas.data[i].of_name + "</option>")
                     }
                 }
             });
@@ -454,37 +477,42 @@
     // 更新备注状况
     function updateOther() {
         var checkVal = $('#other').val();
-        var sale_id =$('#dg').datagrid("getSelected").sale_id;
+        var sale_id = $('#dg').datagrid("getSelected").sale_id;
         $.ajax({
-            url:"/web/sale/updateOther.do",
-            data:{key:sale_id,val:checkVal},
-            success:function (data) {
-                $.messager.alert("消息",data);
+            url: "/web/sale/updateOther.do",
+            data: {key: sale_id, val: checkVal},
+            success: function (data) {
+                $.messager.alert("消息", data);
             }
         })
     }
 
     // 更正发票信息
-    function modify_invoice(val)
-    {
-        switch(val)
-        {
-            case 1:return "有";
-            case 2:return "无";
-            case 3:return "拖欠";
+    function modify_invoice(val) {
+        switch (val) {
+            case 1:
+                return "有";
+            case 2:
+                return "无";
+            case 3:
+                return "拖欠";
         }
     }
+
     //更正付款信息
-    function modify_payment(val)
-    {
-        switch(val)
-        {
-            case 0:return "转账";
-            case 1:return "现结";
-            case 2:return "拖欠";
-            case 3:return "预付款";
+    function modify_payment(val) {
+        switch (val) {
+            case 0:
+                return "转账";
+            case 1:
+                return "现结";
+            case 2:
+                return "拖欠";
+            case 3:
+                return "预付款";
         }
     }
+
     /*]]>*/
 </script>
 <script>
@@ -558,6 +586,7 @@
         tableString += '\n</table>';
         return tableString;
     }
+
     function Export(strXlsName, exportGrid) {
         var f = $('<form action="/web/branch/excel.do" method="post" id="fm1"></form>');
         var i = $('<input type="hidden" id="txtContent" name="txtContent" />');
@@ -569,6 +598,7 @@
         f.appendTo(document.body).submit();
         document.body.removeChild(f);
     }
+
     /*]]>*/
 </script>
 </body>

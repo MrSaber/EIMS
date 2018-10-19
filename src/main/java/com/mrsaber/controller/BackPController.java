@@ -14,21 +14,21 @@ import java.util.List;
 public class BackPController {
     @Autowired
     private BackPMapper backPMapper;
+
     @RoleCheck(level = {3})
     @RequestMapping(value = "/add.do")
-    public String add(BackP p)
-    {
-        try{backPMapper.add(p);}
-        catch (Exception e)
-        {
+    public String add(BackP p) {
+        try {
+            backPMapper.add(p);
+        } catch (Exception e) {
             e.printStackTrace();
             return e.getMessage();
         }
         return "退货成功";
     }
+
     @RequestMapping(value = "/get.do")
-    public List<BackP> get(Integer id)
-    {
+    public List<BackP> get(Integer id) {
         return backPMapper.get(id);
     }
 }

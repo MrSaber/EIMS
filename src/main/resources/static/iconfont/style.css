@@ -1,84 +1,102 @@
 @font-face {
-  font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?u4m6fy');
-  src:  url('fonts/icomoon.eot?u4m6fy#iefix') format('embedded-opentype'),
+    font-family: 'icomoon';
+    src: url('fonts/icomoon.eot?u4m6fy');
+    src: url('fonts/icomoon.eot?u4m6fy#iefix') format('embedded-opentype'),
     url('fonts/icomoon.ttf?u4m6fy') format('truetype'),
     url('fonts/icomoon.woff?u4m6fy') format('woff'),
     url('fonts/icomoon.svg?u4m6fy#icomoon') format('svg');
-  font-weight: normal;
-  font-style: normal;
+    font-weight: normal;
+    font-style: normal;
 }
 
 [class^="icon-"], [class*=" icon-"] {
-  /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'icomoon' !important;
-  speak: none;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
 
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .icon-logg:before {
-  content: "\e915";
+    content: "\e915";
 }
+
 .icon-manager:before {
-  content: "\e916";
+    content: "\e916";
 }
+
 .icon-user:before {
-  content: "\e917";
+    content: "\e917";
 }
+
 .icon-data:before {
-  content: "\e918";
+    content: "\e918";
 }
+
 .icon-sysmanager:before {
-  content: "\e919";
+    content: "\e919";
 }
+
 .icon-list:before {
-  content: "\e91a";
+    content: "\e91a";
 }
+
 .icon-passagewaymanager:before {
-  content: "\e91b";
+    content: "\e91b";
 }
+
 .icon-base:before {
-  content: "\e91c";
+    content: "\e91c";
 }
+
 .icon-agentlist:before {
-  content: "\e91d";
+    content: "\e91d";
 }
+
 .icon-configure:before {
-  content: "\e91e";
+    content: "\e91e";
 }
+
 .icon-flow:before {
-  content: "\e91f";
+    content: "\e91f";
 }
+
 .icon-orderlist:before {
-  content: "\e920";
+    content: "\e920";
 }
+
 .icon-ydlist:before {
-  content: "\e921";
+    content: "\e921";
 }
+
 .icon-agentpay:before {
-  content: "\e922";
+    content: "\e922";
 }
+
 .icon-agentsum:before {
-  content: "\e923";
+    content: "\e923";
 }
+
 .icon-passagewaysum:before {
-  content: "\e924";
+    content: "\e924";
 }
+
 .icon-custom:before {
-  content: "\e925";
+    content: "\e925";
 }
+
 .icon-address:before {
-  content: "\e926";
+    content: "\e926";
 }
+
 .icon-lock:before {
-  content: "\e927";
+    content: "\e927";
 }
 

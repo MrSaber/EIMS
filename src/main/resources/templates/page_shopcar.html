@@ -12,84 +12,96 @@
     <script type="text/javascript" src="jquery-easyui/jquery.easyui.min.js"></script>
 </head>
 <body class="layui-layout-body">
-    <div class="layui-body">
-        <!-- 内容主体区域 -->
-        <div style="padding: 15px;">
-            <table id="dg" class="easyui-datagrid" title="当前购物车" style="width:100%;height:700px"
-                   data-options="rownumbers:true,singleSelect:true,
+<div class="layui-body">
+    <!-- 内容主体区域 -->
+    <div style="padding: 15px;">
+        <table id="dg" class="easyui-datagrid" title="当前购物车" style="width:100%;height:700px"
+               data-options="rownumbers:true,singleSelect:true,
                    url:'/web/sc/get.do',
                    method:'get',
                    toolbar:'#tb',
                    remoteSort:false">
-                <thead>
-                <tr>
-                    <th data-options="field:'car_id',width:80">流水号</th>
-                    <th data-options="field:'car_su_id',width:80,hidden:true">流水号</th>
-                    <th data-options="field:'supplier_office',width:100,sortable:true">供货商</th>
-                    <th data-options="field:'su_name',width:100,sortable:true">货品名称</th>
-                    <th data-options="field:'su_No',width:80,sortable:true">商品货号</th>
-                    <th data-options="field:'su_storage',width:80,align:'right',sortable:true">存储条件</th>
-                    <th data-options="field:'su_orign',width:80,align:'right',sortable:true">产地</th>
-                    <th data-options="field:'su_standard',width:80,align:'right',sortable:true">规格</th>
-                    <th data-options="field:'car_su_number',width:80,align:'right',sortable:true">数量</th>
-                    <th data-options="field:'car_other',width:80,align:'right'">备注</th>
-                </tr>
-                </thead>
-            </table>
-            <div id="tb" style="height:auto">
-                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="delItem()">删除</a>
-                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="delAllItem()">清空购物车</a>
-                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="Export('导出excel', $('#dg'));">打印报表</a>
-            </div>
-            <!--右键菜单-->
-            <div id="mm" class="easyui-menu" style="width:120px;">
-                <div onclick="$('#dlg_inbound').dialog('open')" data-options="iconCls:'icon-add'">入库</div>
-                <div onclick="delItem()" data-options="iconCls:'icon-add'">删除订单</div>
-            </div>
-            <!--入库菜单-->
-            <div id="dlg_inbound" class="easyui-dialog" title="入库" data-options="iconCls:'icon-save'" style="width:400px;height:500px;padding:10px">
-                    <form id="ff" method="post">
-                        <div style="margin-bottom:20px">
-                            <input name="or_number" style="width:100%" type="number"  class="easyui-numberbox" value="1" id="order_number" data-options="label:'数 量:',required:true"/>
-                        </div>
-                        <div style="margin-bottom:20px">
-                            <input name="or_price" style="width:100%" type="number" class="easyui-numberbox" value="1"  data-options="label:'进 价:',required:true,min:0,precision:2"/>
-                        </div>
-                        <div style="margin-bottom:20px">
-                            <input name="or_alarm" style="width:100%" type="number" class="easyui-numberbox" value="1"  data-options="label:'预警阈值:',required:true"/>
-                        </div>
-                        <div style="margin-bottom:20px">
-                            <input  name="or_date"  style="width:100%" type= "text" class= "easyui-datebox" required ="required" label="进货日期："> </input>
-                        </div>
-                        <div style="margin-bottom:20px">
-                            <input  name="or_deaddate"  style="width:100%" type= "text" class= "easyui-datebox" required ="required" label="到期日期："> </input>
-                        </div>
-                        <div style="margin-bottom:20px">
-                            <label class="textbox-label">发票状况：</label>
-                            <select name="or_invoice" style="width:50%" class="easyui-combobox">
-                                <option value="1">有</option>
-                                <option value="2">无</option>
-                                <option value="3">拖欠</option>
-                            </select>
-                        </div>
-                        <div style="margin-bottom:20px">
-                            <label class="textbox-label">付款状况：</label>
-                            <select name="or_payment" style="width:50%" class="easyui-combobox">
-                                <option value="3">预付款</option>
-                                <option value="4">月结</option>
-                                <option value="5">现结</option>
-                            </select>
-                        </div>
+            <thead>
+            <tr>
+                <th data-options="field:'car_id',width:80">流水号</th>
+                <th data-options="field:'car_su_id',width:80,hidden:true">流水号</th>
+                <th data-options="field:'supplier_office',width:100,sortable:true">供货商</th>
+                <th data-options="field:'su_name',width:100,sortable:true">货品名称</th>
+                <th data-options="field:'su_No',width:80,sortable:true">商品货号</th>
+                <th data-options="field:'su_storage',width:80,align:'right',sortable:true">存储条件</th>
+                <th data-options="field:'su_orign',width:80,align:'right',sortable:true">产地</th>
+                <th data-options="field:'su_standard',width:80,align:'right',sortable:true">规格</th>
+                <th data-options="field:'car_su_number',width:80,align:'right',sortable:true">数量</th>
+                <th data-options="field:'car_other',width:80,align:'right'">备注</th>
+            </tr>
+            </thead>
+        </table>
+        <div id="tb" style="height:auto">
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true"
+               onclick="delItem()">删除</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true"
+               onclick="delAllItem()">清空购物车</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true"
+               onclick="Export('导出excel', $('#dg'));">打印报表</a>
+        </div>
+        <!--右键菜单-->
+        <div id="mm" class="easyui-menu" style="width:120px;">
+            <div onclick="$('#dlg_inbound').dialog('open')" data-options="iconCls:'icon-add'">入库</div>
+            <div onclick="delItem()" data-options="iconCls:'icon-add'">删除订单</div>
+        </div>
+        <!--入库菜单-->
+        <div id="dlg_inbound" class="easyui-dialog" title="入库" data-options="iconCls:'icon-save'"
+             style="width:400px;height:500px;padding:10px">
+            <form id="ff" method="post">
+                <div style="margin-bottom:20px">
+                    <input name="or_number" style="width:100%" type="number" class="easyui-numberbox" value="1"
+                           id="order_number" data-options="label:'数 量:',required:true"/>
+                </div>
+                <div style="margin-bottom:20px">
+                    <input name="or_price" style="width:100%" type="number" class="easyui-numberbox" value="1"
+                           data-options="label:'进 价:',required:true,min:0,precision:2"/>
+                </div>
+                <div style="margin-bottom:20px">
+                    <input name="or_alarm" style="width:100%" type="number" class="easyui-numberbox" value="1"
+                           data-options="label:'预警阈值:',required:true"/>
+                </div>
+                <div style="margin-bottom:20px">
+                    <input name="or_date" style="width:100%" type="text" class="easyui-datebox" required="required"
+                           label="进货日期："> </input>
+                </div>
+                <div style="margin-bottom:20px">
+                    <input name="or_deaddate" style="width:100%" type="text" class="easyui-datebox" required="required"
+                           label="到期日期："> </input>
+                </div>
+                <div style="margin-bottom:20px">
+                    <label class="textbox-label">发票状况：</label>
+                    <select name="or_invoice" style="width:50%" class="easyui-combobox">
+                        <option value="1">有</option>
+                        <option value="2">无</option>
+                        <option value="3">拖欠</option>
+                    </select>
+                </div>
+                <div style="margin-bottom:20px">
+                    <label class="textbox-label">付款状况：</label>
+                    <select name="or_payment" style="width:50%" class="easyui-combobox">
+                        <option value="3">预付款</option>
+                        <option value="4">月结</option>
+                        <option value="5">现结</option>
+                    </select>
+                </div>
 
-                        <div style="margin-bottom:20px">
-                            <input class="easyui-textbox" style="width:100%" name="or_other" data-options="label:'备注信息:',required:false"/>
-                        </div>
-                        <div style="text-align: center">
-                            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="addAjax()" style="width:90px">保存</a>
-                        </div>
-                    </form>
-            </div>
-         </div></div>
+                <div style="margin-bottom:20px">
+                    <input class="easyui-textbox" style="width:100%" name="or_other"
+                           data-options="label:'备注信息:',required:false"/>
+                </div>
+                <div style="text-align: center">
+                    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="addAjax()"
+                       style="width:90px">保存</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <!--CURD代码-->
 <script>
@@ -98,54 +110,57 @@
     $(function () {
         $('#dlg_inbound').dialog("close");
         $('#dg').datagrid({
-            onRowContextMenu:function (e,index,row) {
+            onRowContextMenu: function (e, index, row) {
                 e.preventDefault();
-                $('#mm').menu('show',{
-                    left:e.pageX,
-                    top:e.pageY});
-        }})
+                $('#mm').menu('show', {
+                    left: e.pageX,
+                    top: e.pageY
+                });
+            }
+        })
     });
+
     // 删除Item
-    function delItem()
-    {
+    function delItem() {
         var car_id = $('#dg').datagrid('getSelected').car_id;
         $.ajax({
-            url:"/web/sc/del.do",
-            data:{id:car_id},
-            success:function (data) {
-                $.messager.alert("消息",data);
+            url: "/web/sc/del.do",
+            data: {id: car_id},
+            success: function (data) {
+                $.messager.alert("消息", data);
             }
         })
     }
+
     // 清空购物车
     function delAllItem() {
         $.ajax({
-            url:"/web/sc/delAll.do",
-            success:function(data)
-            {
-                $.messager.alert("消息",data);
+            url: "/web/sc/delAll.do",
+            success: function (data) {
+                $.messager.alert("消息", data);
             }
         })
     }
+
     // 入库
     function addAjax() {
         var orderNum = $('#order_number').val();
-        if(orderNum <1)
-        {
-            $.messager.alert("错误","进货数量不能小于1！");
-        }else{
+        if (orderNum < 1) {
+            $.messager.alert("错误", "进货数量不能小于1！");
+        } else {
             $('#ff').form('submit', {
                 url: "/web/order/add.do",
                 onSubmit: function (param) {
-                    param.or_goods_id=$('#dg').datagrid('getSelected').car_su_id;
+                    param.or_goods_id = $('#dg').datagrid('getSelected').car_su_id;
                 },
                 success: function (result) {
-                    $.messager.alert("反馈",result);
+                    $.messager.alert("反馈", result);
                     $('#dg').datagrid("reload");
                 }
             })
         }
     }
+
     /*]]>*/
 </script>
 
@@ -220,6 +235,7 @@
         tableString += '\n</table>';
         return tableString;
     }
+
     function Export(strXlsName, exportGrid) {
         var f = $('<form action="/web/branch/excel.do" method="post" id="fm1"></form>');
         var i = $('<input type="hidden" id="txtContent" name="txtContent" />');
@@ -231,6 +247,7 @@
         f.appendTo(document.body).submit();
         document.body.removeChild(f);
     }
+
     /*]]>*/
 </script>
 </body>

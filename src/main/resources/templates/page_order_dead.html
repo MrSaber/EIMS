@@ -12,61 +12,62 @@
 
 </head>
 <body class="-">
-    <div class="">
-        <!-- 内容主体区域 -->
-        <div style="padding: 15px;">
-            <div id="tb" style="padding:2px 5px;">
-                截止日期<input id="deadDate" class="easyui-datebox" style="width:110px"/>
-                <a href="#" class="easyui-linkbutton" onclick="QueryOrderByDeadDate()" iconCls="icon-search">查询</a>
-                <a href="#" class="easyui-linkbutton" onclick="Export('导出excel', $('#dg'));" iconCls="icon-print">打印</a>
-            </div>
-
-            <!--JQuery Easy UI 表格-->
-            <table id="dg" class="easyui-datagrid" title="到期预警信息" style="width:100%;height:800px"
-                   data-options="rownumbers:true,singleSelect:true,url:'/web/order/getListByDead.do',method:'get'"
-                   toolbar="#tb">
-                <thead>
-                <tr>
-                    <th data-options="field:'or_id',width:80">流水号</th>
-                    <th data-options="field:'su_name',width:80">物品名称</th>
-                    <th data-options="field:'or_price',width:80">进货价</th>
-                    <th data-options="field:'supplier_office',width:100">供货商</th>
-                    <th data-options="field:'su_standard',width:100">规格</th>
-                    <th data-options="field:'su_storage',width:80,align:'right'">存储条件</th>
-                    <th data-options="field:'su_orgin',width:80,align:'right'">产地</th>
-                    <th data-options="field:'or_deaddate',width:80,align:'right'">到期日期</th>
-                    <th data-options="field:'or_number',width:80,align:'right'">库存余量</th>
-                    <th data-options="field:'or_alarm',width:80,align:'right'">报警阀值</th>
-                    <th data-options="field:'sale_other',width:180,align:'right'">备注</th>
-                    <th data-options="field:'sale_invoice',width:220">结款状态</th>
-                    <th data-options="field:'su_goods_id',width:220,hidden:true">商品编号</th>
-                </tr>
-                </thead>
-            </table>
+<div class="">
+    <!-- 内容主体区域 -->
+    <div style="padding: 15px;">
+        <div id="tb" style="padding:2px 5px;">
+            截止日期<input id="deadDate" class="easyui-datebox" style="width:110px"/>
+            <a href="#" class="easyui-linkbutton" onclick="QueryOrderByDeadDate()" iconCls="icon-search">查询</a>
+            <a href="#" class="easyui-linkbutton" onclick="Export('导出excel', $('#dg'));" iconCls="icon-print">打印</a>
         </div>
+
+        <!--JQuery Easy UI 表格-->
+        <table id="dg" class="easyui-datagrid" title="到期预警信息" style="width:100%;height:800px"
+               data-options="rownumbers:true,singleSelect:true,url:'/web/order/getListByDead.do',method:'get'"
+               toolbar="#tb">
+            <thead>
+            <tr>
+                <th data-options="field:'or_id',width:80">流水号</th>
+                <th data-options="field:'su_name',width:80">物品名称</th>
+                <th data-options="field:'or_price',width:80">进货价</th>
+                <th data-options="field:'supplier_office',width:100">供货商</th>
+                <th data-options="field:'su_standard',width:100">规格</th>
+                <th data-options="field:'su_storage',width:80,align:'right'">存储条件</th>
+                <th data-options="field:'su_orgin',width:80,align:'right'">产地</th>
+                <th data-options="field:'or_deaddate',width:80,align:'right'">到期日期</th>
+                <th data-options="field:'or_number',width:80,align:'right'">库存余量</th>
+                <th data-options="field:'or_alarm',width:80,align:'right'">报警阀值</th>
+                <th data-options="field:'sale_other',width:180,align:'right'">备注</th>
+                <th data-options="field:'sale_invoice',width:220">结款状态</th>
+                <th data-options="field:'su_goods_id',width:220,hidden:true">商品编号</th>
+            </tr>
+            </thead>
+        </table>
     </div>
+</div>
 <!--CURD代码-->
 <script>
     /*<![CDATA[*/
     $('#dg').datagrid({
-        onLoadSuccess:function (data) {
-            var rows=$('#dg').datagrid("getRows");
-            for(var i=0;i<rows.length;i++)
-            {
-                $('#dg').datagrid('updateRow',{
+        onLoadSuccess: function (data) {
+            var rows = $('#dg').datagrid("getRows");
+            for (var i = 0; i < rows.length; i++) {
+                $('#dg').datagrid('updateRow', {
                     index: i,
                     row: {
-                        or_deaddate:new Date(rows[i].or_deaddate).toLocaleDateString(),
+                        or_deaddate: new Date(rows[i].or_deaddate).toLocaleDateString(),
                     }
                 });
             }
         }
     });
+
     function QueryOrderByDeadDate() {
-        var deadDate =$("#deadDate").val();
-        $('#dg').datagrid("reload",{deaddate:deadDate})
+        var deadDate = $("#deadDate").val();
+        $('#dg').datagrid("reload", {deaddate: deadDate})
 
     }
+
     /*]]>*/
 </script>
 <script>
@@ -140,6 +141,7 @@
         tableString += '\n</table>';
         return tableString;
     }
+
     function Export(strXlsName, exportGrid) {
         var f = $('<form action="/web/branch/excel.do" method="post" id="fm1"></form>');
         var i = $('<input type="hidden" id="txtContent" name="txtContent" />');
@@ -151,6 +153,7 @@
         f.appendTo(document.body).submit();
         document.body.removeChild(f);
     }
+
     /*]]>*/
 </script>
 </body>

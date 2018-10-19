@@ -36,15 +36,16 @@
             <th data-options="field:'sale_other',width:50,sortable:true">备注</th>
             <th data-options="field:'_operate',width:80,align:'center',formatter:formatOper">操作</th>
             <script>
-                function formatOper(val,row,index){
-                    return '<a href="#"  onclick="outbound('+row.sale_or_id+','+row.sale_number+','+row.sale_id+')">同意</a><a href="#"  onclick="delSale('+row.sale_id+')">拒绝</a>';
+                function formatOper(val, row, index) {
+                    return '<a href="#"  onclick="outbound(' + row.sale_or_id + ',' + row.sale_number + ',' + row.sale_id + ')">同意</a><a href="#"  onclick="delSale(' + row.sale_id + ')">拒绝</a>';
                 }
             </script>
         </tr>
         </thead>
     </table>
     <div id="tb" style="height:auto">
-        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="outboundList()">一键出库</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true"
+           onclick="outboundList()">一键出库</a>
     </div>
 </div>
 
@@ -52,39 +53,37 @@
 <script>
     /*<![CDATA[*/
     //入库
-    function outbound(or_id,number,sale_id)
-    {
-        $.messager.confirm("信息","确定要出库吗？",function(r){
-            if(r)
-            {
-                    $.ajax({
-                        url:"/web/sale/confirmSale.do",
-                        data:{
-                            sale_or_id:or_id,
-                            sale_number:number,
-                            sale_id:sale_id
-                        },
-                        success:function (msg) {
-                            $.messager.alert("反馈",msg);
-                            location.reload();
-                        }
-                    })
-                }
+    function outbound(or_id, number, sale_id) {
+        $.messager.confirm("信息", "确定要出库吗？", function (r) {
+            if (r) {
+                $.ajax({
+                    url: "/web/sale/confirmSale.do",
+                    data: {
+                        sale_or_id: or_id,
+                        sale_number: number,
+                        sale_id: sale_id
+                    },
+                    success: function (msg) {
+                        $.messager.alert("反馈", msg);
+                        location.reload();
+                    }
+                })
+            }
         });
     }
+
     //删除订单
     function delSale(btn) {
-        $.messager.confirm("信息","确定要删除吗？",function(r){
-            if(r) {
-                if(r)
-                {
+        $.messager.confirm("信息", "确定要删除吗？", function (r) {
+            if (r) {
+                if (r) {
                     $.ajax({
-                        url:"/web/sale/del.do",
-                        data:{
-                            sale_id:btn
+                        url: "/web/sale/del.do",
+                        data: {
+                            sale_id: btn
                         },
-                        success:function (msg) {
-                            $.messager.alert("反馈",msg);
+                        success: function (msg) {
+                            $.messager.alert("反馈", msg);
                             location.reload();
                         }
                     })
@@ -92,23 +91,23 @@
             }
         });
     }
+
     //一键出库
-    function outboundList()
-    {
+    function outboundList() {
         var rows = $('#dg').datagrid("getSelections");
-        for(var i=0;i<rows.length;i++)
-        {
+        for (var i = 0; i < rows.length; i++) {
             $.ajax({
-                url:"/web/sale/confirmSale.do",
-                data:{
-                    sale_or_id:rows[i].sale_or_id,
-                    sale_number:rows[i].sale_number,
-                    sale_id:rows[i].sale_id
+                url: "/web/sale/confirmSale.do",
+                data: {
+                    sale_or_id: rows[i].sale_or_id,
+                    sale_number: rows[i].sale_number,
+                    sale_id: rows[i].sale_id
                 }
             })
         }
-        $.messager.alert("反馈","一键出库成功！")
+        $.messager.alert("反馈", "一键出库成功！")
     }
+
     //计算总价
     $('#dg').datagrid({
         onLoadSuccess: function (data) {

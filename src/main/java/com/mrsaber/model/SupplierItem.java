@@ -34,6 +34,7 @@ public class SupplierItem {
     public void setCount(Integer count) {
         this.count = count;
     }
+
     public List<Supplier> getData() {
         return data;
     }

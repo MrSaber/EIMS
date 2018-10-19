@@ -19,56 +19,56 @@ public class InvoiceController {
 
     /**
      * 开发票
+     *
      * @param invoice
      * @return
      */
     @RoleCheck(level = {3})
     @RequestMapping(value = "/add.do")
-    public String add(Invoice invoice)
-    {
+    public String add(Invoice invoice) {
         try {
             invoice.setIn_other(java.net.URLDecoder.decode(invoice.getIn_other(), "UTF-8"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-            invoiceService.addInvoice(invoice);
+        invoiceService.addInvoice(invoice);
         return "添加成功";
     }
 
     /**
      * 获得发票
+     *
      * @param saleId
      * @return
      */
     @RequestMapping(value = "/get.do")
-    public List<Invoice> get(Integer saleId)
-    {
+    public List<Invoice> get(Integer saleId) {
         return invoiceService.getInBySaleId(saleId);
     }
 
     /**
      * 修改发票信息
+     *
      * @param invoice 发票信息
      */
     @RoleCheck(level = {3})
     @RequestMapping(value = "/update.do")
-    public String update(Invoice invoice)
-    {
+    public String update(Invoice invoice) {
         return null;
     }
 
     /**
      * 删除发票
+     *
      * @param inId 发票ID
      * @return
      */
     @RoleCheck(level = {3})
     @RequestMapping(value = "/del.do")
-    public String del(Integer inId)
-    {
-        try{invoiceService.delInvoice(inId);}
-        catch (Exception e)
-        {
+    public String del(Integer inId) {
+        try {
+            invoiceService.delInvoice(inId);
+        } catch (Exception e) {
             e.printStackTrace();
             return e.getMessage();
         }

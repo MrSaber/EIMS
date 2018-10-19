@@ -24,9 +24,8 @@ public class CustomerService {
     private OfficeService officeService;
 
 
-    public CustomerItem getALlCustomer()
-    {
-        List<Customer> customers =  customerMapper.getAllCustomer();
+    public CustomerItem getALlCustomer() {
+        List<Customer> customers = customerMapper.getAllCustomer();
         CustomerItem customerItem = new CustomerItem();
         customerItem.setMsg("Hello");
         customerItem.setCount(customers.size());
@@ -37,58 +36,56 @@ public class CustomerService {
 
     /**
      * 模糊查找客户信息
+     *
      * @param str
      * @return
      */
-    public List<Customer> getListByLikeName1(String str)
-    {
-        return customerMapper.getListByLikeName("%"+str+"%");
+    public List<Customer> getListByLikeName1(String str) {
+        return customerMapper.getListByLikeName("%" + str + "%");
     }
-
 
 
     /**
      * 更新客户信息
+     *
      * @param customer
      */
-    public void update(Customer customer)
-    {
+    public void update(Customer customer) {
         customerMapper.update(customer);
     }
 
     /**
      * 添加客户
+     *
      * @param customer
      */
-    public void addCustomer(Customer customer)
-    {
+    public void addCustomer(Customer customer) {
         customerMapper.addCustomer(customer);
     }
 
     /**
      * 删除客户
+     *
      * @param id
      */
-    public void delCustomer(Integer id)
-    {
+    public void delCustomer(Integer id) {
         customerMapper.delCustomer(id);
     }
-    public Customer getById(Integer id)
-    {
+
+    public Customer getById(Integer id) {
         return customerMapper.getCustomerById(id);
     }
 
-    public List<Customer> getCustomerByLabId(Integer id)
-    {
+    public List<Customer> getCustomerByLabId(Integer id) {
         return customerMapper.getCustomerByLabId(id);
     }
 
     /**
      * 获得客户树
+     *
      * @return
      */
-    public TreeNode getCuTree()
-    {
+    public TreeNode getCuTree() {
         TreeNode treeNode = new TreeNode();
         treeNode.setId("0");
         treeNode.setText("客户");
@@ -100,8 +97,7 @@ public class CustomerService {
          */
         List<TreeNode> officeList = new ArrayList<>();
         Iterator<Office> it = officeService.getAllOffice().getData().iterator();
-        while (it.hasNext())
-        {
+        while (it.hasNext()) {
             Office it_office = it.next();
             TreeNode officeNode = new TreeNode();
             officeNode.setId(String.valueOf(it_office.getOf_id()));
@@ -117,8 +113,7 @@ public class CustomerService {
             */
             List<TreeNode> branchList = new ArrayList<>();
             Iterator<Branch> it_b = branchService.getBranchByOfficeId(it_office.getOf_id()).iterator();
-            while (it_b.hasNext())
-            {
+            while (it_b.hasNext()) {
                 Branch it_branch = it_b.next();
                 TreeNode branchNode = new TreeNode();
                 branchNode.setId(String.valueOf(it_branch.getBr_id()));
@@ -132,15 +127,14 @@ public class CustomerService {
                 /*遍历负责人*/
                 List<TreeNode> cuList = new ArrayList<>();
                 List<Customer> list_cu = customerMapper.getCustomerByLabId(it_branch.getBr_id());
-                Iterator<Customer> it_cu =list_cu.iterator();
-                if(list_cu.size()<=0)
+                Iterator<Customer> it_cu = list_cu.iterator();
+                if (list_cu.size() <= 0)
                     branchNode.setState("open");
                 else
                     branchNode.setState("closed");
 
-                while (it_cu.hasNext())
-                {
-                    Customer it_customer=it_cu.next();
+                while (it_cu.hasNext()) {
+                    Customer it_customer = it_cu.next();
                     TreeNode cuNode = new TreeNode();
                     cuNode.setText(it_customer.getCu_name());
                     TreeNodeAttr attr3 = new TreeNodeAttr();
@@ -150,10 +144,9 @@ public class CustomerService {
                     cuNode.setIconCls("icon-man");
                     /*遍历成员*/
                     List<TreeNode> cusList = new ArrayList<>();
-                    Iterator<Customer> it_cus =customerMapper.getCustomerByFarId(it_customer.getCu_id()).iterator();
-                    while (it_cus.hasNext())
-                    {
-                        Customer it_customers=it_cus.next();
+                    Iterator<Customer> it_cus = customerMapper.getCustomerByFarId(it_customer.getCu_id()).iterator();
+                    while (it_cus.hasNext()) {
+                        Customer it_customers = it_cus.next();
                         TreeNode cusNode = new TreeNode();
                         cusNode.setText(it_customers.getCu_name());
                         cusNode.setIconCls("icon-man");

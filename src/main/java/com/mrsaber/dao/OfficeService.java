@@ -17,9 +17,9 @@ import java.util.List;
 public class OfficeService {
     @Autowired
     private OfficeMappper officeMappper;
-    public OfficeItem getAllOffice()
-    {
-        List<Office> offices =  officeMappper.getAllOffice();
+
+    public OfficeItem getAllOffice() {
+        List<Office> offices = officeMappper.getAllOffice();
         OfficeItem officeItem = new OfficeItem();
         officeItem.setMsg("Hello");
         officeItem.setCount(offices.size());
@@ -28,12 +28,11 @@ public class OfficeService {
         return officeItem;
     }
 
-    public void addOffice(Office office)
-    {
+    public void addOffice(Office office) {
         officeMappper.addOffice(office);
     }
-    public void delOffice(Integer id)
-    {
+
+    public void delOffice(Integer id) {
         officeMappper.delOffice(id);
     }
 }

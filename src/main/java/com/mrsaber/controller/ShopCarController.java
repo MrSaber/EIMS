@@ -18,47 +18,55 @@ public class ShopCarController {
     private ShopCartMapper shopCartMapper;
 
     @RequestMapping("/get.do")
-    public List<ShopCart> get()
-    {
+    public List<ShopCart> get() {
         return shopCartMapper.getCuItems();
     }
+
     @RoleCheck(level = {3})
 
     @RequestMapping("/del.do")
-    public String del(Integer id)
-    {
-        try{shopCartMapper.deleteItemById(id);}
-        catch (Exception e)
-        {e.printStackTrace();return e.getMessage();}
+    public String del(Integer id) {
+        try {
+            shopCartMapper.deleteItemById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return e.getMessage();
+        }
         return "删除成功";
     }
 
     /**
      * 清空购物车
+     *
      * @return
      */
     @RoleCheck(level = {3})
     @RequestMapping("/delAll.do")
-    public String delAll()
-    {
-        try{shopCartMapper.delteAll();}
-        catch (Exception e)
-        {e.printStackTrace();return e.getMessage();}
+    public String delAll() {
+        try {
+            shopCartMapper.delteAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return e.getMessage();
+        }
         return "删除成功";
     }
 
     /**
      * 购物车添加
+     *
      * @param sc
      * @return
      */
     @RoleCheck(level = {3})
     @RequestMapping("/add.do")
-    public String add(ShopCart sc)
-    {
-        try{shopCartMapper.addItem(sc);}
-        catch (Exception e)
-        {e.printStackTrace();return e.getMessage();}
+    public String add(ShopCart sc) {
+        try {
+            shopCartMapper.addItem(sc);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return e.getMessage();
+        }
         return "添加成功";
     }
 

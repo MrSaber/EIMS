@@ -20,14 +20,17 @@ import javax.servlet.http.HttpServletResponse;
 public class OfficeController {
     @Autowired
     private OfficeService officeService;
+
     /**
      * 获得所有单位
+     *
      * @return
      */
     @RequestMapping(value = "/get.do")
     public OfficeItem getALlSupplierInfo() {
         return officeService.getAllOffice();
     }
+
     /**
      * 添加单位
      *
@@ -45,6 +48,7 @@ public class OfficeController {
         }
         return "添加成功";
     }
+
     /**
      * 删除单位
      *
@@ -68,12 +72,9 @@ public class OfficeController {
      */
     @RoleCheck(level = {3})
     @RequestMapping(value = "/update.do")
-    public String updateOffice(Office office)
-    {
-        try{
-        }
-        catch (Exception e)
-        {
+    public String updateOffice(Office office) {
+        try {
+        } catch (Exception e) {
             e.printStackTrace();
             return e.getMessage();
         }

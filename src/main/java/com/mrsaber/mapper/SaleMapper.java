@@ -26,6 +26,7 @@ public interface SaleMapper {
 
     /**
      * 根据顾客ID获取购买信息
+     *
      * @param cuId
      * @return
      */
@@ -33,6 +34,7 @@ public interface SaleMapper {
 
     /**
      * 获取订单信息
+     *
      * @param id
      * @return
      */
@@ -40,19 +42,17 @@ public interface SaleMapper {
     Sale getById(Integer id);
 
 
-
     /**
      * 删除订单信息
+     *
      * @param id
      */
     @Delete("DELETE FROM `gongxiao`.`ms_sale` WHERE `sale_id`=#{id};")
     void delById(Integer id);
 
 
-
-
     @Update("UPDATE `gongxiao`.`ms_sale` SET `sale_number`=`sale_number`-#{back_num}, `sale_other`=#{back_cause} WHERE `sale_id`=#{sale_id};")
-    void backGoods(@Param("sale_id") Integer sale_id,@Param("back_num") Integer back_num,@Param("back_cause") String back_cause);
+    void backGoods(@Param("sale_id") Integer sale_id, @Param("back_num") Integer back_num, @Param("back_cause") String back_cause);
 
     List<Sale> getListByRecent();
 
@@ -61,15 +61,17 @@ public interface SaleMapper {
 
 
     @Select("SELECT ms_sale.*,cu_name,ms_goods.*  FROM gongxiao.ms_sale,gongxiao.ms_customer,gongxiao.ms_goods WHERE sale_cu_id=cu_id and sale_goods_id=su_id and sale_check =1 limit #{rows} offset #{offset};")
-    List<Sale> getListByPage(@Param("rows")Integer rows,@Param("offset") Integer offset);
+    List<Sale> getListByPage(@Param("rows") Integer rows, @Param("offset") Integer offset);
 
     /**
      * 结款
+     *
      * @param sale
      * @return
      */
     @Update("UPDATE `gongxiao`.`ms_sale` SET `sale_payment`=1, `sale_paydate`=#{sale_paydate} ,`sale_commit`=#{sale_commit} WHERE `sale_id`=#{sale_id};")
     void setPayment(Sale sale);
+
     /**
      * 修改备注
      */

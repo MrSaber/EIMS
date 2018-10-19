@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mrsaber.mapper.CustomerMapper">
     <insert id="orderInBound" parameterType="com.mrsaber.model.Customer">
-    INSERT INTO `gongxiao`.`ms_customer` (`cu_name`, `cu_office`, `cu_tel`, `cu_addr`, `cu_other`) VALUES (#{cu_name}, #{cu_office}, #{cu_tel}, #{cu_addr}, #{cu_other});
+        INSERT INTO `gongxiao`.`ms_customer` (`cu_name`, `cu_office`, `cu_tel`, `cu_addr`, `cu_other`) VALUES
+        (#{cu_name}, #{cu_office}, #{cu_tel}, #{cu_addr}, #{cu_other});
     </insert>
 </mapper>
 

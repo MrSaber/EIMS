@@ -14,9 +14,11 @@ public class Customer {
     //*********关联字段****************//
     private String of_name;
     private String cu_farther;
+
     public String getOf_name() {
         return of_name;
     }
+
     public void setOf_name(String of_name) {
         this.of_name = of_name;
     }

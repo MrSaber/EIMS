@@ -25,6 +25,7 @@ public class CustomerController {
 
     /**
      * 获得所有的供应商信息？
+     *
      * @return
      */
     @RequestMapping(value = "/get.do")
@@ -34,6 +35,7 @@ public class CustomerController {
 
     /**
      * 获得负责人
+     *
      * @return
      */
     @RequestMapping(value = "/getP.do")
@@ -43,15 +45,13 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/getById.do")
-    public Customer getById(Integer id)
-    {
+    public Customer getById(Integer id) {
         return customerService.getById(id);
     }
 
     @RequestMapping(value = "/getCuTree.do")
-    public TreeNode[] getCuTree(HttpServletResponse response)
-    {
-        TreeNode[] nodeTree=new TreeNode[1];
+    public TreeNode[] getCuTree(HttpServletResponse response) {
+        TreeNode[] nodeTree = new TreeNode[1];
         nodeTree[0] = customerService.getCuTree();
         return nodeTree;
     }
@@ -71,11 +71,10 @@ public class CustomerController {
 
     @RoleCheck(level = {3})
     @RequestMapping(value = "/update.do")
-    public String update(Customer c)
-    {
-        try{customerService.update(c);}
-        catch (Exception e)
-        {
+    public String update(Customer c) {
+        try {
+            customerService.update(c);
+        } catch (Exception e) {
             e.printStackTrace();
             return e.getMessage();
         }

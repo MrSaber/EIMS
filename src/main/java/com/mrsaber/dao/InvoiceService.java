@@ -15,17 +15,18 @@ public class InvoiceService {
 
     /**
      * 添加发票
+     *
      * @param invoice
      */
-    public void addInvoice(Invoice invoice)
-    {
+    public void addInvoice(Invoice invoice) {
         invoiceMapper.addInvoice(invoice);
     }
-    public void delInvoice(Integer id){
+
+    public void delInvoice(Integer id) {
         invoiceMapper.deleteById(id);
     }
-    public List<Invoice> getInBySaleId(Integer saleId)
-    {
+
+    public List<Invoice> getInBySaleId(Integer saleId) {
         return invoiceMapper.getInvoiceBySaleId(saleId);
     }
 

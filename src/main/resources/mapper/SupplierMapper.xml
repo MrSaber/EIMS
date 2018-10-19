@@ -2,7 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mrsaber.mapper.SupplierMapper">
     <insert id="addSupplier" parameterType="com.mrsaber.model.Supplier">
-      INSERT INTO `gongxiao`.`ms_supplier` (`supplier_name`, `supplier_office`, `supplier_tel`, `supplier_addr`, `supplier_other`,`supplier_bank`,`supplier_bankAccount`,`supplier_tax`,`supplier_advance`,`supplier_level`,`supplier_fax`,`supplier_qq`,`supplier_weixin`,`supplier_mail`,`supplier_type`,`supplier_code`) VALUES (#{supplier_name}, #{supplier_office}, #{supplier_tel}, #{supplier_addr}, #{supplier_other},#{supplier_bank},#{supplier_bankAccount}, #{supplier_tax}, #{supplier_advance}, #{supplier_level}, #{supplier_fax}, #{supplier_qq}, #{supplier_weixin}, #{supplier_mail},#{supplier_type},#{supplier_code});
-  </insert>
+        INSERT INTO `gongxiao`.`ms_supplier` (`supplier_name`, `supplier_office`, `supplier_tel`, `supplier_addr`,
+        `supplier_other`,`supplier_bank`,`supplier_bankAccount`,`supplier_tax`,`supplier_advance`,`supplier_level`,`supplier_fax`,`supplier_qq`,`supplier_weixin`,`supplier_mail`,`supplier_type`,`supplier_code`)
+        VALUES (#{supplier_name}, #{supplier_office}, #{supplier_tel}, #{supplier_addr},
+        #{supplier_other},#{supplier_bank},#{supplier_bankAccount}, #{supplier_tax}, #{supplier_advance},
+        #{supplier_level}, #{supplier_fax}, #{supplier_qq}, #{supplier_weixin},
+        #{supplier_mail},#{supplier_type},#{supplier_code});
+    </insert>
 </mapper>
 

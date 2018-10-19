@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"> </meta>
+    <meta charset="UTF-8">
+    </meta>
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/bootstrap/easyui.css"/>
     <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/icon.css"/>
@@ -11,7 +12,7 @@
 <body>
 
 <table id="dg" title="系统账户信息" style="width:100%;height:700px"
-       toolbar="#toolbar"  idField="id"
+       toolbar="#toolbar" idField="id"
        rownumbers="true" fitColumns="true" singleSelect="true">
     <thead>
     <tr>
@@ -24,7 +25,8 @@
 </table>
 <div id="toolbar">
     <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">添加</a>
-    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="editUser()">修改</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true"
+       onclick="editUser()">修改</a>
     <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="delUser()">删除</a>
 </div>
 
@@ -48,27 +50,30 @@
         </div>
     </form>
     <div id="dlg-buttons">
-        <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()" style="width:90px">Save</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()"
+           style="width:90px">Save</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
+           onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
     </div>
 </div>
 <!--新建用户-->
 <script>
     var url;
-    function newUser(){
-        $('#dlg').dialog('open').dialog('center').dialog('setTitle','New User');
+
+    function newUser() {
+        $('#dlg').dialog('open').dialog('center').dialog('setTitle', 'New User');
         $('#fm').form('clear');
         url = '/web/u/add.do';
     }
 </script>
 <!--修改用户-->
 <script>
-    function editUser(){
+    function editUser() {
         var row = $('#dg').datagrid('getSelected');
-        if (row){
-            $('#dlg').dialog('open').dialog('center').dialog('setTitle','Edit User');
-            $('#fm').form('load',row);
-            url = '/web/u/update.do?user_id='+row.user_id;
+        if (row) {
+            $('#dlg').dialog('open').dialog('center').dialog('setTitle', 'Edit User');
+            $('#fm').form('load', row);
+            url = '/web/u/update.do?user_id=' + row.user_id;
         }
     }
 </script>
@@ -77,10 +82,10 @@
     function delUser() {
         var user_id = $('#dg').datagrid('getSelected').user_id;
         $.ajax({
-            url:"/web/u/del.do",
-            data:{userId:user_id},
-            success:function (data) {
-                $.messager.alert("消息",data);
+            url: "/web/u/del.do",
+            data: {userId: user_id},
+            success: function (data) {
+                $.messager.alert("消息", data);
                 $('#dlg').dialog('close');        // close the dialog
                 $('#dg').datagrid('reload');    // reload the user data
             }
@@ -96,7 +101,7 @@
                 return $(this).form('validate');
             },
             success: function (result) {
-                $.messager.alert("消息",result);
+                $.messager.alert("消息", result);
                 $('#dlg').dialog('close');        // close the dialog
                 $('#dg').datagrid('reload');    // reload the user data
             }
@@ -104,7 +109,7 @@
     }
 </script>
 <script type="text/javascript">
-    $(function(){
+    $(function () {
         $('#dg').datagrid({
             url: '/web/u/getAll.do'
         });

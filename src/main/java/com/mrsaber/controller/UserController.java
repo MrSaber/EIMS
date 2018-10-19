@@ -14,10 +14,10 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserMapper userMapper;
+
     @RoleCheck(level = {3})
     @RequestMapping("/add.do")
-    public String add(User user)
-    {
+    public String add(User user) {
         try {
             userMapper.add(user);
         } catch (Exception e) {
@@ -26,10 +26,10 @@ public class UserController {
         }
         return "添加成功";
     }
+
     @RoleCheck(level = {3})
     @RequestMapping("/del.do")
-    public String del(Integer userId)
-    {
+    public String del(Integer userId) {
         try {
             User user = new User();
             user.setUser_id(userId);
@@ -40,10 +40,10 @@ public class UserController {
         }
         return "删除成功";
     }
+
     @RoleCheck(level = {3})
     @RequestMapping("/update.do")
-    public String update(User user)
-    {
+    public String update(User user) {
         try {
             userMapper.update(user);
         } catch (Exception e) {
@@ -54,14 +54,12 @@ public class UserController {
     }
 
     @RequestMapping("/getAll.do")
-    public List<User> getAll()
-    {
-        return  userMapper.getAll();
+    public List<User> getAll() {
+        return userMapper.getAll();
     }
 
     @RequestMapping("/get.do")
-    public User get(User user)
-    {
+    public User get(User user) {
         return userMapper.get(user);
     }
 }

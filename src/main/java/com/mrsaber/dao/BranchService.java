@@ -12,18 +12,15 @@ public class BranchService {
     @Autowired
     private BranchMapper branchMapper;
 
-    public List<Branch> getBranchByOfficeId(Integer id)
-    {
-       return  branchMapper.getBranchByOfficeId(id);
+    public List<Branch> getBranchByOfficeId(Integer id) {
+        return branchMapper.getBranchByOfficeId(id);
     }
 
-    public void addBranch(Branch branch)
-    {
+    public void addBranch(Branch branch) {
         branchMapper.addBranch(branch);
     }
 
-    public void delBranch(Integer id)
-    {
+    public void delBranch(Integer id) {
         branchMapper.delBranch(id);
     }
 }

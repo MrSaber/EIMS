@@ -14,9 +14,10 @@ import java.util.List;
 @Mapper
 public interface OfficeMappper {
     @Select("SELECT ms_office.*,ms_customer.cu_name FROM gongxiao.ms_office LEFT OUTER JOIN gongxiao.ms_customer on(ms_office.of_principal=ms_customer.cu_id);")
-     List<Office> getAllOffice();
+    List<Office> getAllOffice();
 
     void addOffice(Office office);
+
     @Delete("DELETE FROM ms_office WHERE of_id = #{id}")
     void delOffice(Integer id);
 

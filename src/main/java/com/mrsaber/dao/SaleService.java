@@ -19,8 +19,7 @@ public class SaleService {
     @Autowired
     private OrderService orderService;
 
-    public void addSale(Sale sale)
-    {
+    public void addSale(Sale sale) {
         try {
             //添加销售单
             saleMapper.addSale(sale);
@@ -28,94 +27,95 @@ public class SaleService {
             e.printStackTrace();
         }
     }
-    public void confirmSale(Sale sale)
-    {
+
+    public void confirmSale(Sale sale) {
         //更新仓库数据
         saleMapper.confirmSale(sale.getSale_id());
     }
-    public List<Sale> getAllSaleUnCheck()
-    {
+
+    public List<Sale> getAllSaleUnCheck() {
         return saleMapper.getListSaleUnCheck();
     }
-    public void delSaleById(Integer id)
-    {
+
+    public void delSaleById(Integer id) {
         saleMapper.delById(id);
     }
 
     /**
      * 根据客户ID获取出货记录
+     *
      * @param item
      * @return
      */
-    public List<Sale> getListByDateAndCuId(OfIdAndDateItem item)
-    {
+    public List<Sale> getListByDateAndCuId(OfIdAndDateItem item) {
         return saleMapper.getListByDateAndCuId(item);
     }
+
     /**
      * 根据订单号追踪用户
      */
-    public List<Sale> getListByOrId(Integer id)
-    {
+    public List<Sale> getListByOrId(Integer id) {
         return saleMapper.getListByOrId(id);
     }
+
     /**
-     *退货
+     * 退货
      */
-    public void bakcGoods(Integer sale_id,Integer or_id,Integer back_num,String back_cause)
-    {
-        saleMapper.backGoods(sale_id,back_num,back_cause);
+    public void bakcGoods(Integer sale_id, Integer or_id, Integer back_num, String back_cause) {
+        saleMapper.backGoods(sale_id, back_num, back_cause);
     }
+
     /**
      * 按时间排列出货单
      */
-    public List<Sale> getListByRecent()
-    {
+    public List<Sale> getListByRecent() {
         return saleMapper.getListByRecent();
     }
+
     /**
      * 结账
      */
-    public void setPayment(Sale sale)
-    {
+    public void setPayment(Sale sale) {
         saleMapper.setPayment(sale);
     }
 
     /**
      * 获得
+     *
      * @param cuId
      */
     public List<Sale> getListByCuId(Integer cuId) {
         return saleMapper.getListByCuId(cuId);
     }
+
     /**
      * 修改订单备注
      */
-    public void updateOther(Integer key, String val)
-    {
-        saleMapper.updateOther(val,key);
+    public void updateOther(Integer key, String val) {
+        saleMapper.updateOther(val, key);
     }
 
     /**
      * 获得具体订单
+     *
      * @param saleId
      * @return
      */
-    public Sale getById(Integer saleId)
-    {
+    public Sale getById(Integer saleId) {
         return saleMapper.getById(saleId);
     }
 
     /**
      * 分页
+     *
      * @param rows
      * @param offset
      * @return
      */
-    public onePage getListByPage(Integer rows, Integer offset)
-    {
+    public onePage getListByPage(Integer rows, Integer offset) {
         onePage<Sale> page = new onePage<>();
         page.setTotal(saleMapper.getCount());
-        page.setRows(saleMapper.getListByPage(rows,offset));
+        page.setRows(saleMapper.getListByPage(rows, offset));
         return page;
     }
 

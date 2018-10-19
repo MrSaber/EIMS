@@ -11,12 +11,12 @@
     <script type="text/javascript" src="jquery-easyui/jquery.easyui.min.js"></script>
 </head>
 <body>
-    <div class="layui-body">
-        <!-- 内容主体区域 -->
-        <div style="padding: 15px;">
-            <!--JQuery Easy UI 表格-->
-            <table id="dg" class="easyui-datagrid" title="供应商列表" style="width:100%;height:700px"
-                   data-options="rownumbers:true,
+<div class="layui-body">
+    <!-- 内容主体区域 -->
+    <div style="padding: 15px;">
+        <!--JQuery Easy UI 表格-->
+        <table id="dg" class="easyui-datagrid" title="供应商列表" style="width:100%;height:700px"
+               data-options="rownumbers:true,
                    singleSelect:true,
                    url:'/web/supplier/getByPage.do',
                    method:'get',
@@ -25,123 +25,135 @@
                    remoteSort:false,
                    pagination:true,
                    pageSize:50">
-                <thead>
-                <tr>
-                    <th data-options="field:'supplier_id',width:80,hidden:true,sortable:true">流水号</th>
-                    <th data-options="field:'supplier_office',width:80,editor:'textbox',sortable:true">公司名称</th>
-                    <th data-options="field:'supplier_type',width:80,editor:'textbox',sortable:true">公司分类</th>
-                    <th data-options="field:'supplier_code',width:80,editor:'textbox',sortable:true">信用代码证号</th>
-                    <th data-options="field:'supplier_bank',width:100,editor:'textbox',sortable:true">开户银行</th>
-                    <th data-options="field:'supplier_bankAccount',width:100,editor:'textbox',sortable:true">银行账户</th>
-                    <th data-options="field:'supplier_addr',width:80,align:'right',editor:'textbox',sortable:true">公司地址</th>
-                    <th data-options="field:'supplier_tax',width:80,align:'right',editor:'textbox',sortable:true">默认税率</th>
-                    <th data-options="field:'supplier_advance',width:80,align:'right',editor:'textbox',sortable:true">预付款</th>
-                    <th data-options="field:'supplier_level',width:80,align:'right',editor:'textbox',sortable:true">销售级别</th>
-                    <th data-options="field:'supplier_name',width:80,align:'right',editor:'textbox',sortable:true">联系人</th>
-                    <th data-options="field:'supplier_tel',width:80,align:'right',editor:'textbox'">联系电话</th>
-                    <th data-options="field:'supplier_weixin',width:80,align:'right',editor:'textbox'">微信</th>
-                    <th data-options="field:'supplier_fax',width:80,align:'right',editor:'textbox'">传真</th>
-                    <th data-options="field:'supplier_qq',width:80,align:'right',editor:'textbox'">qq</th>
-                    <th data-options="field:'supplier_mail',width:80,align:'right',editor:'textbox'">邮箱</th>
-                </tr>
-                </thead>
-            </table>
-            <div id="tb" style="height:auto">
-                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="addSu()">添加</a>
-                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="delSu()">删除</a>
-                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="updateRow()">保存选中项</a>
-                <a class="easyui-linkbutton" data-options="iconCls:'icon-print',plain:true" onclick="Export('导出excel', $('#dg'));">打印报表</a>
-            </div>
-            <div id="dlg_Cart" class="easyui-dialog" title="添加供货商" data-options="iconCls:'icon-save'"  closed="true" style="width:450px;height:650px;padding:10px">
-                <iframe id="form_purchase" src="form_addSupplier.html" width="100%" height="100%" style="border: none">
-                </iframe>
-            </div>
-            <div id="dlg" class="easyui-dialog" title="退货记录" data-options="iconCls:'icon-save'"   closed="true" style="width:500px;height:250px">
-                <table id="dg1" class="easyui-datagrid" style="width:450px;height:200px"
-                       data-options="rownumbers:true,
+            <thead>
+            <tr>
+                <th data-options="field:'supplier_id',width:80,hidden:true,sortable:true">流水号</th>
+                <th data-options="field:'supplier_office',width:80,editor:'textbox',sortable:true">公司名称</th>
+                <th data-options="field:'supplier_type',width:80,editor:'textbox',sortable:true">公司分类</th>
+                <th data-options="field:'supplier_code',width:80,editor:'textbox',sortable:true">信用代码证号</th>
+                <th data-options="field:'supplier_bank',width:100,editor:'textbox',sortable:true">开户银行</th>
+                <th data-options="field:'supplier_bankAccount',width:100,editor:'textbox',sortable:true">银行账户</th>
+                <th data-options="field:'supplier_addr',width:80,align:'right',editor:'textbox',sortable:true">公司地址</th>
+                <th data-options="field:'supplier_tax',width:80,align:'right',editor:'textbox',sortable:true">默认税率</th>
+                <th data-options="field:'supplier_advance',width:80,align:'right',editor:'textbox',sortable:true">预付款
+                </th>
+                <th data-options="field:'supplier_level',width:80,align:'right',editor:'textbox',sortable:true">销售级别
+                </th>
+                <th data-options="field:'supplier_name',width:80,align:'right',editor:'textbox',sortable:true">联系人</th>
+                <th data-options="field:'supplier_tel',width:80,align:'right',editor:'textbox'">联系电话</th>
+                <th data-options="field:'supplier_weixin',width:80,align:'right',editor:'textbox'">微信</th>
+                <th data-options="field:'supplier_fax',width:80,align:'right',editor:'textbox'">传真</th>
+                <th data-options="field:'supplier_qq',width:80,align:'right',editor:'textbox'">qq</th>
+                <th data-options="field:'supplier_mail',width:80,align:'right',editor:'textbox'">邮箱</th>
+            </tr>
+            </thead>
+        </table>
+        <div id="tb" style="height:auto">
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true"
+               onclick="addSu()">添加</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true"
+               onclick="delSu()">删除</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true"
+               onclick="updateRow()">保存选中项</a>
+            <a class="easyui-linkbutton" data-options="iconCls:'icon-print',plain:true"
+               onclick="Export('导出excel', $('#dg'));">打印报表</a>
+        </div>
+        <div id="dlg_Cart" class="easyui-dialog" title="添加供货商" data-options="iconCls:'icon-save'" closed="true"
+             style="width:450px;height:650px;padding:10px">
+            <iframe id="form_purchase" src="form_addSupplier.html" width="100%" height="100%" style="border: none">
+            </iframe>
+        </div>
+        <div id="dlg" class="easyui-dialog" title="退货记录" data-options="iconCls:'icon-save'" closed="true"
+             style="width:500px;height:250px">
+            <table id="dg1" class="easyui-datagrid" style="width:450px;height:200px"
+                   data-options="rownumbers:true,
                    singleSelect:true,
                    url:'/web/bp/get.do',
                    method:'get'">
-                    <thead>
-                    <tr>
-                        <th data-options="field:'bp_id',width:80,hidden:true">流水号</th>
-                        <th data-options="field:'bp_date',width:80,editor:'textbox'">退货日期</th>
-                        <th data-options="field:'bp_number',width:80,editor:'textbox'">退货数量</th>
-                        <th data-options="field:'bp_or_id',width:80,editor:'textbox'">退货订单号</th>
-                        <th data-options="field:'bp_other',width:80,editor:'textbox'">说明</th>
-                    </tr>
-                    </thead>
-                </table>
-            </div>
-            <!--右键菜单-->
-            <div id="mm" class="easyui-menu" style="width:120px;">
-                <div onclick="showBP()" data-options="iconCls:'icon-add'">查看退货信息</div>
-            </div>
+                <thead>
+                <tr>
+                    <th data-options="field:'bp_id',width:80,hidden:true">流水号</th>
+                    <th data-options="field:'bp_date',width:80,editor:'textbox'">退货日期</th>
+                    <th data-options="field:'bp_number',width:80,editor:'textbox'">退货数量</th>
+                    <th data-options="field:'bp_or_id',width:80,editor:'textbox'">退货订单号</th>
+                    <th data-options="field:'bp_other',width:80,editor:'textbox'">说明</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+        <!--右键菜单-->
+        <div id="mm" class="easyui-menu" style="width:120px;">
+            <div onclick="showBP()" data-options="iconCls:'icon-add'">查看退货信息</div>
         </div>
     </div>
+</div>
 <script src="layui/layui.js"></script>
 <script>
     $(function () {
         $('#dg').datagrid({
-            onRowContextMenu:function (e,index,row) {
+            onRowContextMenu: function (e, index, row) {
                 e.preventDefault();
-                $('#mm').menu('show',{
-                    left:e.pageX,
-                    top:e.pageY});
+                $('#mm').menu('show', {
+                    left: e.pageX,
+                    top: e.pageY
+                });
             }
         });
         $('#dg1').datagrid({
-            onDblClickRow:function(index, row)
-            {
+            onDblClickRow: function (index, row) {
                 $.ajax({
-                    url:"/web/order/getById.do",
-                    data:{id:row.bp_or_id},
-                    success:function(data)
-                    {
-                        $.messager.alert("消息",data.su_name+"["+data.supplier_office+"]");
+                    url: "/web/order/getById.do",
+                    data: {id: row.bp_or_id},
+                    success: function (data) {
+                        $.messager.alert("消息", data.su_name + "[" + data.supplier_office + "]");
                     }
                 });
             }
         });
     });
+
     //显示退货信息
     function showBP() {
         $('#dlg').dialog("open");
         var id = $("#dg").datagrid("getSelected").supplier_id;
-        $("#dg1").datagrid("load",{id:id});
+        $("#dg1").datagrid("load", {id: id});
     }
+
     var editIndex = undefined;
+
     //双击后确定编辑
-    function onDBClickRow(index,row){
-        if(editIndex!=index)
-        {
-            $('#dg').datagrid('endEdit',editIndex);
-            editIndex=index;
+    function onDBClickRow(index, row) {
+        if (editIndex != index) {
+            $('#dg').datagrid('endEdit', editIndex);
+            editIndex = index;
         }
-        $('#dg').datagrid("beginEdit",index);
+        $('#dg').datagrid("beginEdit", index);
     }
+
     //更新行
     function updateRow() {
         $('#dg').datagrid('endEdit', editIndex);
-        var row=$('#dg').datagrid('getSelected');
-       $.ajax({
-            url:"/web/supplier/update.do",
-            data:row
+        var row = $('#dg').datagrid('getSelected');
+        $.ajax({
+            url: "/web/supplier/update.do",
+            data: row
         });
     }
+
     //添加供货商
     function addSu() {
         $('#dlg_Cart').dialog('open');
     }
+
     //删除供货商
     function delSu() {
-        $.messager.confirm('确认对话框', '您想要删除该供货商吗？', function(r){
-            if (r){
+        $.messager.confirm('确认对话框', '您想要删除该供货商吗？', function (r) {
+            if (r) {
                 $.ajax({
-                    url:"/web/supplier/del.do",
-                    data:{ID:$('#dg').datagrid("getSelected").supplier_id},
-                    success:function (data) {
-                        $.messager.alert('消息',data,'info');
+                    url: "/web/supplier/del.do",
+                    data: {ID: $('#dg').datagrid("getSelected").supplier_id},
+                    success: function (data) {
+                        $.messager.alert('消息', data, 'info');
                     }
                 })
             }
@@ -219,6 +231,7 @@
         tableString += '\n</table>';
         return tableString;
     }
+
     function Export(strXlsName, exportGrid) {
         var f = $('<form action="/web/branch/excel.do" method="post" id="fm1"></form>');
         var i = $('<input type="hidden" id="txtContent" name="txtContent" />');
@@ -230,6 +243,7 @@
         f.appendTo(document.body).submit();
         document.body.removeChild(f);
     }
+
     /*]]>*/
 </script>
 </body>

@@ -11,11 +11,11 @@ public class Sale {
     private Integer sale_goods_id;
     private Integer sale_cu_id;
     private Integer sale_or_id;
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date sale_date;
 
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     private Date sale_paydate;
 

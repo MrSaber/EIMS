@@ -23,14 +23,16 @@ public class OrderService {
 
 
     /*-----[CURD]-----*/
-    public void delById(Integer id){orderMapper.deleteOrderById(id);}
-    public Order getById(Integer id)
-    {
+    public void delById(Integer id) {
+        orderMapper.deleteOrderById(id);
+    }
+
+    public Order getById(Integer id) {
         return orderMapper.getById(id);
     }
-    public Order add(Order order)
-    {
-        Goods goods =goodsService.getGoodsById(order.getOr_goods_id());
+
+    public Order add(Order order) {
+        Goods goods = goodsService.getGoodsById(order.getOr_goods_id());
         //设置供应商
         order.setOr_supplier_id(goods.getSu_supplier());
         //计算总计
@@ -42,87 +44,78 @@ public class OrderService {
     }
 
 
-//  public List<Statistics> getStatistics(){return orderMapper.getStatistics();}
-    public Double getAmount()
-    {
+    //  public List<Statistics> getStatistics(){return orderMapper.getStatistics();}
+    public Double getAmount() {
         return orderMapper.getAmount();
     }
 
 
-    public void setBound(Integer id)
-    {
+    public void setBound(Integer id) {
         orderMapper.orderInBound(id);
     }
 
-    public void setInvoice(Integer key,Integer value)
-    {
-        orderMapper.setInvoice(key,value);
+    public void setInvoice(Integer key, Integer value) {
+        orderMapper.setInvoice(key, value);
     }
 
-    public void setPayment(Integer id)
-    {
+    public void setPayment(Integer id) {
         orderMapper.setPayment(id);
     }
 
-    public void setAlarm(Integer key,Integer val)
-    {
-        orderMapper.resetAlarm(val,key);
+    public void setAlarm(Integer key, Integer val) {
+        orderMapper.resetAlarm(val, key);
     }
 
-    public void setOther(Integer key, String val)
-    {
-        orderMapper.updateOther(val,key);
+    public void setOther(Integer key, String val) {
+        orderMapper.updateOther(val, key);
     }
 
 
+    public List<Order> getList() {
+        return orderMapper.getList();
+    }
 
-    public List<Order> getList(){return orderMapper.getList();}
-
-    public List<Order> getListByAlarm()
-    {
+    public List<Order> getListByAlarm() {
         return orderMapper.getBoundAlarm();
     }
 
-    public List<Order> getListByLikeName(String like)
-    {
-        return orderMapper.getLikeOrderInBound("%"+like+"%");
+    public List<Order> getListByLikeName(String like) {
+        return orderMapper.getLikeOrderInBound("%" + like + "%");
     }
 
-    public List<Order> getListByNo(String like)
-    {
-        return orderMapper.getListByNo("%"+like+"%");
+    public List<Order> getListByNo(String like) {
+        return orderMapper.getListByNo("%" + like + "%");
     }
 
-    public List<Order> getListByDead(Date time)
-    {
+    public List<Order> getListByDead(Date time) {
         return orderMapper.getListByDead(time);
     }
 
-    public List<Order> getListBySupId(Integer id)
-    {
-        return  orderMapper.getListBySupId(id);
+    public List<Order> getListBySupId(Integer id) {
+        return orderMapper.getListBySupId(id);
     }
 
-    public List<Order> getListByDateAndSupId(OfIdAndDateItem item){return orderMapper.getOrderByDateAndSupplierId(item);}
+    public List<Order> getListByDateAndSupId(OfIdAndDateItem item) {
+        return orderMapper.getOrderByDateAndSupplierId(item);
+    }
 
-    public List<Order> getListByStatus(Integer i){return orderMapper.getOrderWhereCheck(i);}
+    public List<Order> getListByStatus(Integer i) {
+        return orderMapper.getOrderWhereCheck(i);
+    }
 
-    public List<Order> getListByPageAndRow(Integer page,Integer row)
-    {
-        List<Order> orders = orderMapper.getListByPageAndRow(row,(page-1)*row);
+    public List<Order> getListByPageAndRow(Integer page, Integer row) {
+        List<Order> orders = orderMapper.getListByPageAndRow(row, (page - 1) * row);
         return orders;
     }
 
-    public onePage getListByPage(Integer rows, Integer offset)
-    {
+    public onePage getListByPage(Integer rows, Integer offset) {
         onePage<Order> page = new onePage<>();
         page.setTotal(orderMapper.getCount());
-        page.setRows(orderMapper.getListByPage(rows,offset));
+        page.setRows(orderMapper.getListByPage(rows, offset));
         return page;
     }
 
-    public List<Order> getListByInbound(Integer id)
-    {
+    public List<Order> getListByInbound(Integer id) {
         return orderMapper.getGoodsInfoInBound(id);
     }
 

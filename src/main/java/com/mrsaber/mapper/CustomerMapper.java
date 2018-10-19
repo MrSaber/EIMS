@@ -15,7 +15,7 @@ import java.util.List;
 @Mapper
 public interface CustomerMapper {
     @Select("SELECT ms_customer.*,ms_office.of_name FROM gongxiao.ms_customer LEFT OUTER JOIN gongxiao.ms_office ON(ms_customer.cu_office=ms_office.of_id);")
-     List<Customer> getAllCustomer();
+    List<Customer> getAllCustomer();
 
     void addCustomer(Customer customer);
 
