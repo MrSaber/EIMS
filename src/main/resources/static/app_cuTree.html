@@ -5,24 +5,31 @@
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/default/easyui.css">
     <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/icon.css">
-    <link rel="stylesheet" type="text/css" href="jquery-easyui/demo.css">
     <script type="text/javascript" src="jquery-easyui/jquery.min.js"></script>
     <script type="text/javascript" src="jquery-easyui/jquery.easyui.min.js"></script>
     <style>
-        .blockquote {
-            margin: 0;
-            margin-bottom: 10px;
-            padding: 15px;
-            line-height: 22px;
-            border-left: 5px solid #009688;
-            border-radius: 0 2px 2px 0;
-            background-color: #f2f2f2;
+        .panel-body{
+            border-color: #D4D4D4;
         }
+        .panel-header{
+            border-color: #D4D4D4;
+            padding: 0;
+        }
+        .panel-title{
+            height: 26px;
+            background-color: #f5f5f5;
+            color: #777;
+            line-height: 26px;
+            padding-left: 10px;
+        }
+
     </style>
 </head>
 <body>
+
+<div class="panel-header" style="width: 100%;"><div class="panel-title">系统账户信息</div></div>
 <div style="">
-    <div class="easyui-panel" style="padding:5px;height:500px;">
+    <div class="easyui-panel" style="padding:5px;height:620px;width: 100%">
         <ul id="tt" class="easyui-tree"
             data-options="url:'/web/customer/getCuTree.do',method:'get',animate:true,lines:true"></ul>
     </div>

@@ -102,7 +102,7 @@ public class CustomerService {
             TreeNode officeNode = new TreeNode();
             officeNode.setId(String.valueOf(it_office.getOf_id()));
             officeNode.setText(it_office.getOf_name());
-            officeNode.setIconCls("icon-more");
+            officeNode.setIconCls("icon-large-shapes");
             TreeNodeAttr attr = new TreeNodeAttr();
             attr.setType(0);
             attr.setTargetVal(it_office.getOf_id());
@@ -118,7 +118,7 @@ public class CustomerService {
                 TreeNode branchNode = new TreeNode();
                 branchNode.setId(String.valueOf(it_branch.getBr_id()));
                 branchNode.setText(it_branch.getBr_name());
-                branchNode.setIconCls("icon-add");
+                branchNode.setIconCls("icon-sum");
                 TreeNodeAttr attr1 = new TreeNodeAttr();
                 attr1.setType(1);
                 attr1.setTargetVal(it_branch.getBr_id());
